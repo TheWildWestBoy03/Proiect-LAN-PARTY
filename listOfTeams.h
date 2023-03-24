@@ -10,5 +10,5 @@ typedef struct Team{
     struct Team *next;  
 }Team;
 
-void addingAtBeginning(Team *listOfTeamHead, Data numberOfMembers, char *nameOfTeam);
+void addingAtBeginning(Team **listOfTeamHead, Data numberOfMembers, char *nameOfTeam);
 
