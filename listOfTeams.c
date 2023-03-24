@@ -10,9 +10,9 @@ void addingAtBeginning(Team **listOfTeamHead, Data numberOfMembers, char *nameOf
     current -> next = NULL;
     current -> numberOfMembers = numberOfMembers;
     current -> nameOfTeam = (char*) malloc(sizeof(char)*strlen(nameOfTeam));
-    if(*ListOfTeamHead == NULL){
+    if(*listOfTeamHead == NULL){
         *listOfTeamHead = current;
-        return;
+        return;   
     }
     else{
         current -> next = *listOfTeamHead;
