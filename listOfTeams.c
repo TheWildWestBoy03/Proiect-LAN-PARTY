@@ -18,7 +18,8 @@ void addingAtBeginning(Team **listOfTeamHead, Data numberOfMembers, char *nameOf
 }
 
 void addTheTeams(Team **listOfTeamHead, int numberOfTeams){
-    char bufferNameOfTeam[50], *nameOfTeam, **listOfMembers;
+    char bufferNameOfTeam[50], *nameOfTeam;
+    Player *playersInTheTeam;
     Team *current = (Team*) malloc(sizeof(Team));
     for (int i = 0; i < numberOfTeams; i++){
         int numberOfMembers;
@@ -30,23 +31,37 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams){
         getchar();
         nameOfTeam = (char*) malloc(strlen(bufferNameOfTeam));
         strcpy(nameOfTeam, bufferNameOfTeam);
-        listOfMembers = (char**)malloc(sizeof(char*) * numberOfMembers);
+        playersInTheTeam = (Player*) malloc(sizeof(Player) * numberOfMembers);
         for(int j = 0; j < numberOfMembers; j++){
-            printf("The name of the member %d is: ", j);
-            char bufferNameOfMember[50];
-            scanf("%s", bufferNameOfMember);
+            printf("The first name of the member %d is: ", j);
+            char bufferFirstNameOfMember[50], bufferSecondNameOfMember[50];
+            int bufferPoints;
+            scanf("%s", bufferFirstNameOfMember);
             getchar();
-            listOfMembers[j] = (char*)malloc(strlen(bufferNameOfMember));
-            strcpy(listOfMembers[j], bufferNameOfMember);
+            printf("The second name of the member %d is: ", j);
+            scanf("%s", bufferSecondNameOfMember);
+            printf("The number of points obtained by this member is: ");
+            scanf("%d", bufferPoints);
+            getchar();
+            playersInTheTeam[j] -> firstName = (char*) malloc(sizeof(bufferFirstNameOfMember));
+            playersInTheTeam[j] -> secondName = (char*) malloc(sizeof(bufferSecondNameOfMember));
+            playersInTheTeam[j] -> points = bufferPoints;
+            getchar();
+            strcpy(playersInTheTeam[j] -> firstName, bufferFirstNameOfMember);
+            strcpy(playersInTheTeam[j] -> secondName, bufferSecondNameOfMember);
         }
+
         current -> next = NULL;
         current -> numberOfMembers = numberOfMembers;
         (*current).nameOfTeam = (char*) malloc(sizeof(char)*strlen(nameOfTeam));
         strcpy(current -> nameOfTeam, nameOfTeam);
-        (*current).nameOfColleagues = (char**)malloc(sizeof(char*) * numberOfMembers);
+
         for(int j = 0; j < numberOfMembers; j++){
-            current->nameOfColleagues[j] = (char*)malloc(strlen(listOfMembers[j]));
-            strcpy(current -> nameOfColleagues[j], listOfMembers[j]);
+            current -> playersInTeam[j] -> points = playersInTheTeam[j] -> points;
+            current -> playersInTeam[j] -> firstName = (Player*)malloc(sizeof(char)*strlen(playersInTheTeam[j] -> firstName));
+            current -> playersInTeam[j] -> secondName = (Player*)malloc(sizeof(char)*strlen(playersInTheTeam[j]) -> secondName);
+            strcpy( current -> playersInTeam[j] -> firstName, playersInTheTeam[j] -> firstName);
+            strcpy( current -> playersInTeam[j] -> secondName, playersInTheTeam[j] -> secondName);
         }
         addingAtBeginning(&*listOfTeamHead, numberOfMembers, nameOfTeam, current);
     }
@@ -60,8 +75,10 @@ void displayTheList(Team *listOfTeamHead){
         printf("The name of team is: ");
         printf("%s.\n", listOfTeamHead -> nameOfTeam);
         printf("--------------------- \n");
-        for(int i=0; i<listOfTeamHead -> numberOfMembers; i++){
-            printf("%s \n", listOfTeamHead -> nameOfColleagues[i]);
+        for(int i=0; i < listOfTeamHead -> numberOfMembers; i++){
+            printf("%s \n", listOfTeamHead -> playersInTeam -> firstName);
+            printf("%s \n", listOfTeamHead -> playersInTeam -> secondName);
+            printf("%d \n"), listOfTeamHead -> playersInTeam -> points);
         }
         printf("--------------------- \n");
         printf("%d \n", listOfTeamHead -> numberOfMembers);
