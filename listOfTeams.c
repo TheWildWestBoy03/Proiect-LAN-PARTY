@@ -7,7 +7,8 @@
 
 void addingAtBeginning(Team **listOfTeamHead, Team **current)
 {
-    if(*listOfTeamHead == NULL){
+    if (*listOfTeamHead == NULL)
+    {
         *listOfTeamHead = *current;
         return;
     }
@@ -62,13 +63,13 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams)
             //  printf("%s %s %d \n", playersInTheTeam[j] . firstName, playersInTheTeam[j] . secondName, playersInTheTeam[j] . points);
             current->playersInTeam[j].points = playersInTheTeam[j].points;
             printf("%d ", current->playersInTeam[j].points);
-            current->playersInTeam[j].firstName = (char *)malloc(sizeof(char) * strlen(playersInTheTeam[j].firstName));
-            current->playersInTeam[j].secondName = (char *)malloc(sizeof(char) * strlen(playersInTheTeam[j].secondName));
+            current->playersInTeam[j].firstName = (char *)malloc(sizeof(char) * (strlen(playersInTheTeam[j].firstName) + 1));
+            printf("Sunt aici! \n");
+            current->playersInTeam[j].secondName = (char *)malloc(sizeof(char) * (strlen(playersInTheTeam[j].secondName) + 1));
             strcpy(current->playersInTeam[j].firstName, playersInTheTeam[j].firstName);
-            // printf("Sunt aici! \n");
             strcpy(current->playersInTeam[j].secondName, playersInTheTeam[j].secondName);
-            printf("%s ", current->playersInTeam[j].firstName);
-            printf("%s \n", current->playersInTeam[j].secondName);
+            puts(current->playersInTeam[j].firstName);
+            puts(current->playersInTeam[j].secondName);
         }
         addingAtBeginning(&*listOfTeamHead, &current);
     }
@@ -89,7 +90,7 @@ void displayTheList(Team *listOfTeamHead)
         }
         printf("--------------------- \n");
         printf("%d \n", listOfTeamHead->numberOfMembers);
-        listOfTeamHead = listOfTeamHead -> next;
+        listOfTeamHead = listOfTeamHead->next;
     }
     return;
 }
