@@ -5,18 +5,11 @@
 #include "listOfTeams.h"
 #include <string.h>
 
-void addingAtBeginning(Team **listOfTeamHead, Data numberOfMembers, char *nameOfTeam, Team *current)
+void addingAtBeginning(Team **listOfTeamHead, Data numberOfMembers, char *nameOfTeam, Team **current)
 {
-    if (*listOfTeamHead == NULL)
-    {
-        *listOfTeamHead = current;
-        return;
-    }
-    else
-    {
-        current->next = *listOfTeamHead;
-        *listOfTeamHead = current;
-    }
+    printf("Am intrat in addingAtBeginning! \n");
+    (*current)->next = *listOfTeamHead;
+    *listOfTeamHead = *current;
 }
 
 void addTheTeams(Team **listOfTeamHead, int numberOfTeams)
@@ -77,7 +70,7 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams)
             printf("%s ", current->playersInTeam[j].firstName);
             printf("%s \n", current->playersInTeam[j].secondName);
         }
-        addingAtBeginning(&copy, numberOfMembers, nameOfTeam, current);
+        addingAtBeginning(listOfTeamHead, numberOfMembers, nameOfTeam, &current);
     }
 }
 
