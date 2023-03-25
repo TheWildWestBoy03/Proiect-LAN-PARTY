@@ -4,6 +4,7 @@
 */
 #include "listOfTeams.h"
 #include <string.h>
+
 void addingAtBeginning(Team **listOfTeamHead, Data numberOfMembers, char *nameOfTeam, Team *current){
     current -> nameOfTeam = nameOfTeam;
     if(*listOfTeamHead == NULL){
@@ -78,7 +79,7 @@ void displayTheList(Team *listOfTeamHead){
         for(int i=0; i < listOfTeamHead -> numberOfMembers; i++){
             printf("%s \n", listOfTeamHead -> playersInTeam -> firstName);
             printf("%s \n", listOfTeamHead -> playersInTeam -> secondName);
-            printf("%d \n"), listOfTeamHead -> playersInTeam -> points);
+            printf("%d \n", listOfTeamHead -> playersInTeam -> points);
         }
         printf("--------------------- \n");
         printf("%d \n", listOfTeamHead -> numberOfMembers);
