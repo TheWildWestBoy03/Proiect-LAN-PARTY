@@ -10,6 +10,7 @@ int main()
     scanf("%d", &numberOfTeams);
     getchar();
     addTheTeams(&listOfTeamsHead, numberOfTeams);
+    printf("Sunt aici boss! \n");
     displayTheList(listOfTeamsHead);
     return 0;
 }
