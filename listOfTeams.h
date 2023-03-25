@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 typedef int Data;
 typedef struct Team{
@@ -11,4 +10,5 @@ typedef struct Team{
 }Team;
 
 void addingAtBeginning(Team **listOfTeamHead, Data numberOfMembers, char *nameOfTeam);
-
+void addTheTeams(Team **listOfTeamHead, int numberOfTeams);
+void displayTheList(Team *listOfTeamHead);
