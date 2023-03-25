@@ -25,6 +25,7 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams)
     {
         Team *current = (Team *)malloc(sizeof(Team));
         int numberOfMembers;
+        current->medium = 0;
         printf("How many students are in this team? \n");
         scanf("%d", &numberOfMembers);
         getchar();
@@ -62,7 +63,7 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams)
         {
             //  printf("%s %s %d \n", playersInTheTeam[j] . firstName, playersInTheTeam[j] . secondName, playersInTheTeam[j] . points);
             current->playersInTeam[j].points = playersInTheTeam[j].points;
-            printf("%d ", current->playersInTeam[j].points);
+            current->medium += current->playersInTeam[j].points;
             current->playersInTeam[j].firstName = (char *)malloc(sizeof(char) * (strlen(playersInTheTeam[j].firstName) + 1));
             printf("Sunt aici! \n");
             current->playersInTeam[j].secondName = (char *)malloc(sizeof(char) * (strlen(playersInTheTeam[j].secondName) + 1));
@@ -71,6 +72,8 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams)
             puts(current->playersInTeam[j].firstName);
             puts(current->playersInTeam[j].secondName);
         }
+        current->medium /= current->numberOfMembers;
+        printf("%f \n", current->medium);
         addingAtBeginning(&*listOfTeamHead, &current);
     }
 }
@@ -92,5 +95,63 @@ void displayTheList(Team *listOfTeamHead)
         printf("%d \n", listOfTeamHead->numberOfMembers);
         listOfTeamHead = listOfTeamHead->next;
     }
+    return;
+}
+void eliminateTheTeamsUtil(Team **listOfTeamsHead, int numberOfTeams)
+{
+    int powerOfTwo = 1;
+    while (powerOfTwo * 2 <= numberOfTeams)
+    {
+        powerOfTwo = powerOfTwo * 2;
+    }
+    for (int i = 0; i < powerOfTwo; i++)
+    {
+        eliminateTheTeams(&*listOfTeamsHead);
+    }
+}
+void eliminateTheTeams(Team **listOfTeamsHead)
+{
+    printf("In eliminating the teams.");
+    Team *copy = *listOfTeamsHead, *dummy;
+    if (copy == NULL)
+    {
+        return;
+    }
+    float minimum = copy->medium;
+    printf("%f \n", minimum);
+    while (copy != NULL)
+    {
+        if (minimum > copy->medium)
+        {
+            minimum = copy->medium;
+        }
+        copy = copy->next;
+    }
+    printf("%f \n", minimum);
+    copy = *listOfTeamsHead;
+    if (copy->next == NULL)
+    {
+        if (copy->medium == minimum)
+        {
+            Team *toDelete = copy;
+            copy = copy->next;
+            free(toDelete);
+        }
+        return;
+    }
+
+    while (copy->next->medium != minimum)
+    {
+        copy = copy->next;
+    }
+    Team *todelete = copy->next;
+    if (copy->next->next == NULL)
+    {
+        copy->next = NULL;
+        free(todelete);
+        return;
+    }
+    copy->next = copy->next->next;
+    free(todelete);
     return;
 }
