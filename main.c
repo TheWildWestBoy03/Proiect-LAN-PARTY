@@ -8,6 +8,7 @@ int main()
     FILE *teamsFiles;
     printf("Insert the number of teams! \n");
     scanf("%d", &numberOfTeams);
+    getchar();
     addTheTeams(&listOfTeamsHead, numberOfTeams);
     displayTheList(listOfTeamsHead);
     return 0;

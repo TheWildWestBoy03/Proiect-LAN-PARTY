@@ -9,6 +9,6 @@ typedef struct Team{
     struct Team *next;  
 }Team;
 
-void addingAtBeginning(Team **listOfTeamHead, Data numberOfMembers, char *nameOfTeam);
+void addingAtBeginning(Team **listOfTeamHead, Data numberOfMembers, char *nameOfTeam, Team *current);
 void addTheTeams(Team **listOfTeamHead, int numberOfTeams);
 void displayTheList(Team *listOfTeamHead);

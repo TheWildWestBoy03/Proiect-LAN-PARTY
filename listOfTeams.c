@@ -4,13 +4,7 @@
 */
 #include "listOfTeams.h"
 #include <string.h>
-void addingAtBeginning(Team **listOfTeamHead, Data numberOfMembers, char *nameOfTeam){
-    Team *current = (Team*)malloc(sizeof(Team));
-    char bufferNameTeam[50], bufferNameColleague[50];
-    current -> next = NULL;
-    current -> numberOfMembers = numberOfMembers;
-    printf("%s \n", nameOfTeam);
-    (*current).nameOfTeam = (char*) malloc(sizeof(char)*strlen(nameOfTeam));
+void addingAtBeginning(Team **listOfTeamHead, Data numberOfMembers, char *nameOfTeam, Team *current){
     current -> nameOfTeam = nameOfTeam;
     if(*listOfTeamHead == NULL){
         *listOfTeamHead = current;
@@ -25,6 +19,7 @@ void addingAtBeginning(Team **listOfTeamHead, Data numberOfMembers, char *nameOf
 
 void addTheTeams(Team **listOfTeamHead, int numberOfTeams){
     char bufferNameOfTeam[50], *nameOfTeam, **listOfMembers;
+    Team *current = (Team*) malloc(sizeof(Team));
     for (int i = 0; i < numberOfTeams; i++){
         int numberOfMembers;
         printf("How many students are in this team? \n");
@@ -42,13 +37,18 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams){
             scanf("%s", bufferNameOfMember);
             getchar();
             listOfMembers[j] = (char*)malloc(strlen(bufferNameOfMember));
+            strcpy(listOfMembers[j], bufferNameOfMember);
         }
-        printf("\n");
-        for(int j=0; j<numberOfMembers; j++){
-            printf("%s \n", listOfMembers[j]);
+        current -> next = NULL;
+        current -> numberOfMembers = numberOfMembers;
+        (*current).nameOfTeam = (char*) malloc(sizeof(char)*strlen(nameOfTeam));
+        strcpy(current -> nameOfTeam, nameOfTeam);
+        (*current).nameOfColleagues = (char**)malloc(sizeof(char*) * numberOfMembers);
+        for(int j = 0; j < numberOfMembers; j++){
+            current->nameOfColleagues[j] = (char*)malloc(strlen(listOfMembers[j]));
+            strcpy(current -> nameOfColleagues[j], listOfMembers[j]);
         }
-        addingAtBeginning(&*listOfTeamHead, numberOfMembers, nameOfTeam);
-        free(nameOfTeam);
+        addingAtBeginning(&*listOfTeamHead, numberOfMembers, nameOfTeam, current);
     }
 }
 
@@ -59,6 +59,12 @@ void displayTheList(Team *listOfTeamHead){
     while(listOfTeamHead != NULL){
         printf("The name of team is: ");
         printf("%s.\n", listOfTeamHead -> nameOfTeam);
+        printf("--------------------- \n");
+        for(int i=0; i<listOfTeamHead -> numberOfMembers; i++){
+            printf("%s \n", listOfTeamHead -> nameOfColleagues[i]);
+        }
+        printf("--------------------- \n");
+        printf("%d \n", listOfTeamHead -> numberOfMembers);
         listOfTeamHead = listOfTeamHead -> next;
     }
     return;
