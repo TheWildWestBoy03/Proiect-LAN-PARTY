@@ -7,7 +7,7 @@ typedef struct Team{
     Data numberOfMembers;
     char *nameOfTeam;
     struct Team *next; 
-    Player *playerInTeams;
+    Player *playerInTeam;
 }Team;
 
 void addingAtBeginning(Team **listOfTeamHead, Data numberOfMembers, char *nameOfTeam, Team *current);
