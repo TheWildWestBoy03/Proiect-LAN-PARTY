@@ -104,7 +104,8 @@ void eliminateTheTeamsUtil(Team **listOfTeamsHead, int numberOfTeams)
     {
         powerOfTwo = powerOfTwo * 2;
     }
-    for (int i = 0; i < powerOfTwo; i++)
+
+    for (int i = powerOfTwo; i < numberOfTeams; i++)
     {
         eliminateTheTeams(&*listOfTeamsHead);
     }
@@ -118,7 +119,6 @@ void eliminateTheTeams(Team **listOfTeamsHead)
         return;
     }
     float minimum = copy->medium;
-    printf("%f \n", minimum);
     while (copy != NULL)
     {
         if (minimum > copy->medium)
@@ -128,30 +128,35 @@ void eliminateTheTeams(Team **listOfTeamsHead)
         copy = copy->next;
     }
     printf("%f \n", minimum);
-    copy = *listOfTeamsHead;
-    if (copy->next == NULL)
+    dummy = (Team *)malloc(sizeof(Team));
+    dummy->next = *listOfTeamsHead;
+    dummy->medium = minimum + 10;
+    copy = dummy;
+    while (copy->next != NULL)
     {
-        if (copy->medium == minimum)
+        if (copy->next->medium == minimum)
         {
-            Team *toDelete = copy;
-            copy = copy->next;
-            free(toDelete);
+            if (copy->next->next == NULL)
+            {
+                Team *todelete = copy->next;
+                copy->next = NULL;
+                free(todelete);
+                todelete = NULL;
+            }
+            else
+            {
+                Team *todelete = copy->next;
+                copy->next = copy->next->next;
+                free(todelete);
+                todelete = NULL;
+            }
+            break;
         }
-        return;
-    }
-
-    while (copy->next->medium != minimum)
-    {
         copy = copy->next;
     }
-    Team *todelete = copy->next;
-    if (copy->next->next == NULL)
-    {
-        copy->next = NULL;
-        free(todelete);
-        return;
-    }
-    copy->next = copy->next->next;
-    free(todelete);
+    *listOfTeamsHead = dummy->next;
+    printf("%s \n", (*listOfTeamsHead)->nameOfTeam);
+    free(dummy);
+    dummy = NULL;
     return;
 }
