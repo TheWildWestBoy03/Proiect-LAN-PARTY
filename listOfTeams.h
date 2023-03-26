@@ -12,9 +12,11 @@ typedef struct Team{
 }Team;
 
 void addingAtBeginning(Team **listOfTeamHead, Team **current);
-void addTheTeams(Team **listOfTeamHead, int numberOfTeams);
+void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsfile);
 void displayTheList(Team *listOfTeamHead);
 void eliminateTheTeamsUtil(Team **listOfTeamsHead, int numberOfTeams);
 void eliminateTheTeams(Team **ListOfTeamsHead);
 void openTheFile(FILE **input, char *mode, char *nameOfFile);
 void closeTheFile(FILE **input);
+int readTheRequests(FILE **requestsFile, int positionOfTheLastRequest);
+void readingData(int lastRequest, int *numberOfTeams, FILE **teamsFile, Team **listOfTeamsHead);

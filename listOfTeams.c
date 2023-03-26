@@ -16,7 +16,7 @@ void addingAtBeginning(Team **listOfTeamHead, Team **current)
     *listOfTeamHead = *current;
 }
 
-void addTheTeams(Team **listOfTeamHead, int numberOfTeams)
+void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
 {
     Team *copy = *listOfTeamHead;
     char bufferNameOfTeam[50], *nameOfTeam;
@@ -24,15 +24,27 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams)
     for (int i = 0; i < numberOfTeams; i++)
     {
         Team *current = (Team *)malloc(sizeof(Team));
-        int numberOfMembers;
+        char buffer[100];
+        int numberOfMembers = 0;
         current->medium = 0;
+        /*
         printf("How many students are in this team? \n");
         scanf("%d", &numberOfMembers);
         getchar();
         printf("What is the name of this team? ");
         gets(bufferNameOfTeam);
+        */
+        fgets(buffer, 99, teamsFile);
         nameOfTeam = (char *)malloc(strlen(bufferNameOfTeam));
-        strcpy(nameOfTeam, bufferNameOfTeam);
+        int numberOfDigits = 0, risingFactory = 1;
+        while(buffer[numberOfDigits] >= '0' && buffer[numberOfDigits] <= '9'){
+            numberOfDigits++;
+            numberOfMembers = numberOfMembers + risingFactory * (buffer[i] - 48);
+            risingFactory *= 10;
+        }
+        printf("%d \n", numberOfMembers);
+
+        strcpy(nameOfTeam, buffer+numberOfDigits+1);
         playersInTheTeam = (Player *)malloc(sizeof(Player) * numberOfMembers);
         for (int j = 0; j < numberOfMembers; j++)
         {
