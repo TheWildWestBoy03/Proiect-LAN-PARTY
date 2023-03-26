@@ -5,14 +5,19 @@ int main()
 {
     int numberOfTeams, positionOfLastRequest = 0;
     Team *listOfTeamsHead = NULL;
-    FILE *teamsFiles, *requestFiles;
-    printf("Insert the number of teams! \n");
+    FILE *teamsFiles, *requestFiles, *outputFile;
+   // printf("Insert the number of teams! \n");
     positionOfLastRequest = readTheRequests(&requestFiles, positionOfLastRequest);
     //scanf("%d", &numberOfTeams);
+    printf("%d \n", positionOfLastRequest);
     readingData(positionOfLastRequest, &numberOfTeams, &teamsFiles, &listOfTeamsHead);
     printf("Sunt aici boss! \n");
     eliminateTheTeamsUtil(&listOfTeamsHead, numberOfTeams);
-    displayTheList(listOfTeamsHead);
+    if(positionOfLastRequest >= 0){
+        openTheFile(&outputFile, "wt", "r.out");
+        displayTheList(listOfTeamsHead, &outputFile);
+        closeTheFile(&outputFile);
+    }
     return 0;
 }
 

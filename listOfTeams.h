@@ -13,7 +13,7 @@ typedef struct Team{
 
 void addingAtBeginning(Team **listOfTeamHead, Team **current);
 void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsfile);
-void displayTheList(Team *listOfTeamHead);
+void displayTheList(Team *listOfTeamHead, FILE **outputFile);
 void eliminateTheTeamsUtil(Team **listOfTeamsHead, int numberOfTeams);
 void eliminateTheTeams(Team **ListOfTeamsHead);
 void openTheFile(FILE **input, char *mode, char *nameOfFile);

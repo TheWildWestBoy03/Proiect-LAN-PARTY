@@ -8,23 +8,24 @@ void openTheFile(FILE **inputFile, char *mode, char *nameOfFile)
     }
 }
 
-void closeFile(FILE **inputFile)
+void closeTheFile(FILE **inputFile)
 {
     fclose(*inputFile);
 }
 int readTheRequests(FILE **requestsFile, int positionOfTheLastRequest)
 {
     int check;
-    openTheFile(&*requestsFile, "wt", "c.in");
+    openTheFile(&*requestsFile, "rt", "date/t3/c.in");
     while (feof(*requestsFile) == 0 && fscanf(*requestsFile, "%d ", &check))
     {
+        printf("%d ", check);
         if (check == 0)
         {
             break;
         }
         positionOfTheLastRequest++;
     }
-    closeFile(&*requestsFile);
+    closeTheFile(&*requestsFile);
     return positionOfTheLastRequest;
 }
 
@@ -38,9 +39,10 @@ void readingData(int lastRequest, int *numberOfTeams, FILE **teamsFile, Team **l
     }
     else
     {
-        openTheFile(&copyOfTheFile, "wt", "d.in");
-        printf("Please insert the number of teams: ");
-        fscanf(*teamsFile, "%d", *numberOfTeams);
-        addTheTeams(&*listOfTeamsHead, *numberOfTeams, *teamsFile);
+        openTheFile(&copyOfTheFile, "rt", "date/t3/d.in");
+        printf("Please insert the number of teams: \n");
+        fscanf(copyOfTheFile, "%d ", numberOfTeams);
+        printf("%d \n", *numberOfTeams);
+        addTheTeams(&*listOfTeamsHead, *numberOfTeams, copyOfTheFile);
     }
 }
