@@ -13,8 +13,8 @@ typedef struct Team{
 
 void addingAtBeginning(Team **listOfTeamHead, Team **current);
 void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsfile);
-void displayThePLayers(Player *playerHead);
 void addingPlayer(Player **playerHead, Player *currentPlayer);
+void displayThePlayers(Player *playerHead, FILE **outputFile);
 void deleteTheTeam(Team **current);
 void displayTheList(Team *listOfTeamHead, FILE **outputFile);
 void eliminateTheTeamsUtil(Team **listOfTeamsHead, int numberOfTeams);
