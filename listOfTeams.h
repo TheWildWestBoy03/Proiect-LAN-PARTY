@@ -7,12 +7,13 @@ typedef struct Team{
     Data numberOfMembers;
     char *nameOfTeam;
     struct Team *next; 
-    Player *playersInTeam;
+    Player *playersHead;
     float medium;
 }Team;
 
 void addingAtBeginning(Team **listOfTeamHead, Team **current);
 void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsfile);
+void addingPlayer(Player **playerHead, Player *current);
 void displayTheList(Team *listOfTeamHead, FILE **outputFile);
 void eliminateTheTeamsUtil(Team **listOfTeamsHead, int numberOfTeams);
 void eliminateTheTeams(Team **ListOfTeamsHead);
