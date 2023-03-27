@@ -15,25 +15,26 @@ void addingAtBeginning(Team **listOfTeamHead, Team **current)
     (*current)->next = *listOfTeamHead;
     *listOfTeamHead = *current;
 }
-
+void addingPlayer(Player **playerHead, Player *currentPlayer){
+    Player *copyPlayer = *playerHead;
+    if(*playerHead == NULL){
+        *playerHead = currentPlayer;
+        return;
+    }
+    currentPlayer -> next = copyPlayer;
+    copyPlayer = currentPlayer;
+    return;
+}
 void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
 {
     Team *copy = *listOfTeamHead;
     char bufferNameOfTeam[50], *nameOfTeam;
-    Player *playersInTheTeam;
     for (int i = 0; i < numberOfTeams; i++)
     {
         Team *current = (Team *)malloc(sizeof(Team));
         char buffer[100];
         int numberOfMembers = 0;
         current->medium = 0;
-        /*
-        printf("How many students are in this team? \n");
-        scanf("%d", &numberOfMembers);
-        getchar();
-        printf("What is the name of this team? ");
-        gets(bufferNameOfTeam);
-        */
         fgets(buffer, 99, teamsFile);
         printf("%s \n", buffer);
         nameOfTeam = (char *)malloc(strlen(bufferNameOfTeam));
@@ -45,73 +46,48 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
             risingFactory *= 10;
         }
         strcpy(nameOfTeam, buffer + numberOfDigits + 1);
-        playersInTheTeam = (Player *)malloc(sizeof(Player) * numberOfMembers);
-        for (int j = 0; j < numberOfMembers; j++)
-        {
-           // printf("The first name of the member %d is: ", j);
-            char bufferFirstNameOfMember[50], bufferSecondNameOfMember[50];
-            int bufferPoints;
-            /*
-            gets(bufferFirstNameOfMember);
-            printf("The second name of the member %d is: ", j);
-            gets(bufferSecondNameOfMember);
-            printf("The number of points obtained by this member is: ");
-            scanf("%d", &bufferPoints);
-            getchar();
-            */
-            fscanf(teamsFile, "%s %s %d ", &bufferFirstNameOfMember, &bufferSecondNameOfMember, &bufferPoints);
-            
-            playersInTheTeam[j].firstName = (char *)malloc(sizeof(bufferFirstNameOfMember));
-            playersInTheTeam[j].secondName = (char *)malloc(sizeof(bufferSecondNameOfMember));
-            playersInTheTeam[j].points = bufferPoints;
-
-            strcpy(playersInTheTeam[j].firstName, bufferFirstNameOfMember);
-            strcpy(playersInTheTeam[j].secondName, bufferSecondNameOfMember);
-            printf("%s %s %d \n", playersInTheTeam[j].firstName, playersInTheTeam[j].secondName, playersInTheTeam[j].points);
-        }
-       //  printf("Segmentation fault??? \n");
-        char c;
-        fscanf(teamsFile, "%c", &c);
+        current->nameOfTeam = (char *)malloc(sizeof(char) * strlen(nameOfTeam));
         current->next = NULL;
         current->numberOfMembers = numberOfMembers;
-      //  printf("Segmentation fault??? \n");
-        current->nameOfTeam = (char *)malloc(sizeof(char) * strlen(nameOfTeam));
         strcpy(current->nameOfTeam, nameOfTeam);
-        current->playersInTeam = (Player *)malloc(sizeof(Player) * numberOfMembers);
-       // printf("Segmentation fault??? \n");
+        Player *currentPlayer = NULL;
+        current -> playersHead = NULL;
+        Player *playersToDisplay = current -> playersHead;
         for (int j = 0; j < numberOfMembers; j++)
         {
-            //  printf("%s %s %d \n", playersInTheTeam[j] . firstName, playersInTheTeam[j] . secondclearclearName, playersInTheTeam[j] . points);
-            current->playersInTeam[j].points = playersInTheTeam[j].points;
-            current->medium += current->playersInTeam[j].points;
-            current->playersInTeam[j].firstName = (char *)malloc(sizeof(char) * (strlen(playersInTheTeam[j].firstName) + 1));
-           // printf("Sunt aici! \n");
-            current->playersInTeam[j].secondName = (char *)malloc(sizeof(char) * (strlen(playersInTheTeam[j].secondName) + 1));
-            strcpy(current->playersInTeam[j].firstName, playersInTheTeam[j].firstName);
-            strcpy(current->playersInTeam[j].secondName, playersInTheTeam[j].secondName);
-            //puts(current->playersInTeam[j].firstName);
-            //puts(current->playersInTeam[j].secondName);
+            currentPlayer = (Player*) malloc(sizeof(Player));
+            currentPlayer -> next = NULL;
+            char bufferFirstNameOfMember[50], bufferSecondNameOfMember[50];
+            int bufferPoints;
+            fscanf(teamsFile, "%s %s %d\n", bufferFirstNameOfMember, bufferSecondNameOfMember, &bufferPoints);
+            currentPlayer -> firstName = (char*)malloc(strlen(bufferFirstNameOfMember) + 1);
+            currentPlayer -> secondName = (char*)malloc(strlen(bufferSecondNameOfMember) + 1);
+            currentPlayer -> points = bufferPoints;
+            current -> medium += bufferPoints;
+            strcpy(currentPlayer -> firstName, bufferFirstNameOfMember);
+            strcpy(currentPlayer -> secondName, bufferSecondNameOfMember);
+            addingPlayer(&(current -> playersHead), currentPlayer);
         }
+        displayThePlayers(playersToDisplay);
         current->medium /= current->numberOfMembers;
-       // printf("%f \n", current->medium);
         addingAtBeginning(&*listOfTeamHead, &current);
-      //  printf("Segmentation fault??? \n");
     }
 }
-
+void displayThePlayers(Player *playerHead){
+    while(playerHead != NULL){
+        printf("%s %s %d \n", playerHead -> firstName, playerHead -> secondName, playerHead -> points);
+        playerHead = playerHead -> next;
+    }
+    return;
+}
 void displayTheList(Team *listOfTeamHead, FILE **outputFile)
 {
     while (listOfTeamHead != NULL)
     {
-        // printf("The name of team is: ");
+       
         fprintf(*outputFile, "%s \n", listOfTeamHead->nameOfTeam);
         fprintf(*outputFile, "--------------------- \n");
-        for (int i = 0; i < listOfTeamHead->numberOfMembers; i++)
-        {
-            fprintf(*outputFile, "%s ", listOfTeamHead->playersInTeam[i].firstName);
-            fprintf(*outputFile, "%s ", listOfTeamHead->playersInTeam[i].secondName);
-            fprintf(*outputFile, "%d \n", listOfTeamHead->playersInTeam[i].points);
-        }
+        displayThePlayers(listOfTeamHead -> playersHead);
         fprintf(*outputFile, "--------------------- \n");
         fprintf(*outputFile, "%d \n", listOfTeamHead->numberOfMembers);
         listOfTeamHead = listOfTeamHead->next;
@@ -129,6 +105,20 @@ void eliminateTheTeamsUtil(Team **listOfTeamsHead, int numberOfTeams)
     for (int i = powerOfTwo; i < numberOfTeams; i++)
     {
         eliminateTheTeams(&*listOfTeamsHead);
+    }
+}
+void deleteTheTeam(Team **current){
+    if(*current == NULL){
+        return;
+    }
+    Team *copy = *current;
+    if(copy -> playersHead == NULL){
+        return;
+    }
+    while(copy -> playersHead != NULL){
+        Player *todelete = copy -> playersHead;
+        copy -> playersHead = copy -> playersHead -> next;
+        free(copy -> playersHead);
     }
 }
 void eliminateTheTeams(Team **listOfTeamsHead)
@@ -161,14 +151,14 @@ void eliminateTheTeams(Team **listOfTeamsHead)
             {
                 Team *todelete = copy->next;
                 copy->next = NULL;
-                free(todelete);
+                deleteTheTeam(&todelete);
                 todelete = NULL;
             }
             else
             {
                 Team *todelete = copy->next;
                 copy->next = copy->next->next;
-                free(todelete);
+                deleteTheTeam(&todelete);
                 todelete = NULL;
             }
             break;

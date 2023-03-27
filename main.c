@@ -14,7 +14,7 @@ int main()
     printf("Sunt aici boss! \n");
     eliminateTheTeamsUtil(&listOfTeamsHead, numberOfTeams);
     if(positionOfLastRequest >= 0){
-        openTheFile(&outputFile, "wt", "r.out");
+        openTheFile(&outputFile, "w", "r.out");
         displayTheList(listOfTeamsHead, &outputFile);
         closeTheFile(&outputFile);
     }
