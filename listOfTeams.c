@@ -47,15 +47,18 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
         char buffer[100];
         int numberOfMembers = 0;
         fgets(buffer, 99, teamsFile);
-        nameOfTeam = (char *)malloc(strlen(bufferNameOfTeam));
+        nameOfTeam = (char *)malloc(strlen(bufferNameOfTeam)+1);
         int numberOfDigits = 0, risingFactory = 1;
+        printf("%s \n", buffer);
         while (buffer[numberOfDigits] >= '0' && buffer[numberOfDigits] <= '9')
         {
-            numberOfMembers = numberOfMembers + risingFactory * (buffer[numberOfDigits] - 48);
+            numberOfMembers = numberOfMembers * 10 + (buffer[numberOfDigits] - 48);
             numberOfDigits++;
             risingFactory *= 10;
         }
+        printf("The number of members is: %d and the name of team is: ", numberOfMembers);
         strcpy(nameOfTeam, buffer + numberOfDigits + 1);
+        printf("%s \n", nameOfTeam);
         current->nameOfTeam = (char *)malloc(sizeof(char) * (strlen(nameOfTeam) + 1));
         current->next = NULL;
         current->numberOfMembers = numberOfMembers;
@@ -63,7 +66,6 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
         Player *currentPlayer = NULL;
         current->playersHead = NULL;
         Player *playersToDisplay = current->playersHead;
-        printf("%d \n", numberOfMembers);
         current -> medium = 0;
         for (int j = 0; j < numberOfMembers; j++)
         {
@@ -81,6 +83,7 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
             strcpy(currentPlayer->secondName, bufferSecondNameOfMember);
             addingPlayer(&(current -> playersHead), currentPlayer);
         }
+        fscanf(teamsFile, "\n");
         current->medium /= current->numberOfMembers;
         addingAtBeginning(&*listOfTeamHead, &current);
     }
