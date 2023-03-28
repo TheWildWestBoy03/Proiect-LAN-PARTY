@@ -15,10 +15,9 @@ void closeTheFile(FILE **inputFile)
 int readTheRequests(FILE **requestsFile, int positionOfTheLastRequest)
 {
     int check;
-    openTheFile(&*requestsFile, "r", "date/t1/c.in");
+    openTheFile(&*requestsFile, "r", "date/t4/c.in");
     while (feof(*requestsFile) == 0 && fscanf(*requestsFile, "%d ", &check))
     {
-        printf("%d ", check);
         if (check == 0)
         {
             break;
@@ -39,10 +38,8 @@ void readingData(int lastRequest, int *numberOfTeams, FILE **teamsFile, Team **l
     }
     else
     {
-        openTheFile(&copyOfTheFile, "r", "date/t1/d.in");
-        printf("Please insert the number of teams: \n");
+        openTheFile(&copyOfTheFile, "r", "date/t4/d.in");
         fscanf(copyOfTheFile, "%d\n", numberOfTeams);
-        printf("%d \n", *numberOfTeams);
         addTheTeams(&*listOfTeamsHead, *numberOfTeams, copyOfTheFile);
     }
 }
