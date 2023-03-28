@@ -30,7 +30,7 @@ void displayThePlayers(Player *playerHead, FILE **outputFile)
 {
     while (playerHead != NULL)
     {
-        fprintf(*outputFile, "%s %s %d\n", playerHead->firstName, playerHead->secondName, playerHead->points);
+       // fprintf(*outputFile, "%s %s %d\n", playerHead->firstName, playerHead->secondName, playerHead->points);
       //  printf("%s %s %d -----> ", playerHead->firstName, playerHead->secondName, playerHead->points);
         playerHead = playerHead->next;
     }
@@ -92,12 +92,12 @@ void displayTheList(Team *listOfTeamHead, FILE **outputFile)
 {
     while (listOfTeamHead != NULL)
     {
-        fprintf(*outputFile, "%d ", listOfTeamHead->numberOfMembers);
-        fprintf(*outputFile, "%s ", listOfTeamHead->nameOfTeam);
-        fprintf(*outputFile, "%f \n", listOfTeamHead->medium);
-        fprintf(*outputFile, "--------------------- \n");
-        displayThePlayers(listOfTeamHead->playersHead, &*outputFile);
-        fprintf(*outputFile, "--------------------- \n");
+       // fprintf(*outputFile, "%d ", listOfTeamHead->numberOfMembers);
+        fprintf(*outputFile, "%s\n", listOfTeamHead->nameOfTeam);
+        //fprintf(*outputFile, "%f \n", listOfTeamHead->medium);
+        //fprintf(*outputFile, "--------------------- \n");
+        //displayThePlayers(listOfTeamHead->playersHead, &*outputFile);
+        //fprintf(*outputFile, "--------------------- \n");
         listOfTeamHead = listOfTeamHead->next;
     }
     return;

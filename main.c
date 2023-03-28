@@ -15,11 +15,13 @@ int main()
     if(positionOfLastRequest >= 1){
         openTheFile(&outputFile, "w", "r.out");
         displayTheList(listOfTeamsHead, &outputFile);
+        /*
         if(positionOfLastRequest >= 2){
             fprintf(outputFile, "\n\n\n");
             eliminateTheTeamsUtil(&listOfTeamsHead, numberOfTeams, &outputFile);
             displayTheList(listOfTeamsHead, &outputFile);
         }
+        */
         closeTheFile(&outputFile);
     }
     
