@@ -3,7 +3,7 @@
 int main()
 {
     int numberOfTeams, positionOfLastRequest = 0, numberOfRounds = 1;
-    Team *listOfTeamsHead = NULL;
+    Team *listOfTeamsHead = NULL, *listOfWinners = NULL;
     FILE *teamsFiles, *requestFiles, *outputFile;
     QueueOfMatches *queueOfMatches;
    // printf("Insert the number of teams! \n");
@@ -27,13 +27,16 @@ int main()
         displayTheList(listOfTeamsHead, &outputFile);
         queueOfMatches = createTheQueue(queueOfMatches);
         fprintf(outputFile, "---Round no:%d\n", numberOfRounds); 
-        enqueueUtil(queueOfMatches, listOfTeamsHead, &outputFile); /*
+        enqueueUtil(queueOfMatches, listOfTeamsHead, &outputFile); 
         while(!isQueueOfMatchesEmpty(queueOfMatches)){
             QMatch *currentMatch = dequeueOfMatches(queueOfMatches);
-            fprintf(outputFile, "%s                   -                %s \n", currentMatch -> firstTeam, currentMatch -> secondTeam);
+            if(currentMatch != NULL){
+                fprintf(outputFile, "%s                   -                %s \n", currentMatch -> firstTeam, currentMatch -> secondTeam);
+            }
         } 
-        */
+
     }
+    
     return 0;
 }
 

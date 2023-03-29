@@ -59,10 +59,11 @@ void enqueueTheMatch(QueueOfMatches *queueOfMatches, QMatch *currentMatch, FILE 
 
 QMatch *setTheMatch(QMatch *someMatch, QMatch *aux)
 {
+    //printf("In setthematch: \n");
     someMatch->next = NULL;
-    someMatch->firstTeam = (char *)malloc(strlen(aux->firstTeam) + 1);
+    someMatch->firstTeam = (char *)malloc(strlen(aux->firstTeam) + 2);
     strcpy(someMatch->firstTeam, aux->firstTeam);
-    someMatch->secondTeam = (char *)malloc(strlen(aux->secondTeam) + 1);
+    someMatch->secondTeam = (char *)malloc(strlen(aux->secondTeam) + 2);
     strcpy(someMatch->secondTeam, aux->secondTeam);
     someMatch->firstTeamScore = aux->firstTeamScore;
     someMatch->secondTeamScore = aux->secondTeamScore;
@@ -71,28 +72,21 @@ QMatch *setTheMatch(QMatch *someMatch, QMatch *aux)
 
 QMatch *dequeueOfMatches(QueueOfMatches *queueOfMatches)
 {
-    printf("In dequeueOfMatches \n");
     QMatch *aux = NULL, *matchToGet = malloc(sizeof(QMatch));
     aux = queueOfMatches->firstMatch;
-    aux->next = NULL;
-    matchToGet = setTheMatch(matchToGet, aux);
-    // printf("%s %s \n", matchToGet -> firstTeam, matchToGet -> secondTeam);
-    if (isQueueOfMatchesEmpty(queueOfMatches) == 0)
-    {
-        queueOfMatches->firstMatch = (queueOfMatches->firstMatch)->next;
+    if(isQueueOfMatchesEmpty(queueOfMatches)){
+        return NULL;
     }
-    else
-        queueOfMatches->firstMatch = NULL;
+    matchToGet = setTheMatch(matchToGet, aux);
+    
+    queueOfMatches->firstMatch = (queueOfMatches->firstMatch)->next;
     free(aux);
+    aux = NULL;
     return matchToGet;
 }
 
 int isQueueOfMatchesEmpty(QueueOfMatches *queueOfMatches)
 {
-    printf("In isqueueempty \n");
-    if (queueOfMatches->firstMatch == queueOfMatches->lastMatch && queueOfMatches->lastMatch == NULL)
-    {
-        return 1;
-    }
-    return 0;
+  //  printf("In isqueueempty \n");
+    return queueOfMatches -> firstMatch == NULL;
 }
