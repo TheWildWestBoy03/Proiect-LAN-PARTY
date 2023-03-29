@@ -39,7 +39,9 @@ void enqueueUtil(QueueOfMatches *queueOfMatches, Team *listOfTeamsHead, FILE **o
 void enqueueTheMatch(QueueOfMatches *queueOfMatches, QMatch *currentMatch, FILE **outputFile)
 {
     static int i = 0;
+
     fprintf(*outputFile, "%s                  -                 %s \n", currentMatch->firstTeam, currentMatch->secondTeam);
+    
     if (queueOfMatches->lastMatch == NULL)
     {
         queueOfMatches->lastMatch = currentMatch;

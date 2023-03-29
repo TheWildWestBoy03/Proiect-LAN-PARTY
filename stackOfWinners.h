@@ -1,12 +1,12 @@
 #include "matchesQueue.h"
 
-typedef struct StackofWinners{
+typedef struct Stack{
     char *nameOfTeam;
     float points;
-    struct StackofWinners *next;
-}StackOfWinners;
+    struct Stack *next;
+}Stack;
 
-StackOfWinners *top(StackOfWinners *stackOfWinners);
-StackOfWinners *pop(StackOfWinners *stackOfWinners);
-void pushTheWinner(StackOfWinners **stackofWinners, StackOfWinners *winnerTeam);
-void isTheStackEmpty(StackOfWinners *StackOfWinners);
+Stack *top(Stack *theStack);
+Stack *pop(Stack *theStack);
+void pushTheWinner(Stack **theStack, Stack *winnerOrLoserTeam);
+int isTheStackEmpty(Stack *theStack);

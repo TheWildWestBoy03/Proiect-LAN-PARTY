@@ -1,4 +1,4 @@
 build:
-	gcc listOfTeams.c listOfTeams.h Player.h files.c main.c -o lanparty
+	gcc listOfTeams.c listOfTeams.h Player.h files.c main.c matchesQueue.c matchesQueue.h stackOfWinners.c stackOfWinners.h -o lanparty
 clean:
 	rm -f lanparty

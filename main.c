@@ -30,9 +30,7 @@ int main()
         enqueueUtil(queueOfMatches, listOfTeamsHead, &outputFile); 
         while(!isQueueOfMatchesEmpty(queueOfMatches)){
             QMatch *currentMatch = dequeueOfMatches(queueOfMatches);
-            if(currentMatch != NULL){
-                fprintf(outputFile, "%s                   -                %s \n", currentMatch -> firstTeam, currentMatch -> secondTeam);
-            }
+            
         } 
 
     }
