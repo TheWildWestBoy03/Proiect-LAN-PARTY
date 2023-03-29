@@ -11,37 +11,35 @@ QueueOfMatches *createTheQueue()
     newQueue->firstMatch = newQueue->lastMatch = NULL;
     return newQueue;
 }
-void enqueueUtil(QueueOfMatches *queueOfMatches, Team *listOfTeamsHead)
+void enqueueUtil(QueueOfMatches *queueOfMatches, Team *listOfTeamsHead, FILE **outputFile)
 {
-    //printf("In enqueueUtil \n");
-    int counter = 0;
+    // printf("In enqueueUtil \n");
     while (listOfTeamsHead != NULL)
     {
         QMatch *currentMatch = (QMatch *)malloc(sizeof(QMatch));
-        if(counter % 2 ==0){
-            currentMatch->firstTeam = (char *)malloc(1 + strlen(listOfTeamsHead->nameOfTeam));
-            strcpy(currentMatch -> firstTeam, listOfTeamsHead -> nameOfTeam);
-            //   printf("Where tf is that seg fault/\n");
+        currentMatch->firstTeam = (char *)malloc(2 + strlen(listOfTeamsHead->nameOfTeam));
+        strcpy(currentMatch->firstTeam, listOfTeamsHead->nameOfTeam);
+        //   printf("Where tf is that seg fault/\n");
         currentMatch->firstTeamScore = listOfTeamsHead->medium;
-     //   printf("Where tf is that seg fault/\n");
-        if(listOfTeamsHead -> next != NULL){
-            currentMatch->secondTeam = (char *)malloc(11 + strlen(listOfTeamsHead->next->nameOfTeam));
+        //   printf("Where tf is that seg fault/\n");
+        if (listOfTeamsHead->next != NULL)
+        {
+            currentMatch->secondTeam = (char *)malloc(2 + strlen(listOfTeamsHead->next->nameOfTeam));
         }
-      //  printf("Where tf is that seg fault/\n");
-        strcpy(currentMatch -> secondTeam, listOfTeamsHead -> next -> nameOfTeam);
-        printf("%s %s", currentMatch -> firstTeam, currentMatch -> secondTeam);
+        //  printf("Where tf is that seg fault/\n");
+        strcpy(currentMatch->secondTeam, listOfTeamsHead->next->nameOfTeam);
+        // printf("%s %s", currentMatch->firstTeam, currentMatch->secondTeam);
         currentMatch->secondTeamScore = listOfTeamsHead->next->medium;
         currentMatch->next = NULL;
-        enqueueTheMatch(queueOfMatches, currentMatch);
+        enqueueTheMatch(queueOfMatches, currentMatch, &*outputFile);
         listOfTeamsHead = listOfTeamsHead->next->next;
-    
     }
     return;
 }
-void enqueueTheMatch(QueueOfMatches *queueOfMatches, QMatch *currentMatch)
-{   static int i = 0;
-    printf("In enqueueTheMatch \n");
-    printf("Where tf is that seg fault/\n");
+void enqueueTheMatch(QueueOfMatches *queueOfMatches, QMatch *currentMatch, FILE **outputFile)
+{
+    static int i = 0;
+    fprintf(*outputFile, "%s                  -                 %s \n", currentMatch->firstTeam, currentMatch->secondTeam);
     if (queueOfMatches->lastMatch == NULL)
     {
         queueOfMatches->lastMatch = currentMatch;
@@ -55,15 +53,16 @@ void enqueueTheMatch(QueueOfMatches *queueOfMatches, QMatch *currentMatch)
     {
         queueOfMatches->firstMatch = queueOfMatches->lastMatch;
     }
+    // printf("%d \n", ++i);
     return;
 }
 
 QMatch *setTheMatch(QMatch *someMatch, QMatch *aux)
 {
     someMatch->next = NULL;
-    someMatch -> firstTeam = (char*)malloc(strlen(aux -> firstTeam)+1);
+    someMatch->firstTeam = (char *)malloc(strlen(aux->firstTeam) + 1);
     strcpy(someMatch->firstTeam, aux->firstTeam);
-    someMatch -> secondTeam = (char*)malloc(strlen(aux -> secondTeam)+1);
+    someMatch->secondTeam = (char *)malloc(strlen(aux->secondTeam) + 1);
     strcpy(someMatch->secondTeam, aux->secondTeam);
     someMatch->firstTeamScore = aux->firstTeamScore;
     someMatch->secondTeamScore = aux->secondTeamScore;
@@ -75,9 +74,9 @@ QMatch *dequeueOfMatches(QueueOfMatches *queueOfMatches)
     printf("In dequeueOfMatches \n");
     QMatch *aux = NULL, *matchToGet = malloc(sizeof(QMatch));
     aux = queueOfMatches->firstMatch;
-    aux -> next = NULL;
+    aux->next = NULL;
     matchToGet = setTheMatch(matchToGet, aux);
-   // printf("%s %s \n", matchToGet -> firstTeam, matchToGet -> secondTeam);
+    // printf("%s %s \n", matchToGet -> firstTeam, matchToGet -> secondTeam);
     if (isQueueOfMatchesEmpty(queueOfMatches) == 0)
     {
         queueOfMatches->firstMatch = (queueOfMatches->firstMatch)->next;

@@ -15,7 +15,7 @@ int main()
         displayTheList(listOfTeamsHead, &outputFile);
         closeTheFile(&outputFile);
     }
-    if(positionOfLastRequest >= 2){
+    if(positionOfLastRequest == 2){
         openTheFile(&outputFile, "w", "r.out");
         eliminateTheTeamsUtil(&listOfTeamsHead, numberOfTeams, &outputFile);
         displayTheList(listOfTeamsHead, &outputFile);
@@ -26,8 +26,8 @@ int main()
         eliminateTheTeamsUtil(&listOfTeamsHead, numberOfTeams, &outputFile);
         displayTheList(listOfTeamsHead, &outputFile);
         queueOfMatches = createTheQueue(queueOfMatches);
-        enqueueUtil(queueOfMatches, listOfTeamsHead);
-        fprintf(outputFile, "---Round no:%d", numberOfRounds); /*
+        fprintf(outputFile, "---Round no:%d\n", numberOfRounds); 
+        enqueueUtil(queueOfMatches, listOfTeamsHead, &outputFile); /*
         while(!isQueueOfMatchesEmpty(queueOfMatches)){
             QMatch *currentMatch = dequeueOfMatches(queueOfMatches);
             fprintf(outputFile, "%s                   -                %s \n", currentMatch -> firstTeam, currentMatch -> secondTeam);

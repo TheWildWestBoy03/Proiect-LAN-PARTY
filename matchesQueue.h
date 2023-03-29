@@ -2,7 +2,7 @@
 
 typedef struct QMatch{
     char *firstTeam, *secondTeam;
-    int firstTeamScore, secondTeamScore;
+    float firstTeamScore, secondTeamScore;
     struct QMatch *next;
 }QMatch;
 
@@ -11,8 +11,8 @@ typedef struct QueueOfMatches{
 }QueueOfMatches;
 
 QueueOfMatches *createTheQueue();
-void enqueueTheMatch(QueueOfMatches *queueOfMatches, QMatch *currentMatch);
-void enqueueUtil(QueueOfMatches *queueOfMatches, Team *listOfTeamsHead);
+void enqueueTheMatch(QueueOfMatches *queueOfMatches, QMatch *currentMatch, FILE **outputFile);
+void enqueueUtil(QueueOfMatches *queueOfMatches, Team *listOfTeamsHead, FILE **outputFile);
 void deleteTheQueue(QueueOfMatches *queueOfMatches);
 QMatch *dequeueOfMatches(QueueOfMatches *queueOfMatches);
 int isQueueOfMatchesEmpty(QueueOfMatches *queueOfMatches);

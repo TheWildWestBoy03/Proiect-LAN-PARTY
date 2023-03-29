@@ -48,7 +48,6 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
         char buffer[100];
         int numberOfMembers = 0;
         fgets(buffer, 99, teamsFile);
-        nameOfTeam = (char *)malloc(strlen(bufferNameOfTeam) + 1);
         int numberOfDigits = 0, risingFactory = 1;
         while (buffer[numberOfDigits] >= '0' && buffer[numberOfDigits] <= '9')
         {
@@ -56,7 +55,9 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
             numberOfDigits++;
             risingFactory *= 10;
         }
+        nameOfTeam = (char*)malloc(sizeof(char) * (strlen(buffer) - numberOfDigits));
         strcpy(nameOfTeam, buffer + numberOfDigits + 1);
+        nameOfTeam[strlen(nameOfTeam) - 1] = 0;      
         current->nameOfTeam = (char *)malloc(sizeof(char) * (strlen(nameOfTeam) + 1));
         current->next = NULL;
         current->numberOfMembers = numberOfMembers;
@@ -90,7 +91,7 @@ void displayTheList(Team *listOfTeamHead, FILE **outputFile)
     while (listOfTeamHead != NULL)
     {
         // fprintf(*outputFile, "%d ", listOfTeamHead->numberOfMembers);
-        fprintf(*outputFile, "%s", listOfTeamHead->nameOfTeam);
+        fprintf(*outputFile, "%s\n", listOfTeamHead->nameOfTeam);
         // fprintf(*outputFile, "%f \n", listOfTeamHead->medium);
         // fprintf(*outputFile, "--------------------- \n");
         // displayThePlayers(listOfTeamHead->playersHead, &*outputFile);
