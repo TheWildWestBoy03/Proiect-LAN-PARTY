@@ -72,7 +72,7 @@ QMatch *setTheMatch(QMatch *someMatch, QMatch *aux)
     return someMatch;
 }
 
-QMatch *dequeueOfMatches(QueueOfMatches *queueOfMatches)
+QMatch *dequeueOfMatches(QueueOfMatches *queueOfMatches, Stack **winnerStack, Stack **loserStack)
 {
     QMatch *aux = NULL, *matchToGet = malloc(sizeof(QMatch));
     aux = queueOfMatches->firstMatch;
@@ -80,7 +80,17 @@ QMatch *dequeueOfMatches(QueueOfMatches *queueOfMatches)
         return NULL;
     }
     matchToGet = setTheMatch(matchToGet, aux);
-    
+    Stack *currentTeam = (Stack*)malloc(sizeof(Stack*));
+    if(matchToGet -> firstTeamScore >= matchToGet -> secondTeamScore){
+        currentTeam -> nameOfTeam = (char*)malloc(strlen(matchToGet -> firstTeam) + 1);
+        strcpy(currentTeam -> nameOfTeam, matchToGet -> firstTeam);
+        pushTheWinner(&*winnerStack, currentTeam);
+    }
+    else {
+        currentTeam -> nameOfTeam = (char*)malloc(strlen(matchToGet -> secondTeam) + 1);
+        strcpy(currentTeam -> nameOfTeam, matchToGet -> secondTeam);
+        pushTheWinner(&*loserStack, currentTeam);
+    }
     queueOfMatches->firstMatch = (queueOfMatches->firstMatch)->next;
     free(aux);
     aux = NULL;

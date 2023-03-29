@@ -5,6 +5,7 @@ int main()
     int numberOfTeams, positionOfLastRequest = 0, numberOfRounds = 1;
     Team *listOfTeamsHead = NULL, *listOfWinners = NULL;
     FILE *teamsFiles, *requestFiles, *outputFile;
+    Stack *winnerStack = NULL, *loserStack = NULL;
     QueueOfMatches *queueOfMatches;
    // printf("Insert the number of teams! \n");
     positionOfLastRequest = readTheRequests(&requestFiles, positionOfLastRequest);
@@ -29,10 +30,8 @@ int main()
         fprintf(outputFile, "---Round no:%d\n", numberOfRounds); 
         enqueueUtil(queueOfMatches, listOfTeamsHead, &outputFile); 
         while(!isQueueOfMatchesEmpty(queueOfMatches)){
-            QMatch *currentMatch = dequeueOfMatches(queueOfMatches);
-            
-        } 
-
+            QMatch *currentMatch = dequeueOfMatches(queueOfMatches, &winnerStack, &loserStack);
+        }
     }
     
     return 0;
