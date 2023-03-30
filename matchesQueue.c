@@ -2,7 +2,6 @@
 
 QueueOfMatches *createTheQueue()
 {
-    printf("In create the queue!\n");
     QueueOfMatches *newQueue = (QueueOfMatches *)malloc(sizeof(QueueOfMatches));
     if (newQueue == NULL)
     {
@@ -81,7 +80,7 @@ QMatch *dequeueOfMatches(QueueOfMatches *queueOfMatches, Stack **winnerStack, St
     Stack *currentWinner = (Stack*)malloc(sizeof(Stack));
     Stack *currentLoser = (Stack*)malloc(sizeof(Stack));
 
-    if(matchToGet -> firstTeamScore >= matchToGet -> secondTeamScore){
+    if(matchToGet -> firstTeamScore > matchToGet -> secondTeamScore){
         currentWinner -> nameOfTeam = (char*)malloc(strlen(matchToGet -> firstTeam) + 1);
         strcpy(currentWinner -> nameOfTeam, matchToGet -> firstTeam);
         currentWinner -> points = (matchToGet ->firstTeamScore + 1);
