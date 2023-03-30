@@ -8,20 +8,21 @@ Stack *top(Stack *theStack){
     return returnIt;
 }
 
-Stack *pop(Stack *theStack){
-    if(theStack == NULL){
+Stack *pop(Stack **theStack){
+    if(*theStack == NULL){
         return NULL;
     }
     Stack *popTheTeam = (Stack*)malloc(sizeof(Stack));
-    popTheTeam -> nameOfTeam = theStack -> nameOfTeam;
-    popTheTeam -> points = theStack -> points;
+    popTheTeam -> nameOfTeam = (*theStack) -> nameOfTeam;
+    popTheTeam -> points = (*theStack) -> points;
     popTheTeam -> next = NULL;
+    (*theStack) = (*theStack) -> next;
     return popTheTeam;
 }
 
 void pushTheWinner(Stack **theStack, Stack *Team){
-     (*theStack) -> next = Team;
-     Team = *theStack;
+     Team -> next = *theStack;
+     *theStack = Team;
 }
 int isTheStackEmpty(Stack *theStack){
     return (theStack  == NULL);

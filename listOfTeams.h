@@ -15,7 +15,7 @@ void addingPlayer(Player **playerHead, Player *currentPlayer);
 void displayThePlayers(Player *playerHead, FILE **outputFile);
 void deleteTheTeam(Team **current);
 void displayTheList(Team *listOfTeamHead, FILE **outputFile);
-void eliminateTheTeamsUtil(Team **listOfTeamsHead, int numberOfTeams, FILE **outputFile);
+void eliminateTheTeamsUtil(Team **listOfTeamsHead, int *numberOfTeams, FILE **outputFile);
 void eliminateTheTeams(Team **ListOfTeamsHead);
 void openTheFile(FILE **input, char *mode, char *nameOfFile);
 void closeTheFile(FILE **input);

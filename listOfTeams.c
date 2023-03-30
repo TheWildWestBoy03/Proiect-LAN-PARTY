@@ -100,18 +100,19 @@ void displayTheList(Team *listOfTeamHead, FILE **outputFile)
     }
     return;
 }
-void eliminateTheTeamsUtil(Team **listOfTeamsHead, int numberOfTeams, FILE **outputFile)
+void eliminateTheTeamsUtil(Team **listOfTeamsHead, int *numberOfTeams, FILE **outputFile)
 {
     int powerOfTwo = 1;
-    while (powerOfTwo * 2 <= numberOfTeams)
+    while (powerOfTwo * 2 <= *numberOfTeams)
     {
         powerOfTwo = powerOfTwo * 2;
     }
 
-    for (int i = powerOfTwo; i < numberOfTeams; i++)
+    for (int i = powerOfTwo; i < *numberOfTeams; i++)
     {
         eliminateTheTeams(&*listOfTeamsHead);
     }
+    *numberOfTeams = powerOfTwo;
     return;
 }
 void deleteTheTeam(Team **current)

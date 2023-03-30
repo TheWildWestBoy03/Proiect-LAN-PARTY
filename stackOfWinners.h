@@ -9,6 +9,6 @@ typedef struct Stack{
 }Stack;
 
 Stack *top(Stack *theStack);
-Stack *pop(Stack *theStack);
+Stack *pop(Stack **theStack);
 void pushTheWinner(Stack **theStack, Stack *winnerOrLoserTeam);
 int isTheStackEmpty(Stack *theStack);
