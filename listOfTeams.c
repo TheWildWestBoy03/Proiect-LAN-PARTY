@@ -55,9 +55,9 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
             numberOfDigits++;
             risingFactory *= 10;
         }
-        nameOfTeam = (char*)malloc(sizeof(char) * (strlen(buffer) - numberOfDigits));
+        nameOfTeam = (char *)malloc(sizeof(char) * (strlen(buffer) - numberOfDigits));
         strcpy(nameOfTeam, buffer + numberOfDigits + 1);
-        nameOfTeam[strlen(nameOfTeam) - 1] = 0;      
+        nameOfTeam[strlen(nameOfTeam) - 1] = 0;
         current->nameOfTeam = (char *)malloc(sizeof(char) * (strlen(nameOfTeam) + 1));
         current->next = NULL;
         current->numberOfMembers = numberOfMembers;
@@ -179,5 +179,17 @@ void eliminateTheTeams(Team **listOfTeamsHead)
     *listOfTeamsHead = dummy->next;
     free(dummy);
     dummy = NULL;
+    return;
+}
+
+void addTheWinners(WinnersList **winnersListHead, WinnersList *currentTeam)
+{
+    if (*winnersListHead == NULL)
+    {
+        *winnersListHead = currentTeam;
+        return;
+    }
+    currentTeam->next = *winnersListHead;
+    *winnersListHead = currentTeam;
     return;
 }
