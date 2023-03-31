@@ -13,7 +13,8 @@ Stack *pop(Stack **theStack){
         return NULL;
     }
     Stack *popTheTeam = (Stack*)malloc(sizeof(Stack));
-    popTheTeam -> nameOfTeam = (*theStack) -> nameOfTeam;
+    popTheTeam -> nameOfTeam = (char*)malloc(strlen((*theStack) -> nameOfTeam) + 1);
+    strcpy(popTheTeam -> nameOfTeam, (*theStack) -> nameOfTeam);
     popTheTeam -> points = (*theStack) -> points;
     popTheTeam -> next = NULL;
     (*theStack) = (*theStack) -> next;

@@ -58,6 +58,9 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
         nameOfTeam = (char *)malloc(sizeof(char) * (strlen(buffer) - numberOfDigits));
         strcpy(nameOfTeam, buffer + numberOfDigits + 1);
         nameOfTeam[strlen(nameOfTeam) - 1] = 0;
+        while(nameOfTeam[strlen(nameOfTeam) - 1] == ' '){
+            nameOfTeam[strlen(nameOfTeam) - 1] = 0;
+        }
         current->nameOfTeam = (char *)malloc(sizeof(char) * (strlen(nameOfTeam) + 1));
         current->next = NULL;
         current->numberOfMembers = numberOfMembers;
