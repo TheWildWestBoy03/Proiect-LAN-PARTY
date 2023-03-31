@@ -25,6 +25,6 @@ void eliminateTheTeamsUtil(Team **listOfTeamsHead, int *numberOfTeams, FILE **ou
 void eliminateTheTeams(Team **ListOfTeamsHead);
 void openTheFile(FILE **input, char *mode, char *nameOfFile);
 void closeTheFile(FILE **input);
-int readTheRequests(FILE **requestsFile, int positionOfTheLastRequest);
-void readingData(int lastRequest, int *numberOfTeams, FILE **teamsFile, Team **listOfTeamsHead);
+int readTheRequests(FILE **requestsFile, int positionOfTheLastRequest, char *argv[]);
+void readingData(int lastRequest, int *numberOfTeams, FILE **teamsFile, Team **listOfTeamsHead, char *argv[]);
 void addTheWinners(WinnersList **winnersListHead, WinnersList *currentTeam);

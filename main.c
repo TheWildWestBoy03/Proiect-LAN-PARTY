@@ -1,7 +1,7 @@
 #include "BinarySearchTree.h"
 #include "matchesQueue.h"
 
-int main()
+int main(int argc, char *argv[])
 {
     int numberOfTeams, positionOfLastRequest = 0, numberOfRounds = 1;
     Team *listOfTeamsHead = NULL, *listOfWinners = NULL;
@@ -13,36 +13,49 @@ int main()
     QMatch *finalMatch = NULL, *scheduledMatch = NULL;
     WinnersTree *binarySearchTreeRoot = NULL;
     // printf("Insert the number of teams! \n");
-    positionOfLastRequest = readTheRequests(&requestFiles, positionOfLastRequest);
-    readingData(positionOfLastRequest, &numberOfTeams, &teamsFiles, &listOfTeamsHead);
+    positionOfLastRequest = readTheRequests(&requestFiles, positionOfLastRequest, argv);
+    readingData(positionOfLastRequest, &numberOfTeams, &teamsFiles, &listOfTeamsHead, argv);
     // eliminateTheTeamsUtil(&listOfTeamsHead, numberOfTeams);
     if (positionOfLastRequest == 1)
     {
-        openTheFile(&outputFile, "w", "r.out");
+        openTheFile(&outputFile, "w", argv[3]);
         displayTheList(listOfTeamsHead, &outputFile);
         closeTheFile(&outputFile);
     }
     if (positionOfLastRequest == 2)
     {
-        openTheFile(&outputFile, "w", "r.out");
+        openTheFile(&outputFile, "w", argv[3]);
         eliminateTheTeamsUtil(&listOfTeamsHead, &numberOfTeams, &outputFile);
         displayTheList(listOfTeamsHead, &outputFile);
         closeTheFile(&outputFile);
     }
-    if (positionOfLastRequest >= 3)
+    if (positionOfLastRequest == 3)
     {
-        openTheFile(&outputFile, "w", "r.out");
+        openTheFile(&outputFile, "w", argv[3]);
         eliminateTheTeamsUtil(&listOfTeamsHead, &numberOfTeams, &outputFile);
         displayTheList(listOfTeamsHead, &outputFile);
         queueOfMatches = createTheQueue();
         enqueueUtil(queueOfMatches, listOfTeamsHead, &outputFile);
         while (numberOfTeams > 2)
-        {
-            fprintf(outputFile, "---Round no:%d\n", numberOfRounds);
+        {                                                           
+           // "TOUCANS                          -                      TERMINATORS"
+            fprintf(outputFile, "--- ROUND NO:%d\n", numberOfRounds);
             while (!isQueueOfMatchesEmpty(queueOfMatches))
             {
                 QMatch *currentMatch = dequeueOfMatches(queueOfMatches, &winnerStack, &loserStack);
-                fprintf(outputFile, "%s                -              %s\n", currentMatch->firstTeam, currentMatch->secondTeam);
+                fprintf(outputFile, "%s", currentMatch -> firstTeam);
+                int index = strlen(currentMatch -> firstTeam);
+                while(index < 33){
+                    fprintf(outputFile, " ");
+                    index ++;
+                }
+                fprintf(outputFile, "-");
+                while(index < 68 - strlen(currentMatch -> secondTeam) - 2){
+                    fprintf(outputFile, " ");
+                    index ++;
+                }
+                fprintf(outputFile, "%s\n", currentMatch -> secondTeam);
+               // fprintf(outputFile, "%s                -              %s\n", currentMatch->firstTeam, currentMatch->secondTeam);
             }
             fprintf(outputFile, "\nWINNERS OF ROUND NO:%d\n", numberOfRounds);
             queueOfMatches = createTheQueue();
@@ -71,8 +84,25 @@ int main()
                 scheduledMatch->secondTeam = (char *)malloc(sizeof(char) * (strlen(currentWinnerOpponent->nameOfTeam) + 1));
                 strcpy(scheduledMatch->secondTeam, currentWinnerOpponent->nameOfTeam);
                 scheduledMatch->secondTeamScore = currentWinnerOpponent->points;
-                fprintf(outputFile, "%s        - %f \n", currentWinner->nameOfTeam, currentWinner->points);
-                fprintf(outputFile, "%s        - %f \n", currentWinnerOpponent->nameOfTeam, currentWinnerOpponent->points);
+                int index = 0;
+                fprintf(outputFile, "%s", currentWinner->nameOfTeam);
+                index += strlen(currentWinner -> nameOfTeam);
+                while(index < 34){
+                    fprintf(outputFile, " ");
+                    index ++;
+                }
+                fprintf(outputFile, "-");
+                fprintf(outputFile, "  %.2f", currentWinner -> points);
+                index = 0;
+                fprintf(outputFile, "%s", currentWinnerOpponent->nameOfTeam);
+                index += strlen(currentWinnerOpponent -> nameOfTeam);
+                while(index < 34){
+                    fprintf(outputFile, " ");
+                    index ++;
+                }
+                fprintf(outputFile, "-");
+                fprintf(outputFile, "  %.2f\n", currentWinnerOpponent -> points);
+                //fprintf(outputFile, "%s        - %f \n", currentWinnerOpponent->nameOfTeam, currentWinnerOpponent->points);
                 enqueueTheMatch(queueOfMatches, scheduledMatch, &outputFile);
             }
             numberOfRounds++;
@@ -80,8 +110,19 @@ int main()
             fprintf(outputFile, "\n");
         }
         finalMatch = dequeueOfMatches(queueOfMatches, &currentWinner, &currentWinnerOpponent);
-        fprintf(outputFile, "Round no:%d\n", numberOfRounds);
-        fprintf(outputFile, "%s          -              %s\n", finalMatch->firstTeam, finalMatch->secondTeam);
+        fprintf(outputFile, "--- ROUND NO:%d\n", numberOfRounds);
+        int index = strlen(finalMatch -> firstTeam);
+        fprintf(outputFile, "%s", finalMatch->firstTeam);
+        while(index < 33){
+            fprintf(outputFile, " ");
+            index ++;
+        }
+        fprintf(outputFile, "-");
+        while(index < 68 - strlen(finalMatch -> secondTeam) - 2){
+            fprintf(outputFile, " ");
+            index ++;
+        }
+        fprintf(outputFile, "%s\n", finalMatch->secondTeam);
         winnerOfTheGame = (Stack *)malloc(sizeof(Stack));
         if (finalMatch->firstTeamScore > finalMatch->secondTeamScore)
         {
@@ -97,17 +138,22 @@ int main()
             strcpy(winnerOfTheGame->nameOfTeam, finalMatch->secondTeam);
             winnerOfTheGame->points = finalMatch->secondTeamScore + 1;
         }
-        fprintf(outputFile, "\nWINNERS OF ROUND NO:%d \n", numberOfRounds);
-        fprintf(outputFile, "%s  - %f\n\n", winnerOfTheGame->nameOfTeam, winnerOfTheGame->points);
-
+        fprintf(outputFile, "\nWINNERS OF ROUND NO:%d\n", numberOfRounds);
+        fprintf(outputFile, "%s", winnerOfTheGame->nameOfTeam);
+        index = strlen(winnerOfTheGame -> nameOfTeam);
+        while(index < 34){
+            fprintf(outputFile, " ");
+            index ++;
+        }
+        fprintf(outputFile, "-");
+        fprintf(outputFile, "  %.2f\n", winnerOfTheGame -> points);
         WinnersList *copy = gameWinners;
         while (copy != NULL)
         {
-
             binarySearchTreeRoot = addTeamInTree(binarySearchTreeRoot, copy->nameOfWinnersTeam, copy->points);
             copy = copy->next;
         }
-        inorder(binarySearchTreeRoot, &outputFile);
+        //inorder(binarySearchTreeRoot, &outputFile);
         printf("%p ", binarySearchTreeRoot);
     }
     return 0;
