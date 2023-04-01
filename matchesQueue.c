@@ -37,8 +37,6 @@ void enqueueUtil(QueueOfMatches *queueOfMatches, Team *listOfTeamsHead, FILE **o
 }
 void enqueueTheMatch(QueueOfMatches *queueOfMatches, QMatch *currentMatch, FILE **outputFile)
 {
-    static int i = 0;
-
     if (queueOfMatches->lastMatch == NULL)
     {
         queueOfMatches->lastMatch = currentMatch;
@@ -52,6 +50,7 @@ void enqueueTheMatch(QueueOfMatches *queueOfMatches, QMatch *currentMatch, FILE 
     {
         queueOfMatches->firstMatch = queueOfMatches->lastMatch;
     }
+    printf("%s   -    %s\n", queueOfMatches -> lastMatch -> firstTeam, queueOfMatches -> lastMatch -> secondTeam);
     return;
 }
 
@@ -78,7 +77,7 @@ QMatch *dequeueOfMatches(QueueOfMatches *queueOfMatches, Stack **winnerStack, St
     matchToGet = setTheMatch(matchToGet, aux);
     Stack *currentWinner = (Stack*)malloc(sizeof(Stack));
     Stack *currentLoser = (Stack*)malloc(sizeof(Stack));
-
+    currentLoser -> next = currentWinner -> next = NULL;
     if(matchToGet -> firstTeamScore > matchToGet -> secondTeamScore){
         currentWinner -> nameOfTeam = (char*)malloc(strlen(matchToGet -> firstTeam) + 1);
         strcpy(currentWinner -> nameOfTeam, matchToGet -> firstTeam);
@@ -100,7 +99,7 @@ QMatch *dequeueOfMatches(QueueOfMatches *queueOfMatches, Stack **winnerStack, St
         pushTheWinner(&*loserStack, currentLoser);
     }
     queueOfMatches->firstMatch = (queueOfMatches->firstMatch)->next;
-    //free(aux -> firstTeam);
+    free(aux -> firstTeam);
     free(aux);
     return matchToGet;
 }
