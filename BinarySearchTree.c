@@ -3,7 +3,7 @@
 WinnersTree *createTheNode(char *nameOfTeam, float points)
 {
     WinnersTree *winnersTreeNode = (WinnersTree *)malloc(sizeof(WinnersTree));
-    winnersTreeNode->nameOfTeam = (char *)malloc(strlen(nameOfTeam) + 20);
+    winnersTreeNode->nameOfTeam = (char *)malloc(strlen(nameOfTeam) + 1);
     strcpy(winnersTreeNode->nameOfTeam, nameOfTeam);
     winnersTreeNode->left = winnersTreeNode->right = NULL;
     winnersTreeNode->points = points;

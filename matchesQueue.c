@@ -16,14 +16,14 @@ void enqueueUtil(QueueOfMatches *queueOfMatches, Team *listOfTeamsHead, FILE **o
     while (listOfTeamsHead != NULL)
     {
         QMatch *currentMatch = (QMatch *)malloc(sizeof(QMatch));
-        currentMatch->firstTeam = (char *)malloc(2 + strlen(listOfTeamsHead->nameOfTeam));
+        currentMatch->firstTeam = (char *)malloc(1 + strlen(listOfTeamsHead->nameOfTeam));
         strcpy(currentMatch->firstTeam, listOfTeamsHead->nameOfTeam);
         //   printf("Where tf is that seg fault/\n");
         currentMatch->firstTeamScore = listOfTeamsHead->medium;
         //   printf("Where tf is that seg fault/\n");
         if (listOfTeamsHead->next != NULL)
         {
-            currentMatch->secondTeam = (char *)malloc(2 + strlen(listOfTeamsHead->next->nameOfTeam));
+            currentMatch->secondTeam = (char *)malloc(1 + strlen(listOfTeamsHead->next->nameOfTeam));
         }
         //  printf("Where tf is that seg fault/\n");
         strcpy(currentMatch->secondTeam, listOfTeamsHead->next->nameOfTeam);
@@ -52,7 +52,6 @@ void enqueueTheMatch(QueueOfMatches *queueOfMatches, QMatch *currentMatch, FILE 
     {
         queueOfMatches->firstMatch = queueOfMatches->lastMatch;
     }
-    // printf("%d \n", ++i);
     return;
 }
 
@@ -60,9 +59,9 @@ QMatch *setTheMatch(QMatch *someMatch, QMatch *aux)
 {
     //printf("In setthematch: \n");
     someMatch->next = NULL;
-    someMatch->firstTeam = (char *)malloc(strlen(aux->firstTeam) + 2);
+    someMatch->firstTeam = (char *)malloc(strlen(aux->firstTeam) + 1);
     strcpy(someMatch->firstTeam, aux->firstTeam);
-    someMatch->secondTeam = (char *)malloc(strlen(aux->secondTeam) + 2);
+    someMatch->secondTeam = (char *)malloc(strlen(aux->secondTeam) + 1);
     strcpy(someMatch->secondTeam, aux->secondTeam);
     someMatch->firstTeamScore = aux->firstTeamScore;
     someMatch->secondTeamScore = aux->secondTeamScore;
@@ -101,13 +100,13 @@ QMatch *dequeueOfMatches(QueueOfMatches *queueOfMatches, Stack **winnerStack, St
         pushTheWinner(&*loserStack, currentLoser);
     }
     queueOfMatches->firstMatch = (queueOfMatches->firstMatch)->next;
+    //free(aux -> firstTeam);
     free(aux);
-    aux = NULL;
     return matchToGet;
 }
 
 int isQueueOfMatchesEmpty(QueueOfMatches *queueOfMatches)
 {
   //  printf("In isqueueempty \n");
-    return queueOfMatches -> firstMatch == NULL;
+    return (queueOfMatches -> firstMatch == NULL);
 }

@@ -42,4 +42,5 @@ void readingData(int lastRequest, int *numberOfTeams, FILE **teamsFile, Team **l
         fscanf(copyOfTheFile, "%d\n", numberOfTeams);
         addTheTeams(&*listOfTeamsHead, *numberOfTeams, copyOfTheFile);
     }
+    closeTheFile(&copyOfTheFile);
 }

@@ -12,3 +12,4 @@ Stack *top(Stack *theStack);
 Stack *pop(Stack **theStack);
 void pushTheWinner(Stack **theStack, Stack *winnerOrLoserTeam);
 int isTheStackEmpty(Stack *theStack);
+void deleteFromStack(Stack **itemToDelete);
