@@ -40,8 +40,7 @@ void displayThePlayers(Player *playerHead, FILE **outputFile)
 
 void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
 {
-    Team *copy = *listOfTeamHead;
-    char bufferNameOfTeam[50], *nameOfTeam;
+    char *nameOfTeam;
     for (int i = 0; i < numberOfTeams; i++)
     {
         Team *current = (Team *)malloc(sizeof(Team));
@@ -67,7 +66,6 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
         strcpy(current->nameOfTeam, nameOfTeam);
         Player *currentPlayer = NULL;
         current->playersHead = NULL;
-        Player *playersToDisplay = current->playersHead;
         current->medium = 0;
         for (int j = 0; j < numberOfMembers; j++)
         {
@@ -88,6 +86,20 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
         current->medium /= current->numberOfMembers;
         addingAtBeginning(&*listOfTeamHead, &current);
     }
+}
+float updateTheScore(Player **playerList){
+    Player *playerListCopy = *playerList;
+    float score = 0.00;
+    int numberOfPlayers = 0;
+    while(playerListCopy != NULL){
+        (playerListCopy -> points) ++;
+        numberOfPlayers ++;
+        score += playerListCopy -> points;
+        playerListCopy = playerListCopy -> next;
+    }
+    printf("%.2f %d \n", score, numberOfPlayers);
+    score /= numberOfPlayers;
+    return score;
 }
 void displayTheList(Team *listOfTeamHead, FILE **outputFile)
 {
@@ -133,7 +145,7 @@ void deleteTheTeam(Team **current)
     {
         Player *todelete = copy->playersHead;
         copy->playersHead = copy->playersHead->next;
-        free(copy->playersHead);
+        free(todelete);
     }
 }
 void eliminateTheTeams(Team **listOfTeamsHead)

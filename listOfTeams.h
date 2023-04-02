@@ -28,3 +28,4 @@ void closeTheFile(FILE **input);
 int readTheRequests(FILE **requestsFile, int positionOfTheLastRequest, char *argv[]);
 void readingData(int lastRequest, int *numberOfTeams, FILE **teamsFile, Team **listOfTeamsHead, char *argv[]);
 void addTheWinners(WinnersList **winnersListHead, WinnersList *currentTeam);
+float updateTheScore(Player **playersList);
