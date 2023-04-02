@@ -5,6 +5,7 @@ Stack *top(Stack *theStack){
     returnIt -> nameOfTeam = (char*)malloc(strlen(theStack -> nameOfTeam) + 1);
     strcpy(returnIt -> nameOfTeam, theStack -> nameOfTeam);
     returnIt -> points = theStack -> points;
+    returnIt -> playersList = theStack -> playersList;
     returnIt -> next = NULL;
     return returnIt;
 }
@@ -18,6 +19,7 @@ Stack *pop(Stack **theStack){
     strcpy(popTheTeam -> nameOfTeam, (*theStack) -> nameOfTeam);
     popTheTeam -> points = (*theStack) -> points;
     popTheTeam -> next = NULL;
+    popTheTeam -> playersList = (*theStack) -> playersList;
     (*theStack) = (*theStack) -> next;
     deleteFromStack(&itemToDelete);
     return popTheTeam;
@@ -26,6 +28,7 @@ Stack *pop(Stack **theStack){
 void deleteFromStack(Stack **itemToDelete){
     free((*itemToDelete) -> nameOfTeam);
     (*itemToDelete) -> nameOfTeam = NULL;
+    (*itemToDelete) -> playersList = NULL;
     free(*itemToDelete);
     *itemToDelete = NULL;
 }

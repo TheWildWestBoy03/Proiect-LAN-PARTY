@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "listOfTeams.h"
 
 typedef struct Stack{
     char *nameOfTeam;
     float points;
     struct Stack *next;
+    Player *playersList;
 }Stack;
 
 Stack *top(Stack *theStack);
