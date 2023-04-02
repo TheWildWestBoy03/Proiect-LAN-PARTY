@@ -2,7 +2,7 @@
 
 Stack *top(Stack *theStack){
     Stack *returnIt = (Stack*)malloc(sizeof(Stack));
-    returnIt -> nameOfTeam = (char*)malloc(sizeof(char) * 100);
+    returnIt -> nameOfTeam = (char*)malloc(strlen(theStack -> nameOfTeam) + 1);
     strcpy(returnIt -> nameOfTeam, theStack -> nameOfTeam);
     returnIt -> points = theStack -> points;
     returnIt -> next = NULL;
@@ -14,7 +14,7 @@ Stack *pop(Stack **theStack){
         return NULL;
     }
     Stack *popTheTeam = (Stack*)malloc(sizeof(Stack)), *itemToDelete = *theStack;
-    popTheTeam -> nameOfTeam = (char*)malloc(sizeof(char) * 100);
+    popTheTeam -> nameOfTeam = (char*)malloc(strlen((*theStack) -> nameOfTeam) + 1);
     strcpy(popTheTeam -> nameOfTeam, (*theStack) -> nameOfTeam);
     popTheTeam -> points = (*theStack) -> points;
     popTheTeam -> next = NULL;

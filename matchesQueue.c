@@ -16,14 +16,14 @@ void enqueueUtil(QueueOfMatches *queueOfMatches, Team *listOfTeamsHead, FILE **o
     while (listOfTeamsHead != NULL)
     {
         QMatch *currentMatch = (QMatch *)malloc(sizeof(QMatch));
-        currentMatch->firstTeam = (char *)malloc(sizeof(char) * 100);
+        currentMatch->firstTeam = (char *)malloc(1 + strlen(listOfTeamsHead->nameOfTeam));
         strcpy(currentMatch->firstTeam, listOfTeamsHead->nameOfTeam);
         //   printf("Where tf is that seg fault/\n");
         currentMatch->firstTeamScore = listOfTeamsHead->medium;
         //   printf("Where tf is that seg fault/\n");
         if (listOfTeamsHead->next != NULL)
         {
-            currentMatch->secondTeam = (char *)malloc(sizeof(char) * 100);
+            currentMatch->secondTeam = (char *)malloc(1 + strlen(listOfTeamsHead->next->nameOfTeam));
         }
         //  printf("Where tf is that seg fault/\n");
         strcpy(currentMatch->secondTeam, listOfTeamsHead->next->nameOfTeam);
@@ -58,9 +58,9 @@ QMatch *setTheMatch(QMatch *someMatch, QMatch *aux)
 {
     //printf("In setthematch: \n");
     someMatch->next = NULL;
-    someMatch->firstTeam = (char *)malloc(sizeof(char) * 100);
+    someMatch->firstTeam = (char *)malloc(strlen(aux->firstTeam) + 1);
     strcpy(someMatch->firstTeam, aux->firstTeam);
-    someMatch->secondTeam = (char *)malloc(sizeof(char) * 100);
+    someMatch->secondTeam = (char *)malloc(strlen(aux->secondTeam) + 1);
     strcpy(someMatch->secondTeam, aux->secondTeam);
     someMatch->firstTeamScore = aux->firstTeamScore;
     someMatch->secondTeamScore = aux->secondTeamScore;
@@ -79,22 +79,22 @@ QMatch *dequeueOfMatches(QueueOfMatches *queueOfMatches, Stack **winnerStack, St
     Stack *currentLoser = (Stack*)malloc(sizeof(Stack));
     currentLoser -> next = currentWinner -> next = NULL;
     if(matchToGet -> firstTeamScore > matchToGet -> secondTeamScore){
-        currentWinner -> nameOfTeam = (char*)malloc(sizeof(char) * 100);
+        currentWinner -> nameOfTeam = (char*)malloc(strlen(matchToGet -> firstTeam) + 1);
         strcpy(currentWinner -> nameOfTeam, matchToGet -> firstTeam);
         currentWinner -> points = (matchToGet ->firstTeamScore + 1);
         currentLoser -> points = (matchToGet -> secondTeamScore);
         pushTheWinner(&*winnerStack, currentWinner);
-        currentLoser -> nameOfTeam = (char*)malloc(sizeof(char) * 100);
+        currentLoser -> nameOfTeam = (char*)malloc(strlen(matchToGet -> secondTeam) + 1);
         strcpy(currentLoser -> nameOfTeam, matchToGet -> secondTeam);
         pushTheWinner(&*loserStack, currentLoser);
     }
     else {
-        currentWinner -> nameOfTeam = (char*)malloc(sizeof(char) * 100);
+        currentWinner -> nameOfTeam = (char*)malloc(strlen(matchToGet -> secondTeam) + 1);
         strcpy(currentWinner -> nameOfTeam, matchToGet -> secondTeam);
         currentWinner -> points = (matchToGet ->secondTeamScore + 1);
         currentLoser -> points = (matchToGet -> firstTeamScore);
         pushTheWinner(&*winnerStack, currentWinner);
-        currentLoser -> nameOfTeam = (char*)malloc(sizeof(char) * 100);
+        currentLoser -> nameOfTeam = (char*)malloc(strlen(matchToGet -> firstTeam) + 1);
         strcpy(currentLoser -> nameOfTeam, matchToGet -> firstTeam);
         pushTheWinner(&*loserStack, currentLoser);
     }
