@@ -187,11 +187,6 @@ void eliminateTheTeams(Team **listOfTeamsHead)
 
 void addTheWinners(WinnersList **winnersListHead, WinnersList *currentTeam)
 {
-    if (*winnersListHead == NULL)
-    {
-        *winnersListHead = currentTeam;
-        return;
-    }
     currentTeam->next = *winnersListHead;
     *winnersListHead = currentTeam;
     return;

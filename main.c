@@ -12,11 +12,11 @@ int main(int argc, char *argv[])
     Team *listOfTeamsHead = NULL, *listOfWinners = NULL;
     WinnersList *gameWinners = NULL, *currentWinnerInList = NULL;
     FILE *teamsFiles, *requestFiles, *outputFile;
-    Stack *winnerStack = NULL, *loserStack = NULL, *currentWinner, *currentWinnerOpponent, *winnerOfTheGame = NULL;
-    Stack *currentLoser = NULL, *currentLoserOpponent = NULL;
+    Stack *winnerStack = NULL, *loserStack = NULL, *winnerOfTheGame = NULL;
     QueueOfMatches *queueOfMatches;
     QMatch *finalMatch = NULL, *scheduledMatch = NULL;
     WinnersTree *binarySearchTreeRoot = NULL;
+    Stack *currentWinner = NULL, *currentWinnerOpponent = NULL;
     // printf("Insert the number of teams! \n");
     openTheFile(&outputFile, "wt", argv[3]);
     positionOfLastRequest = readTheRequests(&requestFiles, positionOfLastRequest, argv);
@@ -25,13 +25,15 @@ int main(int argc, char *argv[])
     if (positionOfLastRequest == 1)
     {
         displayTheList(listOfTeamsHead, &outputFile);
-        // closeTheFile(&outputFile);
+        //closeTheFile(&outputFile);
+      //  return 0;
     }
     if (positionOfLastRequest == 2)
     {
         eliminateTheTeamsUtil(&listOfTeamsHead, &numberOfTeams, &outputFile);
         displayTheList(listOfTeamsHead, &outputFile);
-        // closeTheFile(&outputFile);
+       // closeTheFile(&outputFile);
+      //  return 0;
     }
     if (positionOfLastRequest >= 3)
     {
@@ -42,13 +44,10 @@ int main(int argc, char *argv[])
         fprintf(outputFile, "\n");
         while (numberOfTeams > 2)
         {
-            printf("%d \n", numberOfTeams);
-            // printf("where is the segmentation fault? \n");
             fprintf(outputFile, "--- ROUND NO:%d\n", numberOfRounds);
             while (!isQueueOfMatchesEmpty(queueOfMatches))
             {
                 QMatch *currentMatch = dequeueOfMatches(queueOfMatches, &winnerStack, &loserStack);
-                printf("%s %s\n", currentMatch->firstTeam, currentMatch->secondTeam);
                 fprintf(outputFile, "%s", currentMatch->firstTeam);
                 int index = strlen(currentMatch->firstTeam);
                 while (index < 33)
@@ -65,22 +64,12 @@ int main(int argc, char *argv[])
                 fprintf(outputFile, "%s\n", currentMatch->secondTeam);
             }
             fprintf(outputFile, "\nWINNERS OF ROUND NO:%d\n", numberOfRounds);
-            // printf("Is the queue empty? %d \n", isQueueOfMatchesEmpty(queueOfMatches));
             queueOfMatches = createTheQueue();
-            /*
-            while(!isTheStackEmpty(winnerStack)){
-                Stack *curr = pop(&winnerStack);
-                printf("%s \n", curr -> nameOfTeam);
-            }
-            return 0; */
             while (!isTheStackEmpty(winnerStack))
             {
-                Stack *currentWinner = NULL, *currentWinnerOpponent = NULL;
                 scheduledMatch = (QMatch *)malloc(sizeof(QMatch));
                 currentWinner = pop(&winnerStack);
                 currentWinnerOpponent = pop(&winnerStack);
-                printf("Segfault? \n");
-                printf("%d\n", i++);
                 scheduledMatch->firstTeam = (char *)malloc(sizeof(char) * (strlen(currentWinner->nameOfTeam) + 1));
                 strcpy(scheduledMatch->firstTeam, currentWinner->nameOfTeam);
                 scheduledMatch->firstTeamScore = currentWinner->points;
@@ -94,21 +83,16 @@ int main(int argc, char *argv[])
                     currentWinnerInList = (WinnersList *)malloc(sizeof(WinnersList));
                     currentWinnerInList->points = currentWinnerOpponent->points;
                     currentWinnerInList->nameOfWinnersTeam = (char *)malloc(sizeof(char) * (strlen(currentWinnerOpponent->nameOfTeam) + 1));
+                    currentWinnerInList -> next = NULL;
                     strcpy(currentWinnerInList->nameOfWinnersTeam, currentWinnerOpponent->nameOfTeam);
                     addTheWinners(&gameWinners, currentWinnerInList);
                 }
-                // printf("Segfault after here? \n");
-                // printf("%s \n", currentWinnerOpponent -> nameOfTeam);
                 scheduledMatch->secondTeam = (char *)malloc(sizeof(char) * (strlen(currentWinnerOpponent->nameOfTeam) + 10));
                 strcpy(scheduledMatch->secondTeam, currentWinnerOpponent->nameOfTeam);
-                // printf("%s \n", scheduledMatch -> secondTeam);
-                // printf("Segfault after here? \n");
                 scheduledMatch->secondTeamScore = currentWinnerOpponent->points;
-                //  printf("Segfault after here? \n");
-                // printf("%s %s \n", currentWinner -> nameOfTeam, currentWinnerOpponent -> nameOfTeam);
+                scheduledMatch -> next = NULL;
                 int index = 0;
                 fprintf(outputFile, "%s", currentWinner->nameOfTeam);
-                //  printf("Segfault after here? \n");
                 index += strlen(currentWinner->nameOfTeam);
                 while (index < 34)
                 {
@@ -125,7 +109,6 @@ int main(int argc, char *argv[])
                     index++;
                 }
                 fprintf(outputFile, "-  %.2f\n", currentWinnerOpponent->points);
-                printf("Segfault after here? \n");
                 enqueueTheMatch(queueOfMatches, scheduledMatch, &outputFile);
             }
 
@@ -173,7 +156,7 @@ int main(int argc, char *argv[])
             index++;
         }
         fprintf(outputFile, "-  %.2f\n", winnerOfTheGame->points);
-        if (positionOfLastRequest >= 4)
+        if (positionOfLastRequest == 4)
         {
             WinnersList *copy = gameWinners;
             fprintf(outputFile, "\nTOP 8 TEAMS:\n");
@@ -183,13 +166,9 @@ int main(int argc, char *argv[])
                 copy = copy->next;
             }
             inorder(binarySearchTreeRoot, &outputFile);
-            // closeTheFile(&outputFile);
-        }
-        else
-        {
-            // closeTheFile(&outputFile);
+            return 0;
         }
     }
-    // closeTheFile(&outputFile);
+    closeTheFile(&outputFile);
     return 0;
 }
