@@ -38,9 +38,9 @@ void readingData(int lastRequest, int *numberOfTeams, FILE **teamsFile, Team **l
     }
     else
     {
-        openTheFile(&copyOfTheFile, "r", argv[2]);
+        openTheFile(&copyOfTheFile, "rt", argv[2]);
         fscanf(copyOfTheFile, "%d\n", numberOfTeams);
         addTheTeams(&*listOfTeamsHead, *numberOfTeams, copyOfTheFile);
+        closeTheFile(&copyOfTheFile);
     }
-    closeTheFile(&copyOfTheFile);
 }

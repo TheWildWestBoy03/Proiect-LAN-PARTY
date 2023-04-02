@@ -45,9 +45,9 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
     for (int i = 0; i < numberOfTeams; i++)
     {
         Team *current = (Team *)malloc(sizeof(Team));
-        char buffer[100];
+        char buffer[400];
         int numberOfMembers = 0;
-        fgets(buffer, 99, teamsFile);
+        fgets(buffer, 399, teamsFile);
         int numberOfDigits = 0, risingFactory = 1;
         while (buffer[numberOfDigits] >= '0' && buffer[numberOfDigits] <= '9')
         {

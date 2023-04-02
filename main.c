@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     QMatch *finalMatch = NULL, *scheduledMatch = NULL;
     WinnersTree *binarySearchTreeRoot = NULL;
     // printf("Insert the number of teams! \n");
-    openTheFile(&outputFile, "wt", argv[3]);
+    openTheFile(&outputFile, "at", argv[3]);
     positionOfLastRequest = readTheRequests(&requestFiles, positionOfLastRequest, argv);
     readingData(positionOfLastRequest, &numberOfTeams, &teamsFiles, &listOfTeamsHead, argv);
     // eliminateTheTeamsUtil(&listOfTeamsHead, numberOfTeams);
@@ -81,25 +81,25 @@ int main(int argc, char *argv[])
                 currentWinnerOpponent = pop(&winnerStack);
                 printf("Segfault? \n");
                 printf("%d\n", i++);
-                scheduledMatch->firstTeam = (char *)malloc(sizeof(char) * (strlen(currentWinner->nameOfTeam) + 1));
+                scheduledMatch->firstTeam = (char *)malloc(sizeof(char) * 100);
                 strcpy(scheduledMatch->firstTeam, currentWinner->nameOfTeam);
                 scheduledMatch->firstTeamScore = currentWinner->points;
                 if (numberOfTeams == 16)
                 {
                     currentWinnerInList = (WinnersList *)malloc(sizeof(WinnersList));
-                    currentWinnerInList->nameOfWinnersTeam = (char *)malloc(sizeof(char) * (strlen(currentWinner->nameOfTeam) + 1));
+                    currentWinnerInList->nameOfWinnersTeam = (char *)malloc(sizeof(char) * 100);
                     strcpy(currentWinnerInList->nameOfWinnersTeam, currentWinner->nameOfTeam);
                     currentWinnerInList->points = currentWinner->points;
                     addTheWinners(&gameWinners, currentWinnerInList);
                     currentWinnerInList = (WinnersList *)malloc(sizeof(WinnersList));
                     currentWinnerInList->points = currentWinnerOpponent->points;
-                    currentWinnerInList->nameOfWinnersTeam = (char *)malloc(sizeof(char) * (strlen(currentWinnerOpponent->nameOfTeam) + 1));
+                    currentWinnerInList->nameOfWinnersTeam = (char *)malloc(sizeof(char) * 100);
                     strcpy(currentWinnerInList->nameOfWinnersTeam, currentWinnerOpponent->nameOfTeam);
                     addTheWinners(&gameWinners, currentWinnerInList);
                 }
                 // printf("Segfault after here? \n");
                 // printf("%s \n", currentWinnerOpponent -> nameOfTeam);
-                scheduledMatch->secondTeam = (char *)malloc(sizeof(char) * (strlen(currentWinnerOpponent->nameOfTeam) + 10));
+                scheduledMatch->secondTeam = (char *)malloc(sizeof(char) * 100);
                 strcpy(scheduledMatch->secondTeam, currentWinnerOpponent->nameOfTeam);
                 // printf("%s \n", scheduledMatch -> secondTeam);
                 // printf("Segfault after here? \n");
@@ -153,14 +153,14 @@ int main(int argc, char *argv[])
         if (finalMatch->firstTeamScore > finalMatch->secondTeamScore)
         {
             winnerOfTheGame->next = NULL;
-            winnerOfTheGame->nameOfTeam = (char *)malloc(strlen(finalMatch->firstTeam) + 1);
+            winnerOfTheGame->nameOfTeam = (char *)malloc(sizeof(char) * 100);
             strcpy(winnerOfTheGame->nameOfTeam, finalMatch->firstTeam);
             winnerOfTheGame->points = finalMatch->firstTeamScore + 1;
         }
         else
         {
             winnerOfTheGame->next = NULL;
-            winnerOfTheGame->nameOfTeam = (char *)malloc(strlen(finalMatch->secondTeam) + 1);
+            winnerOfTheGame->nameOfTeam = (char *)malloc(sizeof(char) * 100);
             strcpy(winnerOfTheGame->nameOfTeam, finalMatch->secondTeam);
             winnerOfTheGame->points = finalMatch->secondTeamScore + 1;
         }
