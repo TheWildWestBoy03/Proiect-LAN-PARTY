@@ -1,9 +1,9 @@
 #include "stackOfWinners.h"
-#include "listOfTeams.h"
 
 typedef struct QMatch{
     char *firstTeam, *secondTeam;
     float firstTeamScore, secondTeamScore;
+    Player *firstTeamPlayers, *secondTeamPlayers;
     struct QMatch *next;
 }QMatch;
 

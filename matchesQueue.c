@@ -18,12 +18,14 @@ void enqueueUtil(QueueOfMatches *queueOfMatches, Team *listOfTeamsHead, FILE **o
         currentMatch->firstTeam = (char *)malloc(1 + strlen(listOfTeamsHead->nameOfTeam));
         strcpy(currentMatch->firstTeam, listOfTeamsHead->nameOfTeam);
         currentMatch->firstTeamScore = listOfTeamsHead->medium;
+        currentMatch->firstTeamPlayers = listOfTeamsHead->playersHead;
         if (listOfTeamsHead->next != NULL)
         {
             currentMatch->secondTeam = (char *)malloc(1 + strlen(listOfTeamsHead->next->nameOfTeam));
         }
         strcpy(currentMatch->secondTeam, listOfTeamsHead->next->nameOfTeam);
         currentMatch->secondTeamScore = listOfTeamsHead->next->medium;
+        currentMatch->secondTeamPlayers = listOfTeamsHead->next->playersHead;
         currentMatch->next = NULL;
         enqueueTheMatch(queueOfMatches, currentMatch, &*outputFile);
         listOfTeamsHead = listOfTeamsHead->next->next;
@@ -57,6 +59,8 @@ QMatch *setTheMatch(QMatch *someMatch, QMatch *aux)
     strcpy(someMatch->secondTeam, aux->secondTeam);
     someMatch->firstTeamScore = aux->firstTeamScore;
     someMatch->secondTeamScore = aux->secondTeamScore;
+    someMatch->firstTeamPlayers = aux->firstTeamPlayers;
+    someMatch->secondTeamPlayers = aux->secondTeamPlayers;
     return someMatch;
 }
 
@@ -76,18 +80,22 @@ QMatch *dequeueOfMatches(QueueOfMatches *queueOfMatches, Stack **winnerStack, St
     {
         currentWinner->nameOfTeam = (char *)malloc(strlen(matchToGet->firstTeam) + 1);
         strcpy(currentWinner->nameOfTeam, matchToGet->firstTeam);
-        currentWinner->points = (matchToGet->firstTeamScore + 1);
-        currentLoser->points = (matchToGet->secondTeamScore);
+        currentWinner -> playersList = matchToGet -> firstTeamPlayers;
+        currentWinner -> points = updateTheScore(&(currentWinner -> playersList));
         pushTheWinner(&*winnerStack, currentWinner);
         currentLoser->nameOfTeam = (char *)malloc(strlen(matchToGet->secondTeam) + 1);
         strcpy(currentLoser->nameOfTeam, matchToGet->secondTeam);
+        currentLoser->playersList = matchToGet -> secondTeamPlayers;
+        currentLoser -> points = matchToGet -> secondTeamScore;
         pushTheWinner(&*loserStack, currentLoser);
     }
     else
     {
         currentWinner->nameOfTeam = (char *)malloc(strlen(matchToGet->secondTeam) + 1);
         strcpy(currentWinner->nameOfTeam, matchToGet->secondTeam);
-        currentWinner->points = (matchToGet->secondTeamScore + 1);
+        currentWinner -> playersList = matchToGet -> secondTeamPlayers;
+        currentWinner -> points = updateTheScore(&(currentWinner -> playersList));
+        currentLoser -> playersList = matchToGet -> firstTeamPlayers;
         currentLoser->points = (matchToGet->firstTeamScore);
         pushTheWinner(&*winnerStack, currentWinner);
         currentLoser->nameOfTeam = (char *)malloc(strlen(matchToGet->firstTeam) + 1);
@@ -96,6 +104,9 @@ QMatch *dequeueOfMatches(QueueOfMatches *queueOfMatches, Stack **winnerStack, St
     }
     queueOfMatches->firstMatch = (queueOfMatches->firstMatch)->next;
     free(aux->firstTeam);
+    free(aux->secondTeam);
+    aux -> firstTeamPlayers = NULL;
+    aux -> secondTeamPlayers = NULL;
     free(aux);
     return matchToGet;
 }

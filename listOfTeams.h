@@ -1,4 +1,6 @@
 #include "Player.h"
+#include "BinarySearchTree.h"
+
 typedef int Data;
 
 typedef struct Team{
@@ -29,3 +31,4 @@ int readTheRequests(FILE **requestsFile, int positionOfTheLastRequest, char *arg
 void readingData(int lastRequest, int *numberOfTeams, FILE **teamsFile, Team **listOfTeamsHead, char *argv[]);
 void addTheWinners(WinnersList **winnersListHead, WinnersList *currentTeam);
 float updateTheScore(Player **playersList);
+void createTheLeaderboard(WinnersList **leaderboard, WinnersTree *BinarySearchTreeRoot);

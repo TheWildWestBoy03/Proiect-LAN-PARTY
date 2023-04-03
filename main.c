@@ -1,4 +1,3 @@
-#include "BinarySearchTree.h"
 #include "matchesQueue.h"
 
 int main(int argc, char *argv[])
@@ -9,7 +8,7 @@ int main(int argc, char *argv[])
     }*/
     int numberOfTeams, positionOfLastRequest = 0, numberOfRounds = 1;
     Team *listOfTeamsHead = NULL;
-    WinnersList *gameWinners = NULL, *currentWinnerInList = NULL;
+    WinnersList *gameWinners = NULL, *currentWinnerInList = NULL, *leaderboard = NULL;
     FILE *teamsFiles, *requestFiles, *outputFile;
     Stack *winnerStack = NULL, *loserStack = NULL, *winnerOfTheGame = NULL;
     QueueOfMatches *queueOfMatches;
@@ -152,7 +151,7 @@ int main(int argc, char *argv[])
         }
         printf("%.2f\n", winnerOfTheGame -> points);
         winnerOfTheGame -> points = updateTheScore(&(winnerOfTheGame -> playersList));
-        printf("%.2f\n", winnerOfTheGame -> points);
+        winnerOfTheGame -> points --;
         fprintf(outputFile, "\nWINNERS OF ROUND NO:%d\n", numberOfRounds);
         fprintf(outputFile, "%s", winnerOfTheGame->nameOfTeam);
         index = strlen(winnerOfTheGame->nameOfTeam);
@@ -172,9 +171,13 @@ int main(int argc, char *argv[])
                 copy = copy->next;
             }
             inorder(binarySearchTreeRoot, &outputFile);
-            return 0;
         }
+        if(positionOfLastRequest == 5){
+            createTheLeaderboard(&leaderboard, binarySearchTreeRoot);
+            deleteTheTree(&binarySearchTreeRoot);
             
+        }
+        printf("%p \n", binarySearchTreeRoot);
     }
     closeTheFile(&outputFile);
     return 0;

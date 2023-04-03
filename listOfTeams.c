@@ -97,7 +97,6 @@ float updateTheScore(Player **playerList){
         score += playerListCopy -> points;
         playerListCopy = playerListCopy -> next;
     }
-    printf("%.2f %d \n", score, numberOfPlayers);
     score /= numberOfPlayers;
     return score;
 }
@@ -202,4 +201,18 @@ void addTheWinners(WinnersList **winnersListHead, WinnersList *currentTeam)
     currentTeam->next = *winnersListHead;
     *winnersListHead = currentTeam;
     return;
+}
+
+void createTheLeaderboard(WinnersList **leaderboard, WinnersTree *BinarySearchTreeRoot){
+    if(BinarySearchTreeRoot != NULL){
+        createTheLeaderboard(&*leaderboard, BinarySearchTreeRoot -> left);
+        WinnersList *winnerToAdd = NULL;
+        winnerToAdd = (WinnersList*)malloc(sizeof(WinnersList));
+        winnerToAdd -> nameOfWinnersTeam = (char*)malloc((strlen(BinarySearchTreeRoot -> nameOfTeam)+1));
+        strcpy(winnerToAdd -> nameOfWinnersTeam, BinarySearchTreeRoot -> nameOfTeam);
+        winnerToAdd -> points = BinarySearchTreeRoot -> points;
+        winnerToAdd -> next = NULL;
+        addTheWinners(&*leaderboard, winnerToAdd);
+        createTheLeaderboard(&*leaderboard, BinarySearchTreeRoot -> left);
+    }
 }
