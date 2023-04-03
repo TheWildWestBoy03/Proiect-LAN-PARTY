@@ -8,12 +8,12 @@ typedef struct Team{
     char *nameOfTeam;
     struct Team *next; 
     Player *playersHead;
-    float medium;
+    double medium;
 }Team;
 
 typedef struct WinnersList{
     char *nameOfWinnersTeam;
-    float points;
+    double points;
     struct WinnersList *next;
 }WinnersList;
 
@@ -30,5 +30,5 @@ void closeTheFile(FILE **input);
 int readTheRequests(FILE **requestsFile, int positionOfTheLastRequest, char *argv[]);
 void readingData(int lastRequest, int *numberOfTeams, FILE **teamsFile, Team **listOfTeamsHead, char *argv[]);
 void addTheWinners(WinnersList **winnersListHead, WinnersList *currentTeam);
-float updateTheScore(Player **playersList);
+double updateTheScore(Player **playersList);
 void createTheLeaderboard(WinnersList **leaderboard, WinnersTree *BinarySearchTreeRoot);

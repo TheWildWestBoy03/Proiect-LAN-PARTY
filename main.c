@@ -20,7 +20,6 @@ int main(int argc, char *argv[])
     openTheFile(&outputFile, "wt", argv[3]);
     positionOfLastRequest = readTheRequests(&requestFiles, positionOfLastRequest, argv);
     readingData(positionOfLastRequest, &numberOfTeams, &teamsFiles, &listOfTeamsHead, argv);
-    printf("%d\n", positionOfLastRequest);
     // eliminateTheTeamsUtil(&listOfTeamsHead, numberOfTeams);
     if (positionOfLastRequest == 1)
     {
@@ -162,7 +161,7 @@ int main(int argc, char *argv[])
             fputc(' ', outputFile);
             index++;
         }
-        fprintf(outputFile, "-  %.2f\n", winnerOfTheGame->points);
+        fprintf(outputFile, "-  %.2lf\n", winnerOfTheGame->points);
         if (positionOfLastRequest >= 4)
         {
             WinnersList *copy = gameWinners;
@@ -176,17 +175,13 @@ int main(int argc, char *argv[])
         }
         
         if(positionOfLastRequest >= 5){
-            printf("where the segfault? \n");
             createTheLeaderboard(&leaderboard, binarySearchTreeRoot);
             WinnersList *copyOfLeaderboard = leaderboard, *copy = leaderboard;
             while(copy){
-                printf("%s ", copy -> nameOfWinnersTeam);
                 copy = copy -> next;
             }
             while(copyOfLeaderboard != NULL){
-                printf("\nwtf rumenia\n");
                 avlRoot = insertInAVL(avlRoot, copyOfLeaderboard -> nameOfWinnersTeam, copyOfLeaderboard -> points);
-                printf("in while.... \n");
                 copyOfLeaderboard = copyOfLeaderboard -> next;
             }
             

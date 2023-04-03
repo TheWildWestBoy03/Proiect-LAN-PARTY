@@ -1,6 +1,6 @@
 #include "BinarySearchTree.h"
 
-WinnersTree *createTheNode(char *nameOfTeam, float points)
+WinnersTree *createTheNode(char *nameOfTeam, double points)
 {
     WinnersTree *winnersTreeNode = (WinnersTree *)malloc(sizeof(WinnersTree));
     winnersTreeNode->nameOfTeam = (char *)malloc(strlen(nameOfTeam) + 1);
@@ -12,7 +12,7 @@ WinnersTree *createTheNode(char *nameOfTeam, float points)
 int max(int x, int y){
     return (x >= y)? x : y;
 }
-WinnersTree *addTeamInTree(WinnersTree *BinarySearchTreeRoot, char *nameOfTeam, float points)
+WinnersTree *addTeamInTree(WinnersTree *BinarySearchTreeRoot, char *nameOfTeam, double points)
 {
     if (BinarySearchTreeRoot == NULL)
     {
@@ -53,7 +53,7 @@ void inorder(WinnersTree *BinarySearchTreeRoot, FILE **outputFile)
             index++;
         }
         fprintf(*outputFile, "-  ");
-        fprintf(*outputFile, "%.2f\n", BinarySearchTreeRoot->points);
+        fprintf(*outputFile, "%.2lf\n", BinarySearchTreeRoot->points);
         inorder(BinarySearchTreeRoot->right, &*outputFile);
     }
 }
@@ -70,7 +70,7 @@ void deleteTheTree(WinnersTree **BinarySearchTreeRoot){
     *BinarySearchTreeRoot = NULL;
 }
 
-AVLNode *createAVLNode(char *nameOfTeam, float points){
+AVLNode *createAVLNode(char *nameOfTeam, double points){
     AVLNode *avlWinnerNode = (AVLNode*)malloc(sizeof(AVLNode));
     avlWinnerNode -> left = avlWinnerNode -> right = NULL;
     avlWinnerNode -> nameOfTeam = (char*)malloc(strlen(nameOfTeam)+1);
@@ -112,7 +112,7 @@ int getBalance(AVLNode *subtreeNode){
     }
     return getTheHeight(subtreeNode -> left) - getTheHeight(subtreeNode -> right);
 }
-AVLNode *insertInAVL(AVLNode *AVLRoot, char *nameOfTeam, float points){
+AVLNode *insertInAVL(AVLNode *AVLRoot, char *nameOfTeam, double points){
     if(AVLRoot == NULL){
         AVLRoot = createAVLNode(nameOfTeam, points);
     }

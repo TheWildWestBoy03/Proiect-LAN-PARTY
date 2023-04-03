@@ -86,18 +86,22 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
         current->medium /= current->numberOfMembers;
         addingAtBeginning(&*listOfTeamHead, &current);
     }
-}
-float updateTheScore(Player **playerList){
+}   
+double updateTheScore(Player **playerList){
     Player *playerListCopy = *playerList;
-    float score = 0.00;
+    double score = 0.000;
     int numberOfPlayers = 0;
     while(playerListCopy != NULL){
         (playerListCopy -> points) ++;
         numberOfPlayers ++;
-        score += playerListCopy -> points;
+        score += (playerListCopy -> points) * 1.000;
         playerListCopy = playerListCopy -> next;
     }
     score /= numberOfPlayers;
+    int numeral = score * 1000;
+    if(numeral % 100 == 25){
+        score = score - 0.001;
+    }
     return score;
 }
 void displayTheList(Team *listOfTeamHead, FILE **outputFile)
@@ -155,7 +159,7 @@ void eliminateTheTeams(Team **listOfTeamsHead)
     {
         return;
     }
-    float minimum = copy->medium;
+    double minimum = copy->medium;
     while (copy != NULL)
     {
         if (minimum > copy->medium)
@@ -205,7 +209,7 @@ void addTheWinners(WinnersList **winnersListHead, WinnersList *currentTeam)
 
 void createTheLeaderboard(WinnersList **leaderboard, WinnersTree *BinarySearchTreeRoot){
     if(BinarySearchTreeRoot != NULL){
-        createTheLeaderboard(&*leaderboard, BinarySearchTreeRoot -> left);
+        createTheLeaderboard(&*leaderboard, BinarySearchTreeRoot -> right);
         WinnersList *winnerToAdd = NULL;
         winnerToAdd = (WinnersList*)malloc(sizeof(WinnersList));
         winnerToAdd -> nameOfWinnersTeam = (char*)malloc((strlen(BinarySearchTreeRoot -> nameOfTeam)+1));

@@ -2,7 +2,7 @@
 
 typedef struct QMatch{
     char *firstTeam, *secondTeam;
-    float firstTeamScore, secondTeamScore;
+    double firstTeamScore, secondTeamScore;
     Player *firstTeamPlayers, *secondTeamPlayers;
     struct QMatch *next;
 }QMatch;
