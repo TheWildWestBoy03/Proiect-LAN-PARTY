@@ -15,10 +15,12 @@ int main(int argc, char *argv[])
     QMatch *finalMatch = NULL, *scheduledMatch = NULL;
     WinnersTree *binarySearchTreeRoot = NULL;
     Stack *currentWinner = NULL, *currentWinnerOpponent = NULL;
+    AVLNode *avlRoot = NULL;
     // printf("Insert the number of teams! \n");
     openTheFile(&outputFile, "wt", argv[3]);
     positionOfLastRequest = readTheRequests(&requestFiles, positionOfLastRequest, argv);
     readingData(positionOfLastRequest, &numberOfTeams, &teamsFiles, &listOfTeamsHead, argv);
+    printf("%d\n", positionOfLastRequest);
     // eliminateTheTeamsUtil(&listOfTeamsHead, numberOfTeams);
     if (positionOfLastRequest == 1)
     {
@@ -172,12 +174,29 @@ int main(int argc, char *argv[])
             }
             inorder(binarySearchTreeRoot, &outputFile);
         }
-        if(positionOfLastRequest == 5){
+        
+        if(positionOfLastRequest >= 5){
+            printf("where the segfault? \n");
             createTheLeaderboard(&leaderboard, binarySearchTreeRoot);
-            deleteTheTree(&binarySearchTreeRoot);
+            WinnersList *copyOfLeaderboard = leaderboard, *copy = leaderboard;
+            while(copy){
+                printf("%s ", copy -> nameOfWinnersTeam);
+                copy = copy -> next;
+            }
+            while(copyOfLeaderboard != NULL){
+                printf("\nwtf rumenia\n");
+                avlRoot = insertInAVL(avlRoot, copyOfLeaderboard -> nameOfWinnersTeam, copyOfLeaderboard -> points);
+                printf("in while.... \n");
+                copyOfLeaderboard = copyOfLeaderboard -> next;
+            }
             
-        }
-        printf("%p \n", binarySearchTreeRoot);
+            fprintf(outputFile, "\nTHE LEVEL 2 TEAMS ARE: \n%s\n", avlRoot -> left -> left ->nameOfTeam);
+            fprintf(outputFile,"%s\n", avlRoot -> left -> right ->nameOfTeam);
+            fprintf(outputFile,"%s\n", avlRoot -> right -> left ->nameOfTeam);
+            fprintf(outputFile,"%s", avlRoot -> right -> right ->nameOfTeam); 
+            
+        } 
+        
     }
     closeTheFile(&outputFile);
     return 0;
