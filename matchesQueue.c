@@ -80,8 +80,8 @@ QMatch *dequeueOfMatches(QueueOfMatches *queueOfMatches, Stack **winnerStack, St
     {
         currentWinner->nameOfTeam = (char *)malloc(strlen(matchToGet->firstTeam) + 1);
         strcpy(currentWinner->nameOfTeam, matchToGet->firstTeam);
-        currentWinner -> playersList = matchToGet -> firstTeamPlayers;
-        currentWinner -> points = updateTheScore(&(currentWinner -> playersList));
+        currentWinner->playersList = matchToGet->firstTeamPlayers;
+        currentWinner->points = updateTheScore(&(currentWinner->playersList));
         pushTheWinner(&*winnerStack, currentWinner);
         currentLoser->nameOfTeam = (char *)malloc(strlen(matchToGet->secondTeam) + 1);
         strcpy(currentLoser->nameOfTeam, matchToGet->secondTeam);
@@ -93,11 +93,11 @@ QMatch *dequeueOfMatches(QueueOfMatches *queueOfMatches, Stack **winnerStack, St
     {
         currentWinner->nameOfTeam = (char *)malloc(strlen(matchToGet->secondTeam) + 1);
         strcpy(currentWinner->nameOfTeam, matchToGet->secondTeam);
-        currentWinner -> playersList = matchToGet -> secondTeamPlayers;
-        currentWinner -> points = updateTheScore(&(currentWinner -> playersList));
+        currentWinner->playersList = matchToGet->secondTeamPlayers;
+        currentWinner->points = updateTheScore(&(currentWinner->playersList));
+        pushTheWinner(&*winnerStack, currentWinner);
         currentLoser -> playersList = matchToGet -> firstTeamPlayers;
         currentLoser->points = (matchToGet->firstTeamScore);
-        pushTheWinner(&*winnerStack, currentWinner);
         currentLoser->nameOfTeam = (char *)malloc(strlen(matchToGet->firstTeam) + 1);
         strcpy(currentLoser->nameOfTeam, matchToGet->firstTeam);
         pushTheWinner(&*loserStack, currentLoser);
@@ -105,8 +105,8 @@ QMatch *dequeueOfMatches(QueueOfMatches *queueOfMatches, Stack **winnerStack, St
     queueOfMatches->firstMatch = (queueOfMatches->firstMatch)->next;
     free(aux->firstTeam);
     free(aux->secondTeam);
-    aux -> firstTeamPlayers = NULL;
-    aux -> secondTeamPlayers = NULL;
+    aux->firstTeamPlayers = NULL;
+    aux->secondTeamPlayers = NULL;
     free(aux);
     return matchToGet;
 }

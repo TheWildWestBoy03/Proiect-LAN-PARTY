@@ -57,7 +57,8 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
         nameOfTeam = (char *)malloc(sizeof(char) * (strlen(buffer) - numberOfDigits));
         strcpy(nameOfTeam, buffer + numberOfDigits + 1);
         nameOfTeam[strlen(nameOfTeam) - 1] = 0;
-        while(nameOfTeam[strlen(nameOfTeam) - 1] == ' '){
+        while (nameOfTeam[strlen(nameOfTeam) - 1] == ' ')
+        {
             nameOfTeam[strlen(nameOfTeam) - 1] = 0;
         }
         current->nameOfTeam = (char *)malloc(sizeof(char) * (strlen(nameOfTeam) + 1));
@@ -86,20 +87,23 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
         current->medium /= current->numberOfMembers;
         addingAtBeginning(&*listOfTeamHead, &current);
     }
-}   
-double updateTheScore(Player **playerList){
+}
+double updateTheScore(Player **playerList)
+{
     Player *playerListCopy = *playerList;
     double score = 0.000;
     int numberOfPlayers = 0;
-    while(playerListCopy != NULL){
-        (playerListCopy -> points) ++;
-        numberOfPlayers ++;
-        score += (playerListCopy -> points) * 1.000;
-        playerListCopy = playerListCopy -> next;
+    while (playerListCopy != NULL)
+    {
+        (playerListCopy->points)++;
+        numberOfPlayers++;
+        score += (playerListCopy->points) * 1.000;
+        playerListCopy = playerListCopy->next;
     }
     score /= numberOfPlayers;
     int numeral = score * 1000;
-    if(numeral % 100 == 25){
+    if (numeral % 100 == 25)
+    {
         score = score - 0.001;
     }
     return score;
@@ -207,16 +211,41 @@ void addTheWinners(WinnersList **winnersListHead, WinnersList *currentTeam)
     return;
 }
 
-void createTheLeaderboard(WinnersList **leaderboard, WinnersTree *BinarySearchTreeRoot){
-    if(BinarySearchTreeRoot != NULL){
-        createTheLeaderboard(&*leaderboard, BinarySearchTreeRoot -> right);
+void createTheLeaderboard(WinnersList **leaderboard, WinnersTree *BinarySearchTreeRoot)
+{
+    if (BinarySearchTreeRoot != NULL)
+    {
+        createTheLeaderboard(&*leaderboard, BinarySearchTreeRoot->right);
         WinnersList *winnerToAdd = NULL;
-        winnerToAdd = (WinnersList*)malloc(sizeof(WinnersList));
-        winnerToAdd -> nameOfWinnersTeam = (char*)malloc((strlen(BinarySearchTreeRoot -> nameOfTeam)+1));
-        strcpy(winnerToAdd -> nameOfWinnersTeam, BinarySearchTreeRoot -> nameOfTeam);
-        winnerToAdd -> points = BinarySearchTreeRoot -> points;
-        winnerToAdd -> next = NULL;
+        winnerToAdd = (WinnersList *)malloc(sizeof(WinnersList));
+        winnerToAdd->nameOfWinnersTeam = (char *)malloc((strlen(BinarySearchTreeRoot->nameOfTeam) + 1));
+        strcpy(winnerToAdd->nameOfWinnersTeam, BinarySearchTreeRoot->nameOfTeam);
+        winnerToAdd->points = BinarySearchTreeRoot->points;
+        winnerToAdd->next = NULL;
         addTheWinners(&*leaderboard, winnerToAdd);
-        createTheLeaderboard(&*leaderboard, BinarySearchTreeRoot -> left);
+        createTheLeaderboard(&*leaderboard, BinarySearchTreeRoot->left);
     }
+}
+
+Team *deleteList(Team *listOfTeams){
+    while(listOfTeams != NULL){
+        Team *teamToDelete = listOfTeams;
+        listOfTeams = listOfTeams -> next;
+        free(teamToDelete -> nameOfTeam);
+        teamToDelete -> nameOfTeam = NULL;
+        printf("still alive...\n");
+        while(teamToDelete -> playersHead != NULL){
+            Player *playerToDelete = teamToDelete -> playersHead;
+            teamToDelete -> playersHead = teamToDelete -> playersHead -> next;
+            free(playerToDelete -> firstName);
+            playerToDelete -> firstName = NULL;
+            free(playerToDelete -> secondName);
+            playerToDelete -> secondName = NULL;
+            free(playerToDelete);
+            playerToDelete = NULL;
+        }
+        free(teamToDelete);
+        teamToDelete = NULL;
+    }
+    return listOfTeams;
 }

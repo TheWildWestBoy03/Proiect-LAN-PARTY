@@ -16,31 +16,28 @@ int main(int argc, char *argv[])
     WinnersTree *binarySearchTreeRoot = NULL;
     Stack *currentWinner = NULL, *currentWinnerOpponent = NULL;
     AVLNode *avlRoot = NULL;
-    // printf("Insert the number of teams! \n");
     openTheFile(&outputFile, "wt", argv[3]);
     positionOfLastRequest = readTheRequests(&requestFiles, positionOfLastRequest, argv);
     readingData(positionOfLastRequest, &numberOfTeams, &teamsFiles, &listOfTeamsHead, argv);
-    // eliminateTheTeamsUtil(&listOfTeamsHead, numberOfTeams);
     if (positionOfLastRequest == 1)
     {
         displayTheList(listOfTeamsHead, &outputFile);
-        //closeTheFile(&outputFile);
-      //  return 0;
+        listOfTeamsHead = deleteList(listOfTeamsHead);
     }
-    if (positionOfLastRequest >= 2)
+    if (positionOfLastRequest == 2)
     {
         eliminateTheTeamsUtil(&listOfTeamsHead, &numberOfTeams, &outputFile);
         displayTheList(listOfTeamsHead, &outputFile);
-       // closeTheFile(&outputFile);
-      //  return 0;
+        listOfTeamsHead = deleteList(listOfTeamsHead);
     }
     if (positionOfLastRequest >= 3)
     {
-       // eliminateTheTeamsUtil(&listOfTeamsHead, &numberOfTeams, &outputFile);
-       // displayTheList(listOfTeamsHead, &outputFile);
+        eliminateTheTeamsUtil(&listOfTeamsHead, &numberOfTeams, &outputFile);
+        displayTheList(listOfTeamsHead, &outputFile);
         queueOfMatches = createTheQueue();
         enqueueUtil(queueOfMatches, listOfTeamsHead, &outputFile);
         fprintf(outputFile, "\n");
+       // listOfTeamsHead = deleteList(listOfTeamsHead);
         while (numberOfTeams > 2)
         {
             fprintf(outputFile, "--- ROUND NO:%d\n", numberOfRounds);
@@ -72,7 +69,7 @@ int main(int argc, char *argv[])
                 scheduledMatch->firstTeam = (char *)malloc(sizeof(char) * (strlen(currentWinner->nameOfTeam) + 1));
                 strcpy(scheduledMatch->firstTeam, currentWinner->nameOfTeam);
                 scheduledMatch->firstTeamScore = currentWinner->points;
-                scheduledMatch->firstTeamPlayers = currentWinner -> playersList;
+                scheduledMatch->firstTeamPlayers = currentWinner->playersList;
                 if (numberOfTeams == 16)
                 {
                     currentWinnerInList = (WinnersList *)malloc(sizeof(WinnersList));
@@ -83,15 +80,15 @@ int main(int argc, char *argv[])
                     currentWinnerInList = (WinnersList *)malloc(sizeof(WinnersList));
                     currentWinnerInList->points = currentWinnerOpponent->points;
                     currentWinnerInList->nameOfWinnersTeam = (char *)malloc(sizeof(char) * (strlen(currentWinnerOpponent->nameOfTeam) + 1));
-                    currentWinnerInList -> next = NULL;
+                    currentWinnerInList->next = NULL;
                     strcpy(currentWinnerInList->nameOfWinnersTeam, currentWinnerOpponent->nameOfTeam);
                     addTheWinners(&gameWinners, currentWinnerInList);
                 }
                 scheduledMatch->secondTeam = (char *)malloc(sizeof(char) * (strlen(currentWinnerOpponent->nameOfTeam) + 10));
                 strcpy(scheduledMatch->secondTeam, currentWinnerOpponent->nameOfTeam);
                 scheduledMatch->secondTeamScore = currentWinnerOpponent->points;
-                scheduledMatch -> secondTeamPlayers = currentWinnerOpponent -> playersList;
-                scheduledMatch -> next = NULL;
+                scheduledMatch->secondTeamPlayers = currentWinnerOpponent->playersList;
+                scheduledMatch->next = NULL;
                 int index = 0;
                 fprintf(outputFile, "%s", currentWinner->nameOfTeam);
                 index += strlen(currentWinner->nameOfTeam);
@@ -140,7 +137,7 @@ int main(int argc, char *argv[])
             winnerOfTheGame->nameOfTeam = (char *)malloc(strlen(finalMatch->firstTeam) + 1);
             strcpy(winnerOfTheGame->nameOfTeam, finalMatch->firstTeam);
             winnerOfTheGame->points = finalMatch->firstTeamScore;
-            winnerOfTheGame -> playersList = finalMatch -> firstTeamPlayers;
+            winnerOfTheGame->playersList = finalMatch->firstTeamPlayers;
         }
         else
         {
@@ -148,11 +145,11 @@ int main(int argc, char *argv[])
             winnerOfTheGame->nameOfTeam = (char *)malloc(strlen(finalMatch->secondTeam) + 1);
             strcpy(winnerOfTheGame->nameOfTeam, finalMatch->secondTeam);
             winnerOfTheGame->points = finalMatch->secondTeamScore;
-            winnerOfTheGame -> playersList = finalMatch -> secondTeamPlayers;
+            winnerOfTheGame->playersList = finalMatch->secondTeamPlayers;
         }
-        printf("%.2f\n", winnerOfTheGame -> points);
-        winnerOfTheGame -> points = updateTheScore(&(winnerOfTheGame -> playersList));
-        winnerOfTheGame -> points --;
+
+        winnerOfTheGame->points = updateTheScore(&(winnerOfTheGame->playersList));
+        winnerOfTheGame->points--;
         fprintf(outputFile, "\nWINNERS OF ROUND NO:%d\n", numberOfRounds);
         fprintf(outputFile, "%s", winnerOfTheGame->nameOfTeam);
         index = strlen(winnerOfTheGame->nameOfTeam);
@@ -173,25 +170,26 @@ int main(int argc, char *argv[])
             }
             inorder(binarySearchTreeRoot, &outputFile);
         }
-        
-        if(positionOfLastRequest >= 5){
+
+        if (positionOfLastRequest >= 5)
+        {
             createTheLeaderboard(&leaderboard, binarySearchTreeRoot);
             WinnersList *copyOfLeaderboard = leaderboard, *copy = leaderboard;
-            while(copy){
-                copy = copy -> next;
+            while (copy)
+            {
+                copy = copy->next;
             }
-            while(copyOfLeaderboard != NULL){
-                avlRoot = insertInAVL(avlRoot, copyOfLeaderboard -> nameOfWinnersTeam, copyOfLeaderboard -> points);
-                copyOfLeaderboard = copyOfLeaderboard -> next;
+            while (copyOfLeaderboard != NULL)
+            {
+                avlRoot = insertInAVL(avlRoot, copyOfLeaderboard->nameOfWinnersTeam, copyOfLeaderboard->points);
+                copyOfLeaderboard = copyOfLeaderboard->next;
             }
-            
-            fprintf(outputFile, "\nTHE LEVEL 2 TEAMS ARE: \n%s\n", avlRoot -> left -> left ->nameOfTeam);
-            fprintf(outputFile,"%s\n", avlRoot -> left -> right ->nameOfTeam);
-            fprintf(outputFile,"%s\n", avlRoot -> right -> left ->nameOfTeam);
-            fprintf(outputFile,"%s", avlRoot -> right -> right ->nameOfTeam); 
-            
-        } 
-        
+
+            fprintf(outputFile, "\nTHE LEVEL 2 TEAMS ARE: \n%s\n", avlRoot->left->left->nameOfTeam);
+            fprintf(outputFile, "%s\n", avlRoot->left->right->nameOfTeam);
+            fprintf(outputFile, "%s\n", avlRoot->right->left->nameOfTeam);
+            fprintf(outputFile, "%s", avlRoot->right->right->nameOfTeam);
+        }
     }
     closeTheFile(&outputFile);
     return 0;

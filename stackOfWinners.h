@@ -3,12 +3,13 @@
 #include <string.h>
 #include "listOfTeams.h"
 
-typedef struct Stack{
+typedef struct Stack
+{
     char *nameOfTeam;
     double points;
     struct Stack *next;
     Player *playersList;
-}Stack;
+} Stack;
 
 Stack *top(Stack *theStack);
 Stack *pop(Stack **theStack);
