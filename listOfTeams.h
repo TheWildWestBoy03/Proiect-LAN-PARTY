@@ -35,3 +35,4 @@ void addTheWinners(WinnersList **winnersListHead, WinnersList *currentTeam);
 double updateTheScore(Player **playersList);
 void createTheLeaderboard(WinnersList **leaderboard, WinnersTree *BinarySearchTreeRoot);
 Team *deleteList(Team *listOfTeams);
+Player *defineThePlayer(FILE *teamsFile);

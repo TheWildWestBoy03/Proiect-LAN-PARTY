@@ -2,10 +2,6 @@
 
 int main(int argc, char *argv[])
 {
-    /*
-    if(strcmp(argv[2], "date/t8/c.in") == 0){
-        return 0;
-    }*/
     int numberOfTeams, positionOfLastRequest = 0, numberOfRounds = 1;
     Team *listOfTeamsHead = NULL;
     WinnersList *gameWinners = NULL, *currentWinnerInList = NULL, *leaderboard = NULL;
@@ -32,6 +28,7 @@ int main(int argc, char *argv[])
     }
     if (positionOfLastRequest >= 3)
     {
+        
         eliminateTheTeamsUtil(&listOfTeamsHead, &numberOfTeams, &outputFile);
         displayTheList(listOfTeamsHead, &outputFile);
         queueOfMatches = createTheQueue();

@@ -38,6 +38,20 @@ void displayThePlayers(Player *playerHead, FILE **outputFile)
     return;
 }
 
+Player *defineThePlayer(FILE *teamsFile)
+{
+    Player *currentPlayer = (Player *)malloc(sizeof(Player));
+    currentPlayer->next = NULL;
+    char bufferFirstNameOfMember[50], bufferSecondNameOfMember[50];
+    int bufferPoints;
+    fscanf(teamsFile, "%s %s %d\n", bufferFirstNameOfMember, bufferSecondNameOfMember, &bufferPoints);
+    currentPlayer->firstName = (char *)malloc(strlen(bufferFirstNameOfMember) + 1);
+    currentPlayer->secondName = (char *)malloc(strlen(bufferSecondNameOfMember) + 1);
+    currentPlayer->points = bufferPoints;
+    strcpy(currentPlayer->firstName, bufferFirstNameOfMember);
+    strcpy(currentPlayer->secondName, bufferSecondNameOfMember);
+    return currentPlayer;
+}
 void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
 {
     char *nameOfTeam;
@@ -70,17 +84,8 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
         current->medium = 0;
         for (int j = 0; j < numberOfMembers; j++)
         {
-            currentPlayer = (Player *)malloc(sizeof(Player));
-            currentPlayer->next = NULL;
-            char bufferFirstNameOfMember[50], bufferSecondNameOfMember[50];
-            int bufferPoints;
-            fscanf(teamsFile, "%s %s %d\n", bufferFirstNameOfMember, bufferSecondNameOfMember, &bufferPoints);
-            currentPlayer->firstName = (char *)malloc(strlen(bufferFirstNameOfMember) + 1);
-            currentPlayer->secondName = (char *)malloc(strlen(bufferSecondNameOfMember) + 1);
-            currentPlayer->points = bufferPoints;
+            currentPlayer = defineThePlayer(teamsFile);
             current->medium += currentPlayer->points;
-            strcpy(currentPlayer->firstName, bufferFirstNameOfMember);
-            strcpy(currentPlayer->secondName, bufferSecondNameOfMember);
             addingPlayer(&(current->playersHead), currentPlayer);
         }
         fscanf(teamsFile, "\n");
@@ -112,12 +117,7 @@ void displayTheList(Team *listOfTeamHead, FILE **outputFile)
 {
     while (listOfTeamHead != NULL)
     {
-        // fprintf(*outputFile, "%d ", listOfTeamHead->numberOfMembers);
         fprintf(*outputFile, "%s\n", listOfTeamHead->nameOfTeam);
-        // fprintf(*outputFile, "%f \n", listOfTeamHead->medium);
-        // fprintf(*outputFile, "--------------------- \n");
-        // displayThePlayers(listOfTeamHead->playersHead, &*outputFile);
-        // fprintf(*outputFile, "--------------------- \n");
         listOfTeamHead = listOfTeamHead->next;
     }
     return;
@@ -157,7 +157,6 @@ void deleteTheTeam(Team **current)
 }
 void eliminateTheTeams(Team **listOfTeamsHead)
 {
-    //  printf("In eliminating the teams.");
     Team *copy = *listOfTeamsHead, *dummy;
     if (copy == NULL)
     {
@@ -227,20 +226,22 @@ void createTheLeaderboard(WinnersList **leaderboard, WinnersTree *BinarySearchTr
     }
 }
 
-Team *deleteList(Team *listOfTeams){
-    while(listOfTeams != NULL){
+Team *deleteList(Team *listOfTeams)
+{
+    while (listOfTeams != NULL)
+    {
         Team *teamToDelete = listOfTeams;
-        listOfTeams = listOfTeams -> next;
-        free(teamToDelete -> nameOfTeam);
-        teamToDelete -> nameOfTeam = NULL;
-        printf("still alive...\n");
-        while(teamToDelete -> playersHead != NULL){
-            Player *playerToDelete = teamToDelete -> playersHead;
-            teamToDelete -> playersHead = teamToDelete -> playersHead -> next;
-            free(playerToDelete -> firstName);
-            playerToDelete -> firstName = NULL;
-            free(playerToDelete -> secondName);
-            playerToDelete -> secondName = NULL;
+        listOfTeams = listOfTeams->next;
+        free(teamToDelete->nameOfTeam);
+        teamToDelete->nameOfTeam = NULL;
+        while (teamToDelete->playersHead != NULL)
+        {
+            Player *playerToDelete = teamToDelete->playersHead;
+            teamToDelete->playersHead = teamToDelete->playersHead->next;
+            free(playerToDelete->firstName);
+            playerToDelete->firstName = NULL;
+            free(playerToDelete->secondName);
+            playerToDelete->secondName = NULL;
             free(playerToDelete);
             playerToDelete = NULL;
         }
