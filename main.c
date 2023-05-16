@@ -18,15 +18,16 @@ int main(int argc, char *argv[])
     // eliminateTheTeamsUtil(&listOfTeamsHead, numberOfTeams);
     if (positionOfLastRequest == 1)
     {
-        solveFirstTask(&listOfTeamsHead, &outputFile);
+        displayTheList(listOfTeamsHead, &outputFile);
+        //listOfTeamsHead = deleteList(listOfTeamsHead);
     }
-    if (positionOfLastRequest == 2)
+    if (positionOfLastRequest >= 2)
     {
-        solveSecondTask(&listOfTeamsHead, &outputFile, numberOfTeams);
+        eliminateTheTeamsUtil(&listOfTeamsHead, &numberOfTeams, &outputFile);
+        displayTheList(listOfTeamsHead, &outputFile);
     }
     if (positionOfLastRequest >= 3)
     {
-        solveSecondTask(&listOfTeamsHead, &outputFile, numberOfTeams);
         queueOfMatches = createTheQueue();
         enqueueUtil(queueOfMatches, listOfTeamsHead, &outputFile);
         fprintf(outputFile, "\n");
@@ -37,7 +38,20 @@ int main(int argc, char *argv[])
             while (!isQueueOfMatchesEmpty(queueOfMatches))
             {
                 QMatch *currentMatch = dequeueOfMatches(queueOfMatches, &winnerStack, &loserStack);
-                outputFile = printQueueLine(outputFile, currentMatch);
+                fprintf(outputFile, "%s", currentMatch->firstTeam);
+                int index = strlen(currentMatch->firstTeam);
+                while (index < 33)
+                {
+                    fprintf(outputFile, " ");
+                    index++;
+                }
+                fprintf(outputFile, "-");
+                while (index < 68 - strlen(currentMatch->secondTeam) - 2)
+                {
+                    fprintf(outputFile, " ");
+                    index++;
+                }
+                fprintf(outputFile, "%s\n", currentMatch->secondTeam);
             }
             fprintf(outputFile, "\nWINNERS OF ROUND NO:%d\n", numberOfRounds);
             queueOfMatches = createTheQueue();
@@ -73,7 +87,24 @@ int main(int argc, char *argv[])
                 scheduledMatch->secondTeamScore = currentWinnerOpponent->points;
                 scheduledMatch->secondTeamPlayers = currentWinnerOpponent->playersList;
                 scheduledMatch->next = NULL;
-                outputFile = printStackLine(outputFile, currentWinner, currentWinnerOpponent);
+                int index = 0;
+                fprintf(outputFile, "%s", currentWinner->nameOfTeam);
+                index += strlen(currentWinner->nameOfTeam);
+                while (index < 34)
+                {
+                    fputc(' ', outputFile);
+                    index++;
+                }
+                fprintf(outputFile, "-  %.2f\n", currentWinner->points);
+                index = 0;
+                fprintf(outputFile, "%s", currentWinnerOpponent->nameOfTeam);
+                index += strlen(currentWinnerOpponent->nameOfTeam);
+                while (index < 34)
+                {
+                    fputc(' ', outputFile);
+                    index++;
+                }
+                fprintf(outputFile, "-  %.2f\n", currentWinnerOpponent->points);
                 enqueueTheMatch(queueOfMatches, scheduledMatch, &outputFile);
             }
             numberOfRounds++;
@@ -82,7 +113,19 @@ int main(int argc, char *argv[])
         }
         finalMatch = dequeueOfMatches(queueOfMatches, &currentWinner, &currentWinnerOpponent);
         fprintf(outputFile, "--- ROUND NO:%d\n", numberOfRounds);
-        outputFile = printQueueLine(outputFile, finalMatch);
+        int index = strlen(finalMatch->firstTeam);
+        while (index < 33)
+        {
+            fprintf(outputFile, " ");
+            index++;
+        }
+        fprintf(outputFile, "-");
+        while (index < 68 - strlen(finalMatch->secondTeam) - 2)
+        {
+            fprintf(outputFile, " ");
+            index++;
+        }
+        fprintf(outputFile, "%s\n", finalMatch->secondTeam);
         winnerOfTheGame = (Stack *)malloc(sizeof(Stack));
         if (finalMatch->firstTeamScore > finalMatch->secondTeamScore)
         {
@@ -105,7 +148,7 @@ int main(int argc, char *argv[])
         winnerOfTheGame->points--;
         fprintf(outputFile, "\nWINNERS OF ROUND NO:%d\n", numberOfRounds);
         fprintf(outputFile, "%s", winnerOfTheGame->nameOfTeam);
-        int index = strlen(winnerOfTheGame->nameOfTeam);
+        index = strlen(winnerOfTheGame->nameOfTeam);
         while (index < 34)
         {
             fputc(' ', outputFile);
