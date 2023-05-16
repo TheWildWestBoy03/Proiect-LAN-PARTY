@@ -50,15 +50,6 @@ void enqueueTheMatch(QueueOfMatches *queueOfMatches, QMatch *currentMatch, FILE 
     return;
 }
 
-Stack *getThePlayer(char *nameOfTeam, Player *playersList){
-    Stack *currentPlayerStack = NULL;
-    currentPlayerStack = (Stack*) malloc(sizeof(Stack));
-    currentPlayerStack -> nameOfTeam = (char*)malloc(sizeof(char) * (strlen(nameOfTeam) + 1));
-    strcpy(currentPlayerStack -> nameOfTeam, nameOfTeam);
-    currentPlayerStack -> playersList = playersList;
-    return currentPlayerStack;
-}
-
 QMatch *setTheMatch(QMatch *someMatch, QMatch *aux)
 {
     someMatch->next = NULL;
