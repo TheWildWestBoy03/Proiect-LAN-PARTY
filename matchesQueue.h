@@ -20,4 +20,3 @@ void deleteTheQueue(QueueOfMatches *queueOfMatches);
 QMatch *dequeueOfMatches(QueueOfMatches *queueOfMatches, Stack **winnerStack, Stack **loserStack);
 int isQueueOfMatchesEmpty(QueueOfMatches *queueOfMatches);
 QMatch *setTheMatch(QMatch *someMatch, QMatch *aux);
-Stack *getThePlayer(char *nameOfTeam, Player *playersList);
