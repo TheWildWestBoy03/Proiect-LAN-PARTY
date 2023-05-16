@@ -2,23 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct WinnersTree
-{
+typedef struct WinnersTree{
     char *nameOfTeam;
-    float points;
+    double points;
     struct WinnersTree *left, *right;
-} WinnersTree;
+}WinnersTree;
 
-typedef struct AVLNodeBuilding
-{
+typedef struct AVLNodeBuilding{
     char *nameOfTeam;
-    float points;
+    double points;
     struct AVLNodeBuilding *left, *right;
     int nodeHeight;
-} AVLNode;
+}AVLNode;
 
-WinnersTree *createTheNode(char *nameOfTeam, float points);
-WinnersTree *addTeamInTree(WinnersTree *BinarySearchTreeRoot, char *nameOfTeam, float points);
+WinnersTree *createTheNode(char *nameOfTeam, double points);
+WinnersTree *addTeamInTree(WinnersTree *BinarySearchTreeRoot, char *nameOfTeam, double points);
 void inorder(WinnersTree *BinarySearchTreeRoot, FILE **outputFile);
 void deleteTheTree(WinnersTree **BinarySearchTreeRoot);
 AVLNode *createAVLNode(char *nameOfTeam, double points);
@@ -27,5 +25,3 @@ AVLNode *rotateToRight(AVLNode *rootSubtree);
 AVLNode *rotateToLeft(AVLNode *rootSubtree);
 AVLNode *insertInAVL(AVLNode *AVLRoot, char *nameOfTeam, double points);
 int max(int x, int y);
-AVLNode *leftRightRotate(AVLNode *AVLRoot);
-AVLNode *rightLeftRotate(AVLNode *AVLRoot);

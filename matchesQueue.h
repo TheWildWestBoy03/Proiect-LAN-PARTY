@@ -1,17 +1,15 @@
 #include "stackOfWinners.h"
 
-typedef struct QMatch
-{
+typedef struct QMatch{
     char *firstTeam, *secondTeam;
-    float firstTeamScore, secondTeamScore;
+    double firstTeamScore, secondTeamScore;
     Player *firstTeamPlayers, *secondTeamPlayers;
     struct QMatch *next;
-} QMatch;
+}QMatch;
 
-typedef struct QueueOfMatches
-{
+typedef struct QueueOfMatches{
     struct QMatch *firstMatch, *lastMatch;
-} QueueOfMatches;
+}QueueOfMatches;
 
 QueueOfMatches *createTheQueue();
 void enqueueTheMatch(QueueOfMatches *queueOfMatches, QMatch *currentMatch, FILE **outputFile);
