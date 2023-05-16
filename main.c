@@ -88,6 +88,7 @@ int main(int argc, char *argv[])
     openTheFile(&outputFile, "wt", argv[3]);
     positionOfLastRequest = readTheRequests(&requestFiles, positionOfLastRequest, argv);
     readingData(positionOfLastRequest, &numberOfTeams, &teamsFiles, &listOfTeamsHead, argv);
+    // eliminateTheTeamsUtil(&listOfTeamsHead, numberOfTeams);
     if (positionOfLastRequest == 1)
     {
         solveFirstTask(&listOfTeamsHead, &outputFile);
@@ -184,7 +185,7 @@ int main(int argc, char *argv[])
             fputc(' ', outputFile);
             index++;
         }
-        fprintf(outputFile, "-  %.2lf\n", winnerOfTheGame->points);
+        fprintf(outputFile, "-  %.2f\n", winnerOfTheGame->points);
         if (positionOfLastRequest >= 4)
         {
             WinnersList *copy = gameWinners;
@@ -196,15 +197,16 @@ int main(int argc, char *argv[])
             }
             inorder(binarySearchTreeRoot, &outputFile);
         }
-
-        if (positionOfLastRequest >= 5)
-        {
+        
+        if(positionOfLastRequest >= 5){
             createTheLeaderboard(&leaderboard, binarySearchTreeRoot);
-            WinnersList *copyOfLeaderboard = leaderboard;
-            while (copyOfLeaderboard != NULL)
-            {
-                avlRoot = insertInAVL(avlRoot, copyOfLeaderboard->nameOfWinnersTeam, copyOfLeaderboard->points);
-                copyOfLeaderboard = copyOfLeaderboard->next;
+            WinnersList *copyOfLeaderboard = leaderboard, *copy = leaderboard;
+            while(copy){
+                copy = copy -> next;
+            }
+            while(copyOfLeaderboard != NULL){
+                avlRoot = insertInAVL(avlRoot, copyOfLeaderboard -> nameOfWinnersTeam, copyOfLeaderboard -> points);
+                copyOfLeaderboard = copyOfLeaderboard -> next;
             }
 
             fprintf(outputFile, "\nTHE LEVEL 2 TEAMS ARE: \n%s\n", avlRoot->left->left->nameOfTeam);

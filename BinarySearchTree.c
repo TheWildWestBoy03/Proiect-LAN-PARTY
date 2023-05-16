@@ -1,6 +1,6 @@
 #include "BinarySearchTree.h"
 
-WinnersTree *createTheNode(char *nameOfTeam, double points)
+WinnersTree *createTheNode(char *nameOfTeam, float points)
 {
     WinnersTree *winnersTreeNode = (WinnersTree *)malloc(sizeof(WinnersTree));
     winnersTreeNode->nameOfTeam = (char *)malloc(strlen(nameOfTeam) + 1);
@@ -13,7 +13,7 @@ int max(int x, int y)
 {
     return (x >= y) ? x : y;
 }
-WinnersTree *addTeamInTree(WinnersTree *BinarySearchTreeRoot, char *nameOfTeam, double points)
+WinnersTree *addTeamInTree(WinnersTree *BinarySearchTreeRoot, char *nameOfTeam, float points)
 {
     if (BinarySearchTreeRoot == NULL)
     {
@@ -54,7 +54,7 @@ void inorder(WinnersTree *BinarySearchTreeRoot, FILE **outputFile)
             index++;
         }
         fprintf(*outputFile, "-  ");
-        fprintf(*outputFile, "%.2lf\n", BinarySearchTreeRoot->points);
+        fprintf(*outputFile, "%.2f\n", BinarySearchTreeRoot->points);
         inorder(BinarySearchTreeRoot->right, &*outputFile);
     }
 }
@@ -73,6 +73,7 @@ void deleteTheTree(WinnersTree **BinarySearchTreeRoot)
     *BinarySearchTreeRoot = NULL;
 }
 
+<<<<<<< HEAD
 AVLNode *createAVLNode(char *nameOfTeam, double points)
 {
     AVLNode *avlWinnerNode = (AVLNode *)malloc(sizeof(AVLNode));
@@ -81,6 +82,15 @@ AVLNode *createAVLNode(char *nameOfTeam, double points)
     strcpy(avlWinnerNode->nameOfTeam, nameOfTeam);
     avlWinnerNode->points = points;
     avlWinnerNode->nodeHeight = 1;
+=======
+AVLNode *createAVLNode(char *nameOfTeam, float points){
+    AVLNode *avlWinnerNode = (AVLNode*)malloc(sizeof(AVLNode));
+    avlWinnerNode -> left = avlWinnerNode -> right = NULL;
+    avlWinnerNode -> nameOfTeam = (char*)malloc(strlen(nameOfTeam)+1);
+    strcpy(avlWinnerNode -> nameOfTeam, nameOfTeam);
+    avlWinnerNode -> points = points;
+    avlWinnerNode -> nodeHeight = 1;
+>>>>>>> parent of d755007 (All requests for this homework are done. Still i need to delete the date structures.)
     return avlWinnerNode;
 }
 
@@ -129,10 +139,15 @@ int getBalance(AVLNode *subtreeNode)
     }
     return getTheHeight(subtreeNode->left) - getTheHeight(subtreeNode->right);
 }
+<<<<<<< HEAD
 AVLNode *insertInAVL(AVLNode *AVLRoot, char *nameOfTeam, double points)
 {
     if (AVLRoot == NULL)
     {
+=======
+AVLNode *insertInAVL(AVLNode *AVLRoot, char *nameOfTeam, float points){
+    if(AVLRoot == NULL){
+>>>>>>> parent of d755007 (All requests for this homework are done. Still i need to delete the date structures.)
         AVLRoot = createAVLNode(nameOfTeam, points);
     }
     if (AVLRoot->points < points)

@@ -6,7 +6,7 @@
 typedef struct Stack
 {
     char *nameOfTeam;
-    double points;
+    float points;
     struct Stack *next;
     Player *playersList;
 } Stack;
