@@ -1,78 +1,5 @@
 #include "matchesQueue.h"
 
-void solveFirstTask(Team **listOfTeamsHead, FILE **outputFile)
-{
-    displayTheList(*listOfTeamsHead, outputFile);
-    *listOfTeamsHead = deleteList(*listOfTeamsHead);
-    return;
-}
-
-void solveSecondTask(Team **listOfTeamsHead, FILE **outputFile, int numberOfTeams)
-{
-    eliminateTheTeamsUtil(listOfTeamsHead, &numberOfTeams, outputFile);
-    displayTheList(*listOfTeamsHead, outputFile);
-    return;
-}
-void solveThirdTask(){
-
-}
-FILE *printQueueLine(FILE *outputFile, QMatch *currentMatch)
-{
-    fprintf(outputFile, "%s", currentMatch->firstTeam);
-    int index = strlen(currentMatch->firstTeam);
-    while (index < 33)
-    {
-        fprintf(outputFile, " ");
-        index++;
-    }
-    fprintf(outputFile, "-");
-    while (index < 68 - strlen(currentMatch->secondTeam) - 2)
-    {
-        fprintf(outputFile, " ");
-        index++;
-    }
-    fprintf(outputFile, "%s\n", currentMatch->secondTeam);
-    return outputFile;
-}
-FILE *printStackLine(FILE *outputFile, Stack *currentWinner, Stack *currentWinnerOpponent)
-{
-    fprintf(outputFile, "%s", currentWinner->nameOfTeam);
-    int index = 0;
-    index += strlen(currentWinner->nameOfTeam);
-    while (index < 34)
-    {
-        fputc(' ', outputFile);
-        index++;
-    }
-    fprintf(outputFile, "-  %.2f\n", currentWinner->points);
-    index = 0;
-    fprintf(outputFile, "%s", currentWinnerOpponent->nameOfTeam);
-    index += strlen(currentWinnerOpponent->nameOfTeam);
-    while (index < 34)
-    {
-        fputc(' ', outputFile);
-        index++;
-    }
-    fprintf(outputFile, "-  %.2f\n", currentWinnerOpponent->points);
-    return outputFile;
-}
-
-WinnersList *getTheWinners(WinnersList *winners, Stack *currentWinner, Stack *currentWinnerOpponent){
-    WinnersList *currentWinnerInList = NULL;
-    currentWinnerInList = (WinnersList *)malloc(sizeof(WinnersList));
-    currentWinnerInList->nameOfWinnersTeam = (char *)malloc(sizeof(char) * (strlen(currentWinner->nameOfTeam) + 1));
-    strcpy(currentWinnerInList->nameOfWinnersTeam, currentWinner->nameOfTeam);
-    currentWinnerInList->points = currentWinner->points;
-    currentWinnerInList->next = NULL;
-    addTheWinners(&winners, currentWinnerInList);
-    currentWinnerInList = (WinnersList *)malloc(sizeof(WinnersList));
-    currentWinnerInList->points = currentWinnerOpponent->points;
-    currentWinnerInList->nameOfWinnersTeam = (char *)malloc(sizeof(char) * (strlen(currentWinnerOpponent->nameOfTeam) + 1));
-    currentWinnerInList->next = NULL;
-    strcpy(currentWinnerInList->nameOfWinnersTeam, currentWinnerOpponent->nameOfTeam);
-    addTheWinners(&winners, currentWinnerInList);
-    return winners;
-}
 int main(int argc, char *argv[])
 {
     int numberOfTeams, positionOfLastRequest = 0, numberOfRounds = 1;
@@ -199,13 +126,11 @@ int main(int argc, char *argv[])
         
         if(positionOfLastRequest >= 5){
             createTheLeaderboard(&leaderboard, binarySearchTreeRoot);
-            WinnersList *copyOfLeaderboard = leaderboard, *copy = leaderboard;
-            while(copy){
-                copy = copy -> next;
-            }
-            while(copyOfLeaderboard != NULL){
-                avlRoot = insertInAVL(avlRoot, copyOfLeaderboard -> nameOfWinnersTeam, copyOfLeaderboard -> points);
-                copyOfLeaderboard = copyOfLeaderboard -> next;
+            WinnersList *copyOfLeaderboard = leaderboard;
+            while (copyOfLeaderboard != NULL)
+            {
+                avlRoot = insertInAVL(avlRoot, copyOfLeaderboard->nameOfWinnersTeam, copyOfLeaderboard->points);
+                copyOfLeaderboard = copyOfLeaderboard->next;
             }
 
             fprintf(outputFile, "\nTHE LEVEL 2 TEAMS ARE: \n%s\n", avlRoot->left->left->nameOfTeam);
