@@ -9,13 +9,8 @@ typedef struct Team
     char *nameOfTeam;
     struct Team *next;
     Player *playersHead;
-<<<<<<< HEAD
     double medium;
 } Team;
-=======
-    float medium;
-}Team;
->>>>>>> parent of d755007 (All requests for this homework are done. Still i need to delete the date structures.)
 
 typedef struct WinnersList
 {
@@ -37,12 +32,7 @@ void closeTheFile(FILE **input);
 int readTheRequests(FILE **requestsFile, int positionOfTheLastRequest, char *argv[]);
 void readingData(int lastRequest, int *numberOfTeams, FILE **teamsFile, Team **listOfTeamsHead, char *argv[]);
 void addTheWinners(WinnersList **winnersListHead, WinnersList *currentTeam);
-<<<<<<< HEAD
 double updateTheScore(Player **playersList);
 void createTheLeaderboard(WinnersList **leaderboard, WinnersTree *BinarySearchTreeRoot);
 Team *deleteList(Team *listOfTeams);
 Player *defineThePlayer(FILE *teamsFile);
-=======
-float updateTheScore(Player **playersList);
-void createTheLeaderboard(WinnersList **leaderboard, WinnersTree *BinarySearchTreeRoot);
->>>>>>> parent of d755007 (All requests for this homework are done. Still i need to delete the date structures.)
