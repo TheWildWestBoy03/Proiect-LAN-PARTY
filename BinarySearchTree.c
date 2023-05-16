@@ -106,6 +106,16 @@ AVLNode *rotateToLeft(AVLNode *rootSubtree){
     return rightNode;
 }
 
+AVLNode *leftRightRotate(AVLNode *AVLRoot){
+    AVLRoot -> left = rotateToLeft(AVLRoot -> left);
+    return rotateToRight(AVLRoot);
+}
+
+AVLNode *rightLeftRotate(AVLNode *AVLRoot){
+    AVLRoot -> right = rotateToLeft(AVLRoot -> right);
+    return rotateToLeft(AVLRoot);
+}
+
 int getBalance(AVLNode *subtreeNode){
     if(subtreeNode == NULL){
         return 0;
@@ -136,41 +146,50 @@ AVLNode *insertInAVL(AVLNode *AVLRoot, char *nameOfTeam, double points){
     int balance = getBalance(AVLRoot);
 
     if(balance < -1){
-        if(AVLRoot -> points > points){
+        if(AVLRoot -> right -> points > points){
             return rotateToLeft(AVLRoot);
         }
-        if(AVLRoot -> points == points){
-            if(strcmp(AVLRoot -> nameOfTeam, nameOfTeam) > 0){
+        if(AVLRoot -> right -> points == points){
+            if(strcmp(AVLRoot -> right -> nameOfTeam, nameOfTeam) > 0){
                 return rotateToLeft(AVLRoot);
             }
             else if(strcmp(AVLRoot -> nameOfTeam, nameOfTeam) < 0){
-                AVLRoot -> left = rotateToLeft(AVLRoot -> left);
-                return rotateToRight(AVLRoot);
+                return leftRightRotate(AVLRoot);
             }
         }
-        if(AVLRoot -> points < points){
-            AVLRoot -> right = rotateToRight(AVLRoot -> right);
-            return rotateToLeft(AVLRoot);
+        if(AVLRoot -> right -> points < points){
+           
+            return rightLeftRotate(AVLRoot);
         }
     }
     
     if(balance > 1){
-        if(AVLRoot -> points > points){
-            AVLRoot -> left = rotateToLeft(AVLRoot -> left);
-            return rotateToRight(AVLRoot);
+        if(AVLRoot -> left -> points > points){
+            return leftRightRotate(AVLRoot);
         }
-        if(AVLRoot -> points == points){
+        if(AVLRoot -> left -> points == points){
             if(strcmp(AVLRoot -> nameOfTeam, nameOfTeam) > 0){
-                AVLRoot -> left = rotateToLeft(AVLRoot -> left);
-                    return rotateToRight(AVLRoot);
+                return leftRightRotate(AVLRoot);
             }
             else if(strcmp(AVLRoot -> nameOfTeam, nameOfTeam) < 0){
                 return rotateToRight(AVLRoot);
             }
         }
-        if(AVLRoot -> points < points){
+        if(AVLRoot -> left -> points < points){
             return rotateToRight(AVLRoot);
         }
     }
     return AVLRoot;
+}
+
+void deleteAVLTree(AVLNode *AVLRoot){
+    if(AVLRoot != NULL){
+        deleteAVLTree(AVLRoot -> left);
+        deleteAVLTree(AVLRoot -> right);
+        free(AVLRoot -> nameOfTeam);
+        AVLRoot -> nameOfTeam = NULL;
+        free(AVLRoot);
+        AVLRoot = NULL;
+    }
+    return;
 }

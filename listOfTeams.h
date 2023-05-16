@@ -32,3 +32,4 @@ void readingData(int lastRequest, int *numberOfTeams, FILE **teamsFile, Team **l
 void addTheWinners(WinnersList **winnersListHead, WinnersList *currentTeam);
 double updateTheScore(Player **playersList);
 void createTheLeaderboard(WinnersList **leaderboard, WinnersTree *BinarySearchTreeRoot);
+Team *deleteTheList(Team *listOfTeamsHead);

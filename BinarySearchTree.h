@@ -25,3 +25,4 @@ AVLNode *rotateToRight(AVLNode *rootSubtree);
 AVLNode *rotateToLeft(AVLNode *rootSubtree);
 AVLNode *insertInAVL(AVLNode *AVLRoot, char *nameOfTeam, double points);
 int max(int x, int y);
+void deleteAVLTree(AVLNode *AVLRoot);
