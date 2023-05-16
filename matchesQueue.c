@@ -56,6 +56,7 @@ Stack *getThePlayer(char *nameOfTeam, Player *playersList){
     currentPlayerStack -> nameOfTeam = (char*)malloc(sizeof(char) * (strlen(nameOfTeam) + 1));
     strcpy(currentPlayerStack -> nameOfTeam, nameOfTeam);
     currentPlayerStack -> playersList = playersList;
+    currentPlayerStack -> next = NULL;
     return currentPlayerStack;
 }
 
