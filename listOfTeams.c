@@ -93,16 +93,11 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
         addingAtBeginning(&*listOfTeamHead, &current);
     }
 }
-<<<<<<< HEAD
 double updateTheScore(Player **playerList)
 {
-=======
-float updateTheScore(Player **playerList){
->>>>>>> parent of d755007 (All requests for this homework are done. Still i need to delete the date structures.)
     Player *playerListCopy = *playerList;
-    float score = 0.00;
+    double score = 0.00;
     int numberOfPlayers = 0;
-<<<<<<< HEAD
     while (playerListCopy != NULL)
     {
         (playerListCopy->points)++;
@@ -116,15 +111,6 @@ float updateTheScore(Player **playerList){
     {
         score = score - 0.001;
     }
-=======
-    while(playerListCopy != NULL){
-        (playerListCopy -> points) ++;
-        numberOfPlayers ++;
-        score += playerListCopy -> points;
-        playerListCopy = playerListCopy -> next;
-    }
-    score /= numberOfPlayers;
->>>>>>> parent of d755007 (All requests for this homework are done. Still i need to delete the date structures.)
     return score;
 }
 void displayTheList(Team *listOfTeamHead, FILE **outputFile)

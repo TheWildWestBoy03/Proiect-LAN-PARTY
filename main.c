@@ -142,7 +142,6 @@ int main(int argc, char *argv[])
                     addTheWinners(&gameWinners, currentWinnerInList);
                 }
                 scheduledMatch->secondTeam = (char *)malloc(sizeof(char) * (strlen(currentWinnerOpponent->nameOfTeam) + 1));
-                printf("Unde pula mea e segfaultu? \n");
                 strcpy(scheduledMatch->secondTeam, currentWinnerOpponent->nameOfTeam);
                 scheduledMatch->secondTeamScore = currentWinnerOpponent->points;
                 scheduledMatch->secondTeamPlayers = currentWinnerOpponent->playersList;

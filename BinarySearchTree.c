@@ -73,7 +73,6 @@ void deleteTheTree(WinnersTree **BinarySearchTreeRoot)
     *BinarySearchTreeRoot = NULL;
 }
 
-<<<<<<< HEAD
 AVLNode *createAVLNode(char *nameOfTeam, double points)
 {
     AVLNode *avlWinnerNode = (AVLNode *)malloc(sizeof(AVLNode));
@@ -82,15 +81,6 @@ AVLNode *createAVLNode(char *nameOfTeam, double points)
     strcpy(avlWinnerNode->nameOfTeam, nameOfTeam);
     avlWinnerNode->points = points;
     avlWinnerNode->nodeHeight = 1;
-=======
-AVLNode *createAVLNode(char *nameOfTeam, float points){
-    AVLNode *avlWinnerNode = (AVLNode*)malloc(sizeof(AVLNode));
-    avlWinnerNode -> left = avlWinnerNode -> right = NULL;
-    avlWinnerNode -> nameOfTeam = (char*)malloc(strlen(nameOfTeam)+1);
-    strcpy(avlWinnerNode -> nameOfTeam, nameOfTeam);
-    avlWinnerNode -> points = points;
-    avlWinnerNode -> nodeHeight = 1;
->>>>>>> parent of d755007 (All requests for this homework are done. Still i need to delete the date structures.)
     return avlWinnerNode;
 }
 
@@ -139,15 +129,10 @@ int getBalance(AVLNode *subtreeNode)
     }
     return getTheHeight(subtreeNode->left) - getTheHeight(subtreeNode->right);
 }
-<<<<<<< HEAD
 AVLNode *insertInAVL(AVLNode *AVLRoot, char *nameOfTeam, double points)
 {
     if (AVLRoot == NULL)
     {
-=======
-AVLNode *insertInAVL(AVLNode *AVLRoot, char *nameOfTeam, float points){
-    if(AVLRoot == NULL){
->>>>>>> parent of d755007 (All requests for this homework are done. Still i need to delete the date structures.)
         AVLRoot = createAVLNode(nameOfTeam, points);
     }
     if (AVLRoot->points < points)
