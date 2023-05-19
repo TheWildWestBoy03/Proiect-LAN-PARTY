@@ -45,3 +45,15 @@ int isTheStackEmpty(Stack *theStack)
 {
     return (theStack == NULL);
 }
+void deleteStack(Stack **stackToDelete){
+    while(isTheStackEmpty(*stackToDelete) == 0){
+        Stack *nodeToDelete = *stackToDelete;
+        *stackToDelete = (*stackToDelete) -> next;
+        free(nodeToDelete -> nameOfTeam);
+        nodeToDelete -> nameOfTeam = NULL;
+        nodeToDelete -> playersList = NULL;
+        free(nodeToDelete);
+        nodeToDelete = NULL;
+    }
+    return;
+}

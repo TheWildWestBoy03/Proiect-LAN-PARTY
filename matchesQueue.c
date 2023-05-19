@@ -10,6 +10,7 @@ QueueOfMatches *createTheQueue()
     newQueue->firstMatch = newQueue->lastMatch = NULL;
     return newQueue;
 }
+
 void enqueueUtil(QueueOfMatches *queueOfMatches, Team *listOfTeamsHead, FILE **outputFile)
 {
     while (listOfTeamsHead != NULL)
@@ -32,14 +33,17 @@ void enqueueUtil(QueueOfMatches *queueOfMatches, Team *listOfTeamsHead, FILE **o
     }
     return;
 }
-Stack *getTheTeam(char *nameOfTeam, Player *playersList){
-    Stack *currentTeam = (Stack*)malloc(sizeof(Stack));
-    currentTeam -> nameOfTeam = (char*)malloc(sizeof(char) * (strlen(nameOfTeam) + 1));
-    strcpy(currentTeam -> nameOfTeam, nameOfTeam);
-    currentTeam -> playersList = playersList;
-    currentTeam -> next = NULL;
+
+Stack *getTheTeam(char *nameOfTeam, Player *playersList)
+{
+    Stack *currentTeam = (Stack *)malloc(sizeof(Stack));
+    currentTeam->nameOfTeam = (char *)malloc(sizeof(char) * (strlen(nameOfTeam) + 1));
+    strcpy(currentTeam->nameOfTeam, nameOfTeam);
+    currentTeam->playersList = playersList;
+    currentTeam->next = NULL;
     return currentTeam;
 }
+
 void enqueueTheMatch(QueueOfMatches *queueOfMatches, QMatch *currentMatch, FILE **outputFile)
 {
     if (queueOfMatches->lastMatch == NULL)
@@ -86,31 +90,47 @@ QMatch *dequeueOfMatches(QueueOfMatches *queueOfMatches, Stack **winnerStack, St
     currentLoser->next = currentWinner->next = NULL;
     if (matchToGet->firstTeamScore > matchToGet->secondTeamScore)
     {
-        currentWinner = getTheTeam(matchToGet -> firstTeam, matchToGet -> firstTeamPlayers);
-        currentWinner -> points = updateTheScore(&(currentWinner -> playersList));
+        currentWinner = getTheTeam(matchToGet->firstTeam, matchToGet->firstTeamPlayers);
+        currentWinner->points = updateTheScore(&(currentWinner->playersList));
         pushTheWinner(&*winnerStack, currentWinner);
-        currentLoser = getTheTeam(matchToGet -> secondTeam, matchToGet -> secondTeamPlayers);
-        currentLoser -> points = matchToGet -> secondTeamScore;
-        pushTheWinner(&*loserStack, currentLoser);   
+        currentLoser = getTheTeam(matchToGet->secondTeam, matchToGet->secondTeamPlayers);
+        currentLoser->points = matchToGet->secondTeamScore;
+        pushTheWinner(&*loserStack, currentLoser);
     }
     else
-    {   
-        currentWinner = getTheTeam(matchToGet -> secondTeam, matchToGet -> secondTeamPlayers);
-        currentWinner -> points = updateTheScore(&(currentWinner -> playersList));
+    {
+        currentWinner = getTheTeam(matchToGet->secondTeam, matchToGet->secondTeamPlayers);
+        currentWinner->points = updateTheScore(&(currentWinner->playersList));
         pushTheWinner(&*winnerStack, currentWinner);
-        currentLoser = getTheTeam(matchToGet -> secondTeam, matchToGet -> secondTeamPlayers);
+        currentLoser = getTheTeam(matchToGet->secondTeam, matchToGet->secondTeamPlayers);
         currentLoser->points = (matchToGet->firstTeamScore);
         pushTheWinner(&*loserStack, currentLoser);
     }
     queueOfMatches->firstMatch = (queueOfMatches->firstMatch)->next;
     free(aux->firstTeam);
     free(aux->secondTeam);
-    aux -> firstTeamPlayers = NULL;
-    aux -> secondTeamPlayers = NULL;
+    aux->firstTeamPlayers = NULL;
+    aux->firstTeam = NULL;
+    aux->secondTeamPlayers = NULL;
+    aux->secondTeam = NULL;
     free(aux);
     return matchToGet;
 }
 
+void deleteTheMatchesQueue(QueueOfMatches *queueOfMatches)
+{
+    while (isQueueOfMatchesEmpty(queueOfMatches) == 0)
+    {
+        QMatch *aux = queueOfMatches->firstMatch;
+        queueOfMatches->firstMatch = queueOfMatches->firstMatch->next;
+        free(aux->firstTeam);
+        free(aux->secondTeam);
+        aux->firstTeam = aux->secondTeam = NULL;
+        aux->firstTeamPlayers = aux->secondTeamPlayers = NULL;
+        free(aux);
+    }
+    return;
+}
 int isQueueOfMatchesEmpty(QueueOfMatches *queueOfMatches)
 {
     return (queueOfMatches->firstMatch == NULL);

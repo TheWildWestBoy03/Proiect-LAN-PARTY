@@ -152,21 +152,12 @@ void deleteTheTeam(Team **current)
 }
 void eliminateTheTeams(Team **listOfTeamsHead)
 {
-    //  printf("In eliminating the teams.");
     Team *copy = *listOfTeamsHead, *dummy;
     if (copy == NULL)
     {
         return;
     }
-    double minimum = copy->medium;
-    while (copy != NULL)
-    {
-        if (minimum > copy->medium)
-        {
-            minimum = copy->medium;
-        }
-        copy = copy->next;
-    }
+    double minimum = getTheMinimum(*listOfTeamsHead);
     dummy = (Team *)malloc(sizeof(Team));
     dummy->next = *listOfTeamsHead;
     dummy->medium = minimum + 10;
@@ -175,19 +166,14 @@ void eliminateTheTeams(Team **listOfTeamsHead)
     {
         if (copy->next->medium == minimum)
         {
-            if (copy->next->next == NULL)
-            {
-                Team *todelete = copy->next;
-                copy->next = NULL;
-                deleteTheTeam(&todelete);
-                todelete = NULL;
+            Team *todelete = copy->next;
+            deleteTheTeam(&todelete);
+            todelete = NULL;
+            if(copy -> next -> next == NULL){
+                copy -> next = NULL;
             }
-            else
-            {
-                Team *todelete = copy->next;
-                copy->next = copy->next->next;
-                deleteTheTeam(&todelete);
-                todelete = NULL;
+            else {
+                copy -> next = copy -> next -> next;
             }
             break;
         }
@@ -244,4 +230,30 @@ Team *deleteTheList(Team *listOfTeamsHead)
         teamToDelete -> playersHead = NULL;
     }
     return listOfTeamsHead;
+}
+
+WinnersList *deleteWinners(WinnersList *winnersList){
+    while(winnersList != NULL){
+        WinnersList *winnerToDelete = winnersList;
+        winnersList = winnersList -> next;
+        free(winnerToDelete -> nameOfWinnersTeam);
+        winnerToDelete -> nameOfWinnersTeam = NULL;
+        free(winnerToDelete);
+        winnerToDelete = NULL;
+    }
+    return winnersList;
+}
+
+double getTheMinimum(Team* listOfTeamsHead){
+    Team *copy = listOfTeamsHead;
+    double minimum = copy->medium;
+    while (copy != NULL)
+    {
+        if (minimum > copy->medium)
+        {
+            minimum = copy->medium;
+        }
+        copy = copy->next;
+    }
+    return minimum;
 }
