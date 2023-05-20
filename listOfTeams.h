@@ -35,3 +35,5 @@ void createTheLeaderboard(WinnersList **leaderboard, WinnersTree *BinarySearchTr
 Team *deleteTheList(Team *listOfTeamsHead);
 WinnersList *deleteWinners(WinnersList *winnersList);
 double getTheMinimum(Team* listOfTeamsHead);
+Team *initializeTheTeam(Team *current, char *nameOfTeam, int numberOfMembers);
+Player *assetThePlayer(char *bufferFirstNameOfMember, char *bufferSecondNameOfMember, int bufferPoints);

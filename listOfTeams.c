@@ -27,12 +27,31 @@ void addingPlayer(Player **playerHead, Player *currentPlayer)
     *playerHead = currentPlayer;
     return;
 }
+Player *assetThePlayer(char *bufferFirstNameOfMember, char *bufferSecondNameOfMember, int bufferPoints){
+    Player *currentPlayer = NULL;
+    currentPlayer = (Player *)malloc(sizeof(Player));
+    currentPlayer->next = NULL;
+    currentPlayer->firstName = (char *)malloc(strlen(bufferFirstNameOfMember) + 1);
+    currentPlayer->secondName = (char *)malloc(strlen(bufferSecondNameOfMember) + 1);
+    currentPlayer->points = bufferPoints;
+    strcpy(currentPlayer->firstName, bufferFirstNameOfMember);
+    strcpy(currentPlayer->secondName, bufferSecondNameOfMember);
+    return currentPlayer;
+}
+
+Team *initializeTheTeam(Team *current, char *nameOfTeam, int numberOfMembers){
+    current->nameOfTeam = (char *)malloc(sizeof(char) * (strlen(nameOfTeam) + 1));
+    strcpy(current->nameOfTeam, nameOfTeam);
+    current->next = NULL;
+    current->numberOfMembers = numberOfMembers;
+    current->medium = 0;
+    current -> playersHead = NULL;
+    return current;
+}
 void displayThePlayers(Player *playerHead, FILE **outputFile)
 {
     while (playerHead != NULL)
     {
-        // fprintf(*outputFile, "%s %s %d\n", playerHead->firstName, playerHead->secondName, playerHead->points);
-        //  printf("%s %s %d -----> ", playerHead->firstName, playerHead->secondName, playerHead->points);
         playerHead = playerHead->next;
     }
     return;
@@ -61,26 +80,15 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
         {
             nameOfTeam[strlen(nameOfTeam) - 1] = 0;
         }
-        current->nameOfTeam = (char *)malloc(sizeof(char) * (strlen(nameOfTeam) + 1));
-        current->next = NULL;
-        current->numberOfMembers = numberOfMembers;
-        strcpy(current->nameOfTeam, nameOfTeam);
+        current = initializeTheTeam(current, nameOfTeam, numberOfMembers);
         Player *currentPlayer = NULL;
-        current->playersHead = NULL;
-        current->medium = 0;
         for (int j = 0; j < numberOfMembers; j++)
         {
-            currentPlayer = (Player *)malloc(sizeof(Player));
-            currentPlayer->next = NULL;
             char bufferFirstNameOfMember[50], bufferSecondNameOfMember[50];
             int bufferPoints;
             fscanf(teamsFile, "%s %s %d\n", bufferFirstNameOfMember, bufferSecondNameOfMember, &bufferPoints);
-            currentPlayer->firstName = (char *)malloc(strlen(bufferFirstNameOfMember) + 1);
-            currentPlayer->secondName = (char *)malloc(strlen(bufferSecondNameOfMember) + 1);
-            currentPlayer->points = bufferPoints;
+            currentPlayer = assetThePlayer(bufferFirstNameOfMember, bufferSecondNameOfMember, bufferPoints);
             current->medium += currentPlayer->points;
-            strcpy(currentPlayer->firstName, bufferFirstNameOfMember);
-            strcpy(currentPlayer->secondName, bufferSecondNameOfMember);
             addingPlayer(&(current->playersHead), currentPlayer);
         }
         fscanf(teamsFile, "\n");
@@ -88,6 +96,7 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
         addingAtBeginning(&*listOfTeamHead, &current);
     }
 }
+
 double updateTheScore(Player **playerList)
 {
     Player *playerListCopy = *playerList;
