@@ -156,8 +156,14 @@ void deleteTheTeam(Team **current)
     {
         Player *todelete = copy->playersHead;
         copy->playersHead = copy->playersHead->next;
+        free(todelete -> firstName);
+        free(todelete -> secondName);
         free(todelete);
+        todelete = NULL;
     }
+    free(*current);
+    *current = NULL;
+    return;
 }
 void eliminateTheTeams(Team **listOfTeamsHead)
 {
