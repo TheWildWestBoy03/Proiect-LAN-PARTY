@@ -23,19 +23,19 @@ int main(int argc, char *argv[])
     if (positionOfLastRequest >= 3)
     {
         solveTheThirdTaskPt1(&listOfTeamsHead, &outputFile, &numberOfTeams);
-        simulateTheGame(queueOfMatches, &outputFile, listOfTeamsHead, numberOfTeams, &gameWinners);
+        simulateTheGame(queueOfMatches, &outputFile, listOfTeamsHead, numberOfTeams, &gameWinners, positionOfLastRequest);
+        listOfTeamsHead = deleteTheList(listOfTeamsHead);
     }
     if (positionOfLastRequest >= 4)
     {
-        solveTheFourthTask(gameWinners, &outputFile, &binarySearchTreeRoot);
+        solveTheFourthTask(gameWinners, &outputFile, &binarySearchTreeRoot, positionOfLastRequest);
     }
     if (positionOfLastRequest >= 5)
     {
         solveTheLastTask(binarySearchTreeRoot, &avlRoot, &outputFile);
-        listOfTeamsHead = deleteTheList(listOfTeamsHead);
         deleteTheTree(&binarySearchTreeRoot);
-        deleteAVLTree(&avlRoot);
     }
+
     closeTheFile(&outputFile);
     return 0;
 }
