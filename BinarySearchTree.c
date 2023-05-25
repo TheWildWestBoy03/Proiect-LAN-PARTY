@@ -9,8 +9,9 @@ WinnersTree *createTheNode(char *nameOfTeam, double points)
     winnersTreeNode->points = points;
     return winnersTreeNode;
 }
-int max(int x, int y){
-    return (x >= y)? x : y;
+int max(int x, int y)
+{
+    return (x >= y) ? x : y;
 }
 WinnersTree *addTeamInTree(WinnersTree *BinarySearchTreeRoot, char *nameOfTeam, double points)
 {
@@ -58,138 +59,170 @@ void inorder(WinnersTree *BinarySearchTreeRoot, FILE **outputFile)
     }
 }
 
-void deleteTheTree(WinnersTree **BinarySearchTreeRoot){
-    if( (*BinarySearchTreeRoot) != NULL){
-        deleteTheTree(&((*BinarySearchTreeRoot) -> left));
-        deleteTheTree(&((*BinarySearchTreeRoot) -> right));
-        free( (*BinarySearchTreeRoot) -> nameOfTeam);
-        (*BinarySearchTreeRoot) -> nameOfTeam = NULL;
-        (*BinarySearchTreeRoot) -> left = (*BinarySearchTreeRoot) -> right = NULL;
+void deleteTheTree(WinnersTree **BinarySearchTreeRoot)
+{
+    if ((*BinarySearchTreeRoot) != NULL)
+    {
+        deleteTheTree(&((*BinarySearchTreeRoot)->left));
+        deleteTheTree(&((*BinarySearchTreeRoot)->right));
+        free((*BinarySearchTreeRoot)->nameOfTeam);
+        (*BinarySearchTreeRoot)->nameOfTeam = NULL;
+        (*BinarySearchTreeRoot)->left = (*BinarySearchTreeRoot)->right = NULL;
         free((*BinarySearchTreeRoot));
     }
     *BinarySearchTreeRoot = NULL;
 }
 
-AVLNode *createAVLNode(char *nameOfTeam, double points){
-    AVLNode *avlWinnerNode = (AVLNode*)malloc(sizeof(AVLNode));
-    avlWinnerNode -> left = avlWinnerNode -> right = NULL;
-    avlWinnerNode -> nameOfTeam = (char*)malloc(strlen(nameOfTeam)+1);
-    strcpy(avlWinnerNode -> nameOfTeam, nameOfTeam);
-    avlWinnerNode -> points = points;
-    avlWinnerNode -> nodeHeight = 1;
+AVLNode *createAVLNode(char *nameOfTeam, double points)
+{
+    AVLNode *avlWinnerNode = (AVLNode *)malloc(sizeof(AVLNode));
+    avlWinnerNode->left = avlWinnerNode->right = NULL;
+    avlWinnerNode->nameOfTeam = (char *)malloc(strlen(nameOfTeam) + 1);
+    strcpy(avlWinnerNode->nameOfTeam, nameOfTeam);
+    avlWinnerNode->points = points;
+    avlWinnerNode->nodeHeight = 1;
     return avlWinnerNode;
 }
 
-int getTheHeight(AVLNode *AVLRoot){
-    if(AVLRoot == NULL){
+int getTheHeight(AVLNode *AVLRoot)
+{
+    if (AVLRoot == NULL)
+    {
         return 0;
     }
-    return AVLRoot -> nodeHeight;
+    return AVLRoot->nodeHeight;
 }
 
-AVLNode *rotateToRight(AVLNode *rootSubtree){
-    AVLNode *leftNode = rootSubtree -> left;
-    AVLNode *rightSubtreeNode = leftNode -> right;
-    leftNode -> right = rootSubtree; 
-    rootSubtree -> left = rightSubtreeNode;
-    rootSubtree -> nodeHeight = max(getTheHeight(rootSubtree -> left), getTheHeight(rootSubtree -> right)) + 1;
-    leftNode -> nodeHeight = max(getTheHeight(leftNode -> left), getTheHeight(leftNode -> right)) + 1;
+AVLNode *rotateToRight(AVLNode *rootSubtree)
+{
+    AVLNode *leftNode = rootSubtree->left;
+    AVLNode *rightSubtreeNode = leftNode->right;
+    leftNode->right = rootSubtree;
+    rootSubtree->left = rightSubtreeNode;
+    rootSubtree->nodeHeight = max(getTheHeight(rootSubtree->left), getTheHeight(rootSubtree->right)) + 1;
+    leftNode->nodeHeight = max(getTheHeight(leftNode->left), getTheHeight(leftNode->right)) + 1;
     return leftNode;
 }
-AVLNode *rotateToLeft(AVLNode *rootSubtree){
-    AVLNode *rightNode = rootSubtree -> right;
-    AVLNode *leftSubtreeNode = rightNode -> left;
-    rightNode -> left = rootSubtree;
-    rootSubtree -> right = leftSubtreeNode;
-    rootSubtree -> nodeHeight = max(getTheHeight(rootSubtree -> left), getTheHeight(rootSubtree -> right)) + 1;
-    rightNode -> nodeHeight = max(getTheHeight(rightNode -> left), getTheHeight(rightNode -> right)) + 1;
+AVLNode *rotateToLeft(AVLNode *rootSubtree)
+{
+    AVLNode *rightNode = rootSubtree->right;
+    AVLNode *leftSubtreeNode = rightNode->left;
+    rightNode->left = rootSubtree;
+    rootSubtree->right = leftSubtreeNode;
+    rootSubtree->nodeHeight = max(getTheHeight(rootSubtree->left), getTheHeight(rootSubtree->right)) + 1;
+    rightNode->nodeHeight = max(getTheHeight(rightNode->left), getTheHeight(rightNode->right)) + 1;
     return rightNode;
 }
 
-AVLNode *leftRightRotate(AVLNode *AVLRoot){
-    AVLRoot -> left = rotateToLeft(AVLRoot -> left);
+AVLNode *leftRightRotate(AVLNode *AVLRoot)
+{
+    AVLRoot->left = rotateToLeft(AVLRoot->left);
     return rotateToRight(AVLRoot);
 }
 
-AVLNode *rightLeftRotate(AVLNode *AVLRoot){
-    AVLRoot -> right = rotateToLeft(AVLRoot -> right);
+AVLNode *rightLeftRotate(AVLNode *AVLRoot)
+{
+    AVLRoot->right = rotateToLeft(AVLRoot->right);
     return rotateToLeft(AVLRoot);
 }
 
-int getBalance(AVLNode *subtreeNode){
-    if(subtreeNode == NULL){
+int getBalance(AVLNode *subtreeNode)
+{
+    if (subtreeNode == NULL)
+    {
         return 0;
     }
-    return getTheHeight(subtreeNode -> left) - getTheHeight(subtreeNode -> right);
+    return getTheHeight(subtreeNode->left) - getTheHeight(subtreeNode->right);
 }
-AVLNode *insertInAVL(AVLNode *AVLRoot, char *nameOfTeam, double points){
-    if(AVLRoot == NULL){
+AVLNode *insertInAVL(AVLNode *AVLRoot, char *nameOfTeam, double points)
+{
+    if (AVLRoot == NULL)
+    {
         AVLRoot = createAVLNode(nameOfTeam, points);
     }
-    if(AVLRoot -> points < points){
-        AVLRoot -> left = insertInAVL(AVLRoot -> left, nameOfTeam, points);
+    if (AVLRoot->points < points)
+    {
+        AVLRoot->left = insertInAVL(AVLRoot->left, nameOfTeam, points);
     }
-    else if(AVLRoot -> points > points){
-        AVLRoot -> right = insertInAVL(AVLRoot -> right, nameOfTeam, points);
+    else if (AVLRoot->points > points)
+    {
+        AVLRoot->right = insertInAVL(AVLRoot->right, nameOfTeam, points);
     }
-    else if(AVLRoot -> points == points){
+    else if (AVLRoot->points == points)
+    {
 
-        if(strcmp((AVLRoot -> nameOfTeam), nameOfTeam) > 0){
-            AVLRoot -> right = insertInAVL(AVLRoot -> right, nameOfTeam, points);
+        if (strcmp((AVLRoot->nameOfTeam), nameOfTeam) > 0)
+        {
+            AVLRoot->right = insertInAVL(AVLRoot->right, nameOfTeam, points);
         }
-        else if(strcmp((AVLRoot -> nameOfTeam), nameOfTeam) < 0){
-            AVLRoot -> left = insertInAVL(AVLRoot -> left, nameOfTeam, points);
+        else if (strcmp((AVLRoot->nameOfTeam), nameOfTeam) < 0)
+        {
+            AVLRoot->left = insertInAVL(AVLRoot->left, nameOfTeam, points);
         }
     }
-    AVLRoot -> nodeHeight = 1 + max(getTheHeight(AVLRoot -> left), getTheHeight(AVLRoot -> right));
-    
+    AVLRoot->nodeHeight = 1 + max(getTheHeight(AVLRoot->left), getTheHeight(AVLRoot->right));
+
     int balance = getBalance(AVLRoot);
 
-    if(balance < -1){
-        if(AVLRoot -> right -> points > points){
+    if (balance < -1)
+    {
+        if (AVLRoot->right->points > points)
+        {
             return rotateToLeft(AVLRoot);
         }
-        if(AVLRoot -> right -> points == points){
-            if(strcmp(AVLRoot -> right -> nameOfTeam, nameOfTeam) > 0){
+        if (AVLRoot->right->points == points)
+        {
+            if (strcmp(AVLRoot->right->nameOfTeam, nameOfTeam) > 0)
+            {
                 return rotateToLeft(AVLRoot);
             }
-            else if(strcmp(AVLRoot -> nameOfTeam, nameOfTeam) < 0){
+            else if (strcmp(AVLRoot->nameOfTeam, nameOfTeam) < 0)
+            {
                 return leftRightRotate(AVLRoot);
             }
         }
-        if(AVLRoot -> right -> points < points){
-           
+        if (AVLRoot->right->points < points)
+        {
+
             return rightLeftRotate(AVLRoot);
         }
     }
-    
-    if(balance > 1){
-        if(AVLRoot -> left -> points > points){
+
+    if (balance > 1)
+    {
+        if (AVLRoot->left->points > points)
+        {
             return leftRightRotate(AVLRoot);
         }
-        if(AVLRoot -> left -> points == points){
-            if(strcmp(AVLRoot -> nameOfTeam, nameOfTeam) > 0){
+        if (AVLRoot->left->points == points)
+        {
+            if (strcmp(AVLRoot->nameOfTeam, nameOfTeam) > 0)
+            {
                 return leftRightRotate(AVLRoot);
             }
-            else if(strcmp(AVLRoot -> nameOfTeam, nameOfTeam) < 0){
+            else if (strcmp(AVLRoot->nameOfTeam, nameOfTeam) < 0)
+            {
                 return rotateToRight(AVLRoot);
             }
         }
-        if(AVLRoot -> left -> points < points){
+        if (AVLRoot->left->points < points)
+        {
             return rotateToRight(AVLRoot);
         }
     }
     return AVLRoot;
 }
 
-void deleteAVLTree(AVLNode *AVLRoot){
-    if(AVLRoot != NULL){
-        deleteAVLTree(AVLRoot -> left);
-        deleteAVLTree(AVLRoot -> right);
-        free(AVLRoot -> nameOfTeam);
-        AVLRoot -> nameOfTeam = NULL;
-        free(AVLRoot);
-        AVLRoot = NULL;
+void deleteAVLTree(AVLNode **AVLRoot)
+{
+    if (*AVLRoot != NULL)
+    {
+        deleteAVLTree(&((*AVLRoot)->left));
+        deleteAVLTree(&((*AVLRoot)->right));
+        free((*AVLRoot)->nameOfTeam);
+        (*AVLRoot)->nameOfTeam = NULL;
+        free((*AVLRoot));
+        (*AVLRoot) = NULL;
     }
     return;
 }

@@ -184,12 +184,13 @@ void solveTheFourthTask(WinnersList *gameWinners, FILE **outputFile, WinnersTree
     fprintf(*outputFile, "\nTOP 8 TEAMS:\n");
     while (gameWinners != NULL)
     {
-        copy = addTeamInTree(copy, gameWinners ->nameOfWinnersTeam, gameWinners->points);
+        copy = addTeamInTree(copy, gameWinners->nameOfWinnersTeam, gameWinners->points);
         gameWinners = gameWinners->next;
     }
     inorder(copy, outputFile);
     *binarySearchTreeRoot = copy;
-    if(positionOfLastRequest < 5){
+    if (positionOfLastRequest < 5)
+    {
         deleteTheTree(binarySearchTreeRoot);
     }
     gameWinners = deleteWinners(gameWinners);

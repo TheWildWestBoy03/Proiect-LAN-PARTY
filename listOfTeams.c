@@ -27,7 +27,8 @@ void addingPlayer(Player **playerHead, Player *currentPlayer)
     *playerHead = currentPlayer;
     return;
 }
-Player *assetThePlayer(char *bufferFirstNameOfMember, char *bufferSecondNameOfMember, int bufferPoints){
+Player *assetThePlayer(char *bufferFirstNameOfMember, char *bufferSecondNameOfMember, int bufferPoints)
+{
     Player *currentPlayer = NULL;
     currentPlayer = (Player *)malloc(sizeof(Player));
     currentPlayer->next = NULL;
@@ -39,13 +40,14 @@ Player *assetThePlayer(char *bufferFirstNameOfMember, char *bufferSecondNameOfMe
     return currentPlayer;
 }
 
-Team *initializeTheTeam(Team *current, char *nameOfTeam, int numberOfMembers){
+Team *initializeTheTeam(Team *current, char *nameOfTeam, int numberOfMembers)
+{
     current->nameOfTeam = (char *)malloc(sizeof(char) * (strlen(nameOfTeam) + 1));
     strcpy(current->nameOfTeam, nameOfTeam);
     current->next = NULL;
     current->numberOfMembers = numberOfMembers;
     current->medium = 0;
-    current -> playersHead = NULL;
+    current->playersHead = NULL;
     return current;
 }
 void displayThePlayers(Player *playerHead, FILE **outputFile)
@@ -156,8 +158,8 @@ void deleteTheTeam(Team **current)
     {
         Player *todelete = copy->playersHead;
         copy->playersHead = copy->playersHead->next;
-        free(todelete -> firstName);
-        free(todelete -> secondName);
+        free(todelete->firstName);
+        free(todelete->secondName);
         free(todelete);
         todelete = NULL;
     }
@@ -184,11 +186,13 @@ void eliminateTheTeams(Team **listOfTeamsHead)
             Team *todelete = copy->next;
             deleteTheTeam(&todelete);
             todelete = NULL;
-            if(copy -> next -> next == NULL){
-                copy -> next = NULL;
+            if (copy->next->next == NULL)
+            {
+                copy->next = NULL;
             }
-            else {
-                copy -> next = copy -> next -> next;
+            else
+            {
+                copy->next = copy->next->next;
             }
             break;
         }
@@ -242,24 +246,27 @@ Team *deleteTheList(Team *listOfTeamsHead)
             free(playerToDelete);
             playerToDelete = NULL;
         }
-        teamToDelete -> playersHead = NULL;
+        teamToDelete->playersHead = NULL;
     }
     return listOfTeamsHead;
 }
 
-WinnersList *deleteWinners(WinnersList *winnersList){
-    while(winnersList != NULL){
+WinnersList *deleteWinners(WinnersList *winnersList)
+{
+    while (winnersList != NULL)
+    {
         WinnersList *winnerToDelete = winnersList;
-        winnersList = winnersList -> next;
-        free(winnerToDelete -> nameOfWinnersTeam);
-        winnerToDelete -> nameOfWinnersTeam = NULL;
+        winnersList = winnersList->next;
+        free(winnerToDelete->nameOfWinnersTeam);
+        winnerToDelete->nameOfWinnersTeam = NULL;
         free(winnerToDelete);
         winnerToDelete = NULL;
     }
     return winnersList;
 }
 
-double getTheMinimum(Team* listOfTeamsHead){
+double getTheMinimum(Team *listOfTeamsHead)
+{
     Team *copy = listOfTeamsHead;
     double minimum = copy->medium;
     while (copy != NULL)

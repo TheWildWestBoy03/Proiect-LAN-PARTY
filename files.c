@@ -12,18 +12,23 @@ void closeTheFile(FILE **inputFile)
 {
     fclose(*inputFile);
 }
-int readTheRequests(FILE **requestsFile, int positionOfTheLastRequest, char *argv[])
-{
+
+void goThroughFile(FILE **requestsFile, int *position){
     int check;
-    openTheFile(&*requestsFile, "r", argv[1]);
+    *position = 0;
     while (feof(*requestsFile) == 0 && fscanf(*requestsFile, "%d ", &check))
     {
         if (check == 0)
         {
             break;
         }
-        positionOfTheLastRequest++;
+        (*position)++;
     }
+}
+int readTheRequests(FILE **requestsFile, int positionOfTheLastRequest, char *argv[])
+{
+    openTheFile(&*requestsFile, "r", argv[1]);
+    goThroughFile(requestsFile, &positionOfTheLastRequest);
     closeTheFile(&*requestsFile);
     return positionOfTheLastRequest;
 }
