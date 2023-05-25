@@ -3,19 +3,21 @@
 
 typedef int Data;
 
-typedef struct Team{
+typedef struct Team
+{
     Data numberOfMembers;
     char *nameOfTeam;
-    struct Team *next; 
+    struct Team *next;
     Player *playersHead;
     double medium;
-}Team;
+} Team;
 
-typedef struct WinnersList{
+typedef struct WinnersList
+{
     char *nameOfWinnersTeam;
     double points;
     struct WinnersList *next;
-}WinnersList;
+} WinnersList;
 
 void addingAtBeginning(Team **listOfTeamHead, Team **current);
 void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsfile);
@@ -34,6 +36,6 @@ double updateTheScore(Player **playersList);
 void createTheLeaderboard(WinnersList **leaderboard, WinnersTree *BinarySearchTreeRoot);
 Team *deleteTheList(Team *listOfTeamsHead);
 WinnersList *deleteWinners(WinnersList *winnersList);
-double getTheMinimum(Team* listOfTeamsHead);
+double getTheMinimum(Team *listOfTeamsHead);
 Team *initializeTheTeam(Team *current, char *nameOfTeam, int numberOfMembers);
 Player *assetThePlayer(char *bufferFirstNameOfMember, char *bufferSecondNameOfMember, int bufferPoints);
