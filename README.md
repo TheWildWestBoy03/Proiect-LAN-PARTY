@@ -67,4 +67,5 @@
 -void deleteAVLTree(AVLNode **AVLRoot);
 -void createTheLeaderboard(WinnersList **leaderboard, WinnersTree *BinarySearchTreeRoot);
 
-Din punct de vedere al utilitatii temei, consider ca exercitiul propus reuseste sa promoveze gandirea analitica necesara gasirii si conturarii unei solutii eficiente. 
+Din punct de vedere al utilitatii temei, consider ca exercitiul propus reuseste sa promoveze gandirea analitica necesara gasirii si conturarii unei solutii eficiente, prin tema contemporana aleasa.
+ 
