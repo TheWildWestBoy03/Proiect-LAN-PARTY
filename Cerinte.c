@@ -93,44 +93,24 @@ QMatch *prepairTheScheduledMatch(Stack *currentWinner, Stack *currentWinnerOppon
     scheduledMatch->next = NULL;
     return scheduledMatch;
 }
-Stack *getTheFinalWinner(QMatch *finalMatch)
-{
-    Stack *winnerOfTheGame = malloc(sizeof(QMatch));
-    winnerOfTheGame->next = NULL;
-    if (finalMatch->firstTeamScore > finalMatch->secondTeamScore)
-    {
-        winnerOfTheGame->nameOfTeam = (char *)malloc(strlen(finalMatch->firstTeam) + 1);
-        strcpy(winnerOfTheGame->nameOfTeam, finalMatch->firstTeam);
-        winnerOfTheGame->points = finalMatch->firstTeamScore;
-        winnerOfTheGame->playersList = finalMatch->firstTeamPlayers;
-    }
-    else
-    {
-        winnerOfTheGame->nameOfTeam = (char *)malloc(strlen(finalMatch->secondTeam) + 1);
-        strcpy(winnerOfTheGame->nameOfTeam, finalMatch->secondTeam);
-        winnerOfTheGame->points = finalMatch->secondTeamScore;
-        winnerOfTheGame->playersList = finalMatch->secondTeamPlayers;
-    }
-    return winnerOfTheGame;
-}
+
 void simulateFinalMatch(QueueOfMatches *queueOfMatches, Stack *currentWinner, Stack *currentWinnerOpponent, FILE **outputFile, int numberOfRounds)
 {
-    QMatch *finalMatch = dequeueOfMatches(queueOfMatches, &currentWinner, &currentWinnerOpponent);
+    Stack *winnerOfTheGame = NULL, *theSecondBestTeam = NULL;
+    QMatch *finalMatch = dequeueOfMatches(queueOfMatches, &winnerOfTheGame, &theSecondBestTeam);
     fprintf(*outputFile, "--- ROUND NO:%d\n", numberOfRounds);
-    int index = strlen(finalMatch->firstTeam);
     printQueueLine(outputFile, finalMatch);
-    Stack *winnerOfTheGame = getTheFinalWinner(finalMatch);
-    winnerOfTheGame->points = updateTheScore(&(winnerOfTheGame->playersList));
-    winnerOfTheGame->points--;
     fprintf(*outputFile, "\nWINNERS OF ROUND NO:%d\n", numberOfRounds);
     fprintf(*outputFile, "%s", winnerOfTheGame->nameOfTeam);
-    index = strlen(winnerOfTheGame->nameOfTeam);
+    int index = strlen(winnerOfTheGame->nameOfTeam);
     while (index < 34)
     {
         fputc(' ', *outputFile);
         index++;
     }
     fprintf(*outputFile, "-  %.2lf\n", winnerOfTheGame->points);
+    winnerOfTheGame = deleteWinner(winnerOfTheGame);
+    theSecondBestTeam = deleteWinner(theSecondBestTeam);
     return;
 }
 void simulateTheGame(QueueOfMatches *queueOfMatches, FILE **outputFile, Team *listOfTeamsHead, int numberOfTeams, WinnersList **gameOfficialWinners, int positionOfLastRequest)
@@ -168,6 +148,8 @@ void simulateTheGame(QueueOfMatches *queueOfMatches, FILE **outputFile, Team *li
             }
             printStackLine(outputFile, currentWinner, currentWinnerOpponent);
             enqueueTheMatch(queueOfMatches, scheduledMatch, outputFile);
+            currentWinner = deleteWinner(currentWinner);
+            currentWinnerOpponent = deleteWinner(currentWinnerOpponent);
         }
         numberOfRounds++;
         numberOfTeams /= 2;

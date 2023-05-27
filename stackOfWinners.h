@@ -17,3 +17,4 @@ void pushTheWinner(Stack **theStack, Stack *winnerOrLoserTeam);
 int isTheStackEmpty(Stack *theStack);
 void deleteFromStack(Stack **itemToDelete);
 void deleteStack(Stack **stackToDelete);
+Stack *deleteWinner(Stack *winner);

@@ -11,6 +11,15 @@ Stack *top(Stack *theStack)
     return returnIt;
 }
 
+Stack *deleteWinner(Stack *winner)
+{
+    free(winner->nameOfTeam);
+    winner->nameOfTeam = NULL;
+    free(winner);
+    winner = NULL;
+    return winner;
+}
+
 Stack *pop(Stack **theStack)
 {
     if (*theStack == NULL)

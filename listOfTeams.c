@@ -99,17 +99,17 @@ void addTheTeams(Team **listOfTeamHead, int numberOfTeams, FILE *teamsFile)
     }
 }
 
-double updateTheScore(Player **playerList)
+double updateTheScore(Player **modifiedPlayersScores)
 {
-    Player *playerListCopy = *playerList;
+    Player *playersListCopy = *modifiedPlayersScores;
     double score = 0.000;
     int numberOfPlayers = 0;
-    while (playerListCopy != NULL)
+    while (playersListCopy != NULL)
     {
-        (playerListCopy->points)++;
+        (playersListCopy->points)++;
         numberOfPlayers++;
-        score += (playerListCopy->points) * 1.000;
-        playerListCopy = playerListCopy->next;
+        score += (playersListCopy->points) * 1.000;
+        playersListCopy = playersListCopy->next;
     }
     score /= numberOfPlayers;
     int numeral = score * 1000;
@@ -119,6 +119,7 @@ double updateTheScore(Player **playerList)
     }
     return score;
 }
+
 void displayTheList(Team *listOfTeamHead, FILE **outputFile)
 {
     while (listOfTeamHead != NULL)
