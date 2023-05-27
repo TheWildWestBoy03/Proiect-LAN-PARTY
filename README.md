@@ -30,9 +30,9 @@
 
  -Al treilea task, a fost, după părerea mea, cel mai complicat din punct de vedere al găsirii unei soluții cât mai eficiente. Pentru simularea jocului trebuiau reținute meciurile create în urma organizării echipelor rămase după taskul 2. Pentru asta am ales să implementez o coadă de meciuri, ale cărei noduri să rețină date despre cele două echipe adversare, cum ar fi numele, punctajele și câte o referință către playerii fiecărei echipe. Echipele câștigătoare le-am introdus la fiecare pas într-o stivă de câștigători, iar cele pierzătoare, într-o stivă de pierzători, pe care ulterior am șters-o conformm cerinței. Toți acești pași au fost îndepliniți până în momentul în care au rămas două echipe. De asemenea, la 16 echipe rămase, după introducerea în stiva de câștigători, am creat o listă simplu înlănțuită cu ultimele opt echipe rămase. La final, am creat meciul final folosind o funcție specializată, urmând găsirea câștigătorului. În cele din urmă, am șters ce a rămas neșters din memorie. Functional, am implementat trei functii ce inglobeaza toate functionalitatile realizate pentru indeplinirea acestui task. Cele mai importante functionalitati implementate:
 
- -solveTheThirdTaskPt1(&listOfTeamsHead, &outputFile, &numberOfTeams) 
+ -void solveTheThirdTaskPt1(Team **listOfTeamsHead, FILE **outputFile, int *numberOfTeams);
     -realizeaza taskul doi, mai putin stergerea efectiva a listei
- -simulateTheGame(queueOfMatches, &outputFile, listOfTeamsHead, numberOfTeams, &gameWinners, positionOfLastRequest)
+ -void simulateTheGame(QueueOfMatches *queueOfMatches, FILE **outputFile, Team *listOfTeamsHead, int numberOfTeams, WinnersList **gameOfficialWinners, int positionOfLastRequest);
     -foloseste o serie de functionalitati cu rol de manipulare a stivelor si a cozii de meciuri
         -Stack *top(Stack *theStack);
         -Stack *pop(Stack **theStack);
@@ -47,6 +47,8 @@
         -int isQueueOfMatchesEmpty(QueueOfMatches *queueOfMatches);
         -QMatch *setTheMatch(QMatch *someMatch, QMatch *aux);
         -void deleteTheMatchesQueue(QueueOfMatches *queueOfMatches);
+ -void simulateFinalMatch(QueueOfMatches *queueOfMatches, Stack *currentWinner, Stack *currentWinnerOpponent, FILE **outputFile, int numberOfRounds);
+  -aceasta functie foloseste functia de dequeue din coada de meciuri, pentru a extrage castigatorul jocului
 
  -La taskul patru am implementat un arbore binar de căutare, folosind lista de câștigători implementată la taskul anterior, folosind funcția de inserare, definire a unui nod tip, precum și de ștergere a arborelui. Ulterior, cu o traversare tip inordine, am scris în fișierul de output numele echipelor și punctajele lor.
  Functionalitatile necesare implica atat cele folosite la taskurile anterioare, cat si cele de prelucrare a arborelui binar de cautare, cat si a listei celor opt invingatori.
